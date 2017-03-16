@@ -3,11 +3,12 @@
 <title>Login Page</title>
 
 <link rel="stylesheet" type="text/css" href="styles.css">
-<form action="login_process.php" method="post">
 </head>
-
+<form action="#" id='loginForm' method="post">
+<script src="./jquery.js"></script>
+<script src="./app.js"></script>
 <body>
-
+    <p id='server-time'></p>
     <!-- Begin Page Content -->
     <div id="container">
             <label for="loginmsg" style="color:hsla(0,100%,50%,0.5); font-family:"Helvetica Neue",Helvetica,sans-serif;"><?php  echo @$_GET['msg'];?></label>

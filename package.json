@@ -8,6 +8,9 @@
     "start": "node server.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
+  "engines": {
+    "node": "6.2.0"
+  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/jjwatt99/hrsf72-mvp.git"
@@ -26,12 +29,16 @@
     "babel-preset-react": "^6.23.0",
     "bcrypt-nodejs": "0.0.3",
     "body-parser": "^1.17.1",
-    "express": "^4.15.2",
+    "bufferutil": "3.0.0",
+    "express": "4.15.2",
     "jquery": "^3.1.1",
     "mongoose": "^4.8.6",
+    "path": "^0.12.7",
     "react": "^15.4.2",
     "react-dom": "^15.4.2",
+    "utf-8-validate": "3.0.1",
     "webpack": "^2.2.1",
-    "webpack-dev-middleware": "^1.10.1"
+    "webpack-dev-middleware": "^1.10.1",
+    "ws": "2.2.1"
   }
 }
