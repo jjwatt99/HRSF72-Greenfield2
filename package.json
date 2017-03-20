@@ -36,6 +36,8 @@
     "path": "^0.12.7",
     "react": "^15.4.2",
     "react-dom": "^15.4.2",
+    "socket.io": "^1.7.3",
+    "tcomb-form": "^0.9.14",
     "utf-8-validate": "3.0.1",
     "webpack": "^2.2.1",
     "webpack-dev-middleware": "^1.10.1",
