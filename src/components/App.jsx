@@ -1,7 +1,7 @@
 import React from 'react';
 import Month from './Month.jsx';
-import example from '../ExampleData.js';
 import $ from 'jquery';
+
 
 class App extends React.Component {
 	constructor(props) {
@@ -12,8 +12,19 @@ class App extends React.Component {
 	}
 
 	componentWillMount() {
-		this.setState({
-			events: example
+		var context = this;
+		$(document).ready( function() {
+			console.log('hello client calendar');
+			var HOST = location.origin.replace(/^http/, 'ws')
+			var ws = new WebSocket(HOST);
+			var el = document.getElementById('server-time');
+			ws.onmessage = function (msg) {
+				recObj = JSON.parse(msg.data);
+				el.innerHTML = 'Server time: ' + recObj.time;
+				context.setState({
+					events: recObj.events
+				})
+			};
 		});
 	}
 
