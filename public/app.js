@@ -9,15 +9,18 @@ var app = {
 			ws.onmessage = function (msg) {
 					recObj = JSON.parse(msg.data);
 					el.innerHTML = 'Server time: ' + recObj.time;
+					if (recObj.user.loginOk === true) {
+						$("body").load("application.html");
+					}
 			};
 
 			$('#loginForm').submit( function(event) {
 				event.preventDefault();
-				var username = $(username).val();
-				var password = $(password).val();
+				var username = $("#username").val();
+				var password = $("#password").val();
 				var dataObj = {
-					usermame: username,
-					password: password,
+					username: username,
+					password: password
 				};
 				ws.send( JSON.stringify(dataObj));
 			});

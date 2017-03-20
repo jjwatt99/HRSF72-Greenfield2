@@ -48,7 +48,7 @@ var Tasks = mongoose.Schema({
 	Due: { type: Date, default: Date.now },
 	Prerequisite: Array,
 	Project: {
-    _id: Project.Id
+    _id: {type: Number, default: 0}
   },
   timeCreated: {
     type: Date,
@@ -58,20 +58,28 @@ var Tasks = mongoose.Schema({
 
 
 
-var Item = mongoose.model('Item', itemSchema);
+// var Item = mongoose.model('Item', itemSchema);
 
-var selectAll = function(callback) {
-  Item.find({}, function(err, items) {
-    if(err) {
-      callback(err, null);
-    } else {
-      callback(null, items);
-    }
-  });
-};
+// var selectAll = function(callback) {
+//   Item.find({}, function(err, items) {
+//     if(err) {
+//       callback(err, null);
+//     } else {
+//       callback(null, items);
+//     }
+//   });
+// };
 
+// var selectAll = function(callback) {
+//   Item.find({}, function(err, items) {
+//     if(err) {
+//       callback(err, null);
+//     } else {
+//       callback(null, items);
+//     }
+//   });
+// };
 
-
-module.exports = Item;
+// module.exports = Item;
 
 
