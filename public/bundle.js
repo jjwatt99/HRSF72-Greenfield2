@@ -9476,7 +9476,7 @@ var _react2 = _interopRequireDefault(_react);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-var example = [[{ first: 'study' }, { second: 'eat' }, { third: 'party' }], [{ first: 'work' }, { second: 'eat' }, { third: 'party' }], [{ first: 'work' }, { second: 'eat' }, { third: 'party' }], [{ first: 'work' }, { second: 'eat' }, { third: 'party' }], [{ first: 'work' }, { second: 'eat' }, { third: 'party' }], [{ first: 'work' }, { second: 'eat' }, { third: 'party' }], [{ first: 'work' }, { second: 'eat' }, { third: 'party' }], [{ first: 'work' }, { second: 'eat' }, { third: 'party' }], [{ first: 'work' }, { second: 'eat' }, { third: 'party' }], [{ first: 'work' }, { second: 'eat' }, { third: 'party' }], [{ first: 'work' }, { second: 'eat' }, { third: 'party' }], [{ first: 'work' }, { second: 'eat' }, { third: 'party' }], [{ first: 'work' }, { second: 'eat' }, { third: 'party' }], [{ first: 'work' }, { second: 'eat' }, { third: 'party' }], [{ first: 'work' }, { second: 'eat' }, { third: 'party' }], [{ first: 'work' }, { second: 'eat' }, { third: 'party' }], [{ first: 'work' }, { second: 'eat' }, { third: 'party' }], [{ first: 'work' }, { second: 'eat' }, { third: 'party' }], [{ first: 'work' }, { second: 'eat' }, { third: 'party' }], [{ first: 'work' }, { second: 'eat' }, { third: 'party' }], [{ first: 'work' }, { second: 'eat' }, { third: 'party' }], [{ first: 'work' }, { second: 'eat' }, { third: 'party' }], [{ first: 'work' }, { second: 'eat' }, { third: 'party' }], [{ first: 'work' }, { second: 'eat' }, { third: 'party' }], [{ first: 'work' }, { second: 'eat' }, { third: 'party' }], [{ first: 'work' }, { second: 'eat' }, { third: 'party' }], [{ first: 'work' }, { second: 'eat' }, { third: 'party' }], [{ first: 'work' }, { second: 'eat' }, { third: 'party' }]];
+var example = [[{ date: 1 }, { first: 'study' }, { second: 'eat' }, { third: 'party' }], [{ date: 2 }, { first: 'work' }, { second: 'eat' }, { third: 'party' }], [{ date: 3 }, { first: 'work' }, { second: 'eat' }, { third: 'party' }], [{ date: 4 }, { first: 'work' }, { second: 'eat' }, { third: 'party' }], [{ date: 5 }, { first: 'work' }, { second: 'eat' }, { third: 'party' }], [{ date: 6 }, { first: 'work' }, { second: 'eat' }, { third: 'party' }], [{ date: 7 }, { first: 'work' }, { second: 'eat' }, { third: 'party' }], [{ date: 8 }, { first: 'work' }, { second: 'eat' }, { third: 'party' }], [{ date: 9 }, { first: 'work' }, { second: 'eat' }, { third: 'party' }], [{ date: 10 }, { first: 'work' }, { second: 'eat' }, { third: 'party' }], [{ date: 11 }, { first: 'work' }, { second: 'eat' }, { third: 'party' }], [{ date: 12 }, { first: 'work' }, { second: 'eat' }, { third: 'party' }], [{ date: 13 }, { first: 'work' }, { second: 'eat' }, { third: 'party' }], [{ date: 14 }, { first: 'work' }, { second: 'eat' }, { third: 'party' }], [{ date: 15 }, { first: 'work' }, { second: 'eat' }, { third: 'party' }], [{ date: 16 }, { first: 'work' }, { second: 'eat' }, { third: 'party' }], [{ date: 17 }, { first: 'work' }, { second: 'eat' }, { third: 'party' }], [{ date: 18 }, { first: 'work' }, { second: 'eat' }, { third: 'party' }], [{ date: 19 }, { first: 'work' }, { second: 'eat' }, { third: 'party' }], [{ date: 20 }, { first: 'work' }, { second: 'eat' }, { third: 'party' }], [{ date: 21 }, { first: 'work' }, { second: 'eat' }, { third: 'party' }], [{ date: 22 }, { first: 'work' }, { second: 'eat' }, { third: 'party' }], [{ date: 23 }, { first: 'work' }, { second: 'eat' }, { third: 'party' }], [{ date: 24 }, { first: 'work' }, { second: 'eat' }, { third: 'party' }], [{ date: 25 }, { first: 'work' }, { second: 'eat' }, { third: 'party' }], [{ date: 26 }, { first: 'work' }, { second: 'eat' }, { third: 'party' }], [{ date: 27 }, { first: 'work' }, { second: 'eat' }, { third: 'party' }], [{ date: 28 }, { first: 'work' }, { second: 'eat' }, { third: 'party' }]];
 
 exports.default = example;
 
@@ -9543,7 +9543,42 @@ var App = function (_React$Component) {
 		value: function render() {
 			return _react2.default.createElement(
 				'div',
-				null,
+				{ id: 'calendar' },
+				_react2.default.createElement(
+					'div',
+					{ className: 'days' },
+					'Monday'
+				),
+				_react2.default.createElement(
+					'div',
+					{ className: 'days' },
+					'Tuesday'
+				),
+				_react2.default.createElement(
+					'div',
+					{ className: 'days' },
+					'Wednesday'
+				),
+				_react2.default.createElement(
+					'div',
+					{ className: 'days' },
+					'Thursday'
+				),
+				_react2.default.createElement(
+					'div',
+					{ className: 'days' },
+					'Friday'
+				),
+				_react2.default.createElement(
+					'div',
+					{ className: 'days' },
+					'Saturday'
+				),
+				_react2.default.createElement(
+					'div',
+					{ className: 'days' },
+					'Sunday'
+				),
 				_react2.default.createElement(
 					'div',
 					null,
@@ -9614,6 +9649,11 @@ var Events = function Events(props) {
 		return _react2.default.createElement(
 				'div',
 				null,
+				_react2.default.createElement(
+						'div',
+						null,
+						props.event.date
+				),
 				_react2.default.createElement(
 						'div',
 						null,
