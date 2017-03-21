@@ -36,3 +36,6 @@ bower_components/
 
 # API Key
 src/config/
+
+
+public/bundle.js
