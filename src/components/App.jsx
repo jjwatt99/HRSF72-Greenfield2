@@ -3,9 +3,7 @@ import React from 'react';
 import Month from './Month.jsx';
 import $ from 'jquery';
 import t from 'tcomb-form';
-
-
-
+import Button from 'react-bootstrap/lib/Button';
 
 class App extends React.Component {
 	constructor(props) {
@@ -43,8 +41,8 @@ class App extends React.Component {
 
 	render() {
 		const ActionType = t.enums.of([
-		  'Create a Task',
-		  'Create a Project'
+		  'New Task',
+		  'New Project'
 		], 'ActionType')
 
 		const ListOfProjects = t.enums.of([
@@ -62,28 +60,32 @@ class App extends React.Component {
 		}, 'AddType')
 
 		const AddTask = AddType.extend({
-		  label: t.String,
 		  name: t.Str,
-		  startTime: t.Str,
-		  endTime: t.Str,
+		  startDate: t.Date,
+		  startTime: t.String,
+		  dueDate: t.Date,
 		  completed: t.Bool,
-		  Prerequesites: ListOfProjects,
-		  Dependencies: ListOfProjects,
+		  Prerequesites: t.maybe(t.list(ListOfProjects)),
+		  Dependencies: t.maybe(t.list(ListOfProjects)),
 		}, 'AddTask')
 
 		const AddProject = AddType.extend({
-		  label: t.String,
 		  name: t.Str,
-		  startTime: t.Str,
-		  endTime: t.Str,
-		  manager: t.Num,
+		  startDate: t.Date,
+		  startTime: t.String,
+		  dueDate: t.Date,
+		  manager: t.maybe(t.Str),
 		}, 'AddProject')
 
-		const Options = t.union([AddType, AddTask, AddProject], 'Options')
+		const Options = t.union([AddTask, AddProject], 'Options')
+	
 
-		Options.dispatch = value => value && value.type === 'Create a Task' ? AddTask : AddProject
+		Options.dispatch = value => value && value.type === 'New Task' ? AddTask : AddProject
 
 		const Type = t.list(Options)
+		
+		const options = {
+		};		
 	  return (
 	  	<div id="calendar">
 	  	  <div className="days">Monday</div>
@@ -99,9 +101,10 @@ class App extends React.Component {
         <t.form.Form
           ref="form"
           type={Type}
+          options={options}
         />
         <div className="form-group">
-          <button type="submit" className="btn btn-primary">Save</button>
+          <Button type="submit" className="btn btn-primary">Save</Button>
         </div>
       </form>
       </div>
