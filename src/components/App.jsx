@@ -21,16 +21,16 @@ class App extends React.Component {
 			console.log('hello client calendar');
 			var HOST = location.origin.replace(/^http/, 'ws')
 			var ws = new WebSocket(HOST);
+			window.ws = ws;
 			var el = document.getElementById('server-time');
 			var dataObj = {
 				type: 'getUserTasks',
-				username: 'Bobs',
-				password: 'UpandDownInTheWater'
+				username: window.username,
+				password: ''
 			};
 			ws.onopen = function() {
 				ws.send( JSON.stringify(dataObj) );
 			}
-				
 			ws.onmessage = function (msg) {
 				recObj = JSON.parse(msg.data);
 				console.log(recObj);
@@ -48,16 +48,17 @@ class App extends React.Component {
 
 	onSubmit(evt) {
 		evt.preventDefault();
+		console.log(window.ws);
 		var userInput = this.refs.form.getValue()[0];
 		if (userInput) {
-			if (userInput === "New Task") {
+			if (userInput.type === "New Task") {
 				console.log('userInput = ', userInput)
 				var sendObj = {
 					type: 'addTask',
-					newTask: {
-						
-					}
+					username: window.username,
+					newTask: userInput
 				};
+				window.ws.send( JSON.stringify(sendObj) );
 			}
 		}
 		this.resetForm();

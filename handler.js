@@ -15,6 +15,9 @@ module.exports = {
 					console.log('no data for user: ', username);
 				}
 			});
+	},
+	addTask: function(username, newTask, callback) {
+		
 	}
 }
 

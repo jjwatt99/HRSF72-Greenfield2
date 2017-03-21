@@ -19,6 +19,7 @@ const server = express()
 console.log(PORT)
 const WSserver = new SocketServer({ server });
 const handler = require('./handler');
+var sessions = {};
 
 WSserver.on('connection', (client) => {
 	var clientID = client.upgradeReq.rawHeaders[21].slice(0,5);
@@ -34,16 +35,22 @@ WSserver.on('connection', (client) => {
 		recObj = JSON.parse(recObj);
 		console.log('\n' + clientID + ' attempting to update ');
 			if ( recObj.type === 'login' && recObj.username.length > 0 && recObj.password.length > 0) {
-				var clientName = recObj.username;
-				console.log('ClientID: ', clientID, ' is username: ', clientName);
+				sessions[recObj.username] = clientID;
+				console.log('Login ClientID: ', clientID, ' is username: ', recObj.username);
 				sendObj.user.loginOk = true;
 				client.send( JSON.stringify(sendObj) );
 			}
-			console.log(recObj);
 			if ( recObj.type === 'getUserTasks') {
+				console.log('Get User Takss ClientID: ', clientID, ' is username: ', recObj.username);
 				handler.getUserTasks(recObj.username, function(tasks) {
 					client.send( JSON.stringify(tasks) );
 				});
+			}
+			if ( recObj.type === 'addTask' ) {
+				handler.addTask(recObj.username, recObj.newTask, function(tasks) {
+					client.send( JSON.stringify(tasks) );
+				})
+
 			}
 		});
 
