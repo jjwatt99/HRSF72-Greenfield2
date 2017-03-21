@@ -1,27 +1,23 @@
-<head>
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-<title>Login Page</title>
-
-<link rel="stylesheet" type="text/css" href="styles.css">
-</head>
-<form action="#" id='loginForm' method="post">
-<script src="./jquery.js"></script>
-<script src="./app.js"></script>
-<body>
+<html>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <title>Login Page</title>
+    <link rel="stylesheet" type="text/css" href="styles.css">
+  </head>
+  <body>
+    <form action="#" id='loginForm' method="post"></form>
+    <script src="./jquery.js"></script>
+    <script src="./app.js"></script>
     <p id='server-time'></p>
-    <!-- Begin Page Content -->
     <div id="container">
-            <label for="loginmsg" style="color:hsla(0,100%,50%,0.5); font-family:"Helvetica Neue",Helvetica,sans-serif;"><?php  echo @$_GET['msg'];?></label>
-            <label for="username">Username:</label>
-            <input type="text" id="username" name="username">
-            <label for="password">Password:</label>
-            <input type="password" id="password" name="password">
-            <div id="lower">
-                <input type="checkbox"><label class="check" for="checkbox">Keep me logged in</label>
-                <input type="submit" value="Login">
-            </div><!--/ lower-->
-        </form>
-    </div><!--/ container-->
-    <!-- End Page Content -->
-</body>
+      <label for="username">Username:</label>
+      <input type="text" id="username" name="username">
+      <label for="password">Password:</label>
+      <input type="password" id="password" name="password">
+      <div id="lower">
+        <input type="checkbox"><label class="check" for="checkbox">Keep me logged in</label>
+        <input type="submit" value="Login">
+      </div>
+    </div>
+  </body>
 </html>
