@@ -16,7 +16,7 @@ var app = {
 					}
 			};
 
-			$('#loginForm').submit( function(event) {
+			$('#submit').click( function(event) {
 				event.preventDefault();
 				var username = $("#username").val();
 				var password = $("#password").val();
