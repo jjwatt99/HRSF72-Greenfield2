@@ -16,8 +16,8 @@ db.once('open', function() {
       var task = new Task({
         Username: 'Bobs',
         Name: 'shopping',
-        Start: ''+i+'12:30',
-        Due: ''+i+'13:30',
+        Start: ''+i+' 12:30',
+        Due: ''+i+' 13:30',
         Project: 5
       }).save();
     }

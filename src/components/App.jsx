@@ -48,11 +48,17 @@ class App extends React.Component {
 
 	onSubmit(evt) {
 		evt.preventDefault();
-		var v = this.refs.form.getValue();
-		if (v) {
-			console.log('value = ', v)
-			var sendObj = {};
-			// sendObj.v[0].Struct)
+		var userInput = this.refs.form.getValue()[0];
+		if (userInput) {
+			if (userInput === "New Task") {
+				console.log('userInput = ', userInput)
+				var sendObj = {
+					type: 'addTask',
+					newTask: {
+						
+					}
+				};
+			}
 		}
 		this.resetForm();
 	}

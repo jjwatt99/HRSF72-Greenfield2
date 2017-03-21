@@ -23,9 +23,9 @@ const handler = require('./handler');
 WSserver.on('connection', (client) => {
 	var clientID = client.upgradeReq.rawHeaders[21].slice(0,5);
 	console.log('\n' + clientID + ' <---- connected');
-	var sendObj = {};
-	sendObj.user = {};
-	sendObj.user.loginOk = false;
+	var sendObj = {
+		user: {loginOk: false}
+	};
 	sendObj.time = new Date().toTimeString();
 	client.send( JSON.stringify(sendObj) );
 
@@ -33,16 +33,18 @@ WSserver.on('connection', (client) => {
 	client.on('message', (recObj)=> {
 		recObj = JSON.parse(recObj);
 		console.log('\n' + clientID + ' attempting to update ');
-		if ( recObj.type === 'login' && recObj.username.length > 0 && recObj.password.length > 0) {
-			sendObj.user.loginOk = true;
-			client.send( JSON.stringify(sendObj) );
-		}
-		console.log(recObj);
-		if ( recObj.type === 'getUserTasks') {
-			handler.getUserTasks(recObj.username, function(tasks) {
-				client.send( JSON.stringify(tasks) );
-				});
-		}
+		
+			if ( recObj.type === 'login' && recObj.username.length > 0 && recObj.password.length > 0) {
+				sendObj.user.loginOk = true;
+
+				client.send( JSON.stringify(sendObj) );
+			}
+			console.log(recObj);
+			if ( recObj.type === 'getUserTasks') {
+				handler.getUserTasks(recObj.username, function(tasks) {
+					client.send( JSON.stringify(tasks) );
+					});
+			}
 		});
 
 	client.on('close', ()=> {
