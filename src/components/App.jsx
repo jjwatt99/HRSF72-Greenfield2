@@ -3,7 +3,6 @@ import React from 'react';
 import Month from './Month.jsx';
 import $ from 'jquery';
 import t from 'tcomb-form';
-import Button from 'react-bootstrap/lib/Button';
 // import Boring from '../../react-client/src/components/boringStuff.js'
 // console.log(Boring.Months)
 class App extends React.Component {
@@ -13,6 +12,9 @@ class App extends React.Component {
 			events: [],
 			name: null
 		}
+		this.resetForm = this.resetForm.bind(this);
+		this.onSubmit = this.onSubmit.bind(this);
+	
 	}
 
 	componentWillMount() {
@@ -71,6 +73,7 @@ class App extends React.Component {
 		], 'ActionType')
 
 		const ListOfProjects = t.enums.of([
+			// Pass in an array of projects here from DB
 			'Project 1',
 			'Project 2',
 			'Project 3',
@@ -86,10 +89,10 @@ class App extends React.Component {
 
 		const AddTask = AddType.extend({
 		  name: t.Str,
-		  startDay: Days,
+		  startDate: Days,
 		  startMonth: Months,
 		  startTime: t.String,
-		  dueDay: Days,
+		  dueDate: Days,
 		  dueMonth: Months,
 		  completed: t.Bool,
 		  Prerequesites: t.maybe(t.list(ListOfProjects)),
@@ -98,10 +101,10 @@ class App extends React.Component {
 
 		const AddProject = AddType.extend({
 		  name: t.Str,
-		  startDay: Days,
+		  startDate: Days,
 		  startMonth: Months,
 		  startTime: t.String,
-		  dueDay: Days,
+		  dueDate: Days,
 		  dueMonth: Months,
 		  manager: t.maybe(t.Str),
 		}, 'AddProject')
@@ -134,7 +137,12 @@ class App extends React.Component {
           options={options}
         />
         <div className="form-group">
-          <Button type="submit" className="btn btn-primary">Save</Button>
+          <button 
+	          type="submit" 
+	          className="btn btn-primary" 
+	          onClick={this.resetForm}>
+		          Save
+	          </button>
         </div>
       </form>
       </div>
