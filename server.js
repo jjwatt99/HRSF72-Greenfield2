@@ -51,6 +51,7 @@ WSserver.on('connection', (client) => {
 });
 
 
+
 var example = [
 	[{date: 1}, {first: 'study'}, {second: 'eat'}, {third: 'party'}],
 	[{date: 2}, {first: 'work'}, {second: 'eat'}, {third: 'party'}],

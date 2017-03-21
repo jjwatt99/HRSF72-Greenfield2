@@ -33,17 +33,17 @@ class App extends React.Component {
 	}
 
 	resetForm() {
-  	this.setState({value: null});
-  }
-
-  onSubmit(evt) {
-  	evt.preventDefault();
-  	this.resetForm();
-  	const v = this.refs.form.getValue()
-  	if (v) {
-    console.log(v)
+  		this.setState({value: null});
   	}
-  }
+
+	onSubmit(evt) {
+		evt.preventDefault();
+		var v = this.refs.form.getValue();
+		if (v) {
+			console.log('value = ', v)
+		}
+		this.resetForm();
+	}
 
 	render() {
 		const ActionType = t.enums.of([
@@ -107,8 +107,9 @@ class App extends React.Component {
 	  	  <div className="days">Sunday</div>
 		  	<div><Month month={this.state.events}/></div>
 			  	<div>
-        <form onSubmit={this.onSubmit}>
+        <form onSubmit={this.onSubmit.bind(this)}>
         <t.form.Form
+
           ref="form"
           type={Type}
           options={options}
