@@ -5,15 +5,7 @@ import $ from 'jquery';
 import t from 'tcomb-form';
 
 
-//easier way to handle form without writing a whole bunch of html
-const Form = t.form.Form;
-const FormSchema = t.struct({
-  name: t.Str,
-  startTime: t.Str,
-  endTime: t.Str,
-  manager: t.Num,
-  completed: t.Bool,
-})
+
 
 class App extends React.Component {
 	constructor(props) {
@@ -41,15 +33,57 @@ class App extends React.Component {
 		});
 	}
 
-  onSubmit(evt) {
+    onSubmit(evt) {
     evt.preventDefault()
-    const value = this.refs.form.getValue()
-    if (value) {
-      console.log(value)
+    const v = this.refs.form.getValue()
+    if (v) {
+      console.log(v)
     }
   }
 
 	render() {
+		const ActionType = t.enums.of([
+		  'Create a Task',
+		  'Create a Project'
+		], 'ActionType')
+
+		const ListOfProjects = t.enums.of([
+			'Project 1',
+			'Project 2',
+			'Project 3',
+			'Project 4',
+			'Project 5',
+			'Project 6',
+			'Project 7'
+		])
+
+		const AddType = t.struct({
+		  type: ActionType
+		}, 'AddType')
+
+		const AddTask = AddType.extend({
+		  label: t.String,
+		  name: t.Str,
+		  startTime: t.Str,
+		  endTime: t.Str,
+		  completed: t.Bool,
+		  Prerequesites: ListOfProjects,
+		  Dependencies: ListOfProjects,
+		}, 'AddTask')
+
+		const AddProject = AddType.extend({
+		  label: t.String,
+		  name: t.Str,
+		  startTime: t.Str,
+		  endTime: t.Str,
+		  manager: t.Num,
+		}, 'AddProject')
+
+		const Options = t.union([AddType, AddTask, AddProject], 'Options')
+
+		Options.dispatch = value => value && value.type === 'Create a Task' ? AddTask : AddProject
+
+		const Type = t.list(Options)
 	  return (
 	  	<div id="calendar">
 	  	  <div className="days">Monday</div>
@@ -60,15 +94,17 @@ class App extends React.Component {
 	  	  <div className="days">Saturday</div>
 	  	  <div className="days">Sunday</div>
 		  	<div><Month month={this.state.events}/></div>
-			  	<div className = "userInputForm">
-			  	<h1>Create an event</h1>
-	        <form onSubmit={this.onSubmit}>
-	        <t.form.Form ref="form" type={FormSchema} />
-	        <div className="form-group">
-	          <button type="submit" className="btn btn-primary">Save</button>
-	        </div>
-		      </form>
-		      </div>
+			  	<div>
+        <form onSubmit={this.onSubmit}>
+        <t.form.Form
+          ref="form"
+          type={Type}
+        />
+        <div className="form-group">
+          <button type="submit" className="btn btn-primary">Save</button>
+        </div>
+      </form>
+      </div>
 		  </div>	
 	  );
 	}
