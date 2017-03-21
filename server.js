@@ -33,17 +33,17 @@ WSserver.on('connection', (client) => {
 	client.on('message', (recObj)=> {
 		recObj = JSON.parse(recObj);
 		console.log('\n' + clientID + ' attempting to update ');
-		
 			if ( recObj.type === 'login' && recObj.username.length > 0 && recObj.password.length > 0) {
+				var clientName = recObj.username;
+				console.log('ClientID: ', clientID, ' is username: ', clientName);
 				sendObj.user.loginOk = true;
-
 				client.send( JSON.stringify(sendObj) );
 			}
 			console.log(recObj);
 			if ( recObj.type === 'getUserTasks') {
 				handler.getUserTasks(recObj.username, function(tasks) {
 					client.send( JSON.stringify(tasks) );
-					});
+				});
 			}
 		});
 
