@@ -16,7 +16,6 @@ const server = express()
 	console.log(`Listening on ${ PORT }`);
 	console.log('\n\n\n\n\n');
 	});
-console.log(PORT)
 const WSserver = new SocketServer({ server });
 const handler = require('./handler');
 var sessions = {};
