@@ -4,7 +4,7 @@ var Events = (props) => {
   return (
 	  <div>
 	    <div>{props.event.date}</div>
-	    <div>{props.event.Start}</div>
+	    <div>{props.event.Name}</div>
 	  </div>
 	);
 };
