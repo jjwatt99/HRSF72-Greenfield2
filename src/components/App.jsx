@@ -22,8 +22,18 @@ class App extends React.Component {
 			var HOST = location.origin.replace(/^http/, 'ws')
 			var ws = new WebSocket(HOST);
 			var el = document.getElementById('server-time');
+			var dataObj = {
+				type: 'getUserTasks',
+				username: 'Bobs',
+				password: 'UpandDownInTheWater'
+			};
+			ws.onopen = function() {
+				ws.send( JSON.stringify(dataObj) );
+			}
+				
 			ws.onmessage = function (msg) {
 				recObj = JSON.parse(msg.data);
+				console.log(recObj);
 				el.innerHTML = 'Server time: ' + recObj.time;
 				context.setState({
 					events: recObj.events
@@ -41,6 +51,8 @@ class App extends React.Component {
 		var v = this.refs.form.getValue();
 		if (v) {
 			console.log('value = ', v)
+			var sendObj = {};
+			// sendObj.v[0].Struct)
 		}
 		this.resetForm();
 	}
