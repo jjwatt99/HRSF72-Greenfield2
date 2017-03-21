@@ -11,7 +11,17 @@ db.on('error', function() {
 });
 
 db.once('open', function() {
-  console.log('mongoose connected successfully');
+  db.dropDatabase().then(function() {
+    for (var i = 1; i <= 31; i++) {
+      var task = new Task({
+        Username: 'Bobs',
+        Name: 'shopping',
+        Start: ''+i+'12:30',
+        Due: ''+i+'13:30',
+        Project: 5
+      }).save();
+    }
+  });
 });
 
 var Project = mongoose.Schema({
@@ -45,16 +55,16 @@ var User = mongoose.Schema({
 });
 
 var Tasks = mongoose.Schema({
-	Due: { type: Date, default: Date.now },
-	Prerequisite: Array,
-	Project: {
-    _id: {type: Number, default: 0}
-  },
-  timeCreated: {
-    type: Date,
-    default: Date.now
-  }
+  Username: {type: String},
+  Name: {type: String},
+  Start: {type: String},
+  Due: {type: String},
+  Prerequisite: Array,
+  Project: {type: Number, default: 0},
 })
+
+var Task = mongoose.model('Task', Tasks)
+module.exports = Task;
 
 
 

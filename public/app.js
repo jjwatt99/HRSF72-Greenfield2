@@ -8,6 +8,7 @@ var app = {
 			var el = document.getElementById('server-time');
 			ws.onmessage = function (msg) {
 					recObj = JSON.parse(msg.data);
+					console.log(recObj);
 					el.innerHTML = 'Server time: ' + recObj.time;
 					if (recObj.user.loginOk === true) {
 						$("body").load("application.html");
@@ -20,6 +21,7 @@ var app = {
 				var username = $("#username").val();
 				var password = $("#password").val();
 				var dataObj = {
+					type: 'login',
 					username: username,
 					password: password
 				};
