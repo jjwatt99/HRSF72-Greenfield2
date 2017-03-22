@@ -10,39 +10,87 @@ db.on('error', function() {
   console.log('mongoose connection error');
 });
 
+// db.once('open', function() {
+//   console.log('We are connected to database test');
+//   db.collections['tasks'].drop();
+//   var i = 1;
+//   function addOne(i) {
+//     if (i === 32) {
+//       return;
+//     } else if (i < 16) {
+//       var first = new Task({
+//         Username: 'Bobs',
+//         Name: 'shopping',
+//         DueMonth: 1,
+//         DueDate: 14,
+//         StartMonth: 1,
+//         StartDate: 10,
+//         StartTime: 700,
+//         Prerequisites: [],
+//         Dependencies: [],
+//         Completed: false,
+//         Project: 5
+//       }).save(function(err, data) {
+//         i++;
+//         addOne(i);
+//         return;
+//       });
+//     } else {
+//       var first = new Task({
+//         Username: 'Fred',
+//         Name: 'coding',
+//         DueMonth: 1,
+//         DueDate: 15,
+//         StartMonth: 1,
+//         StartDate: 19,
+//         StartTime: 900,
+//         Prerequisites: [],
+//         Dependencies: [],
+//         Completed: false,
+//         Project: 5
+//       }).save(function(err, data) {
+//         i++;
+//         addOne(i);
+//         return;
+//       });
+//     }
+//   }
+//   addOne(i);
+// });
+
 db.once('open', function() {
-  console.log('We are connected to database test');
   db.collections['tasks'].drop();
-  var i = 1;
-  function addOne(i) {
-    if (i === 32) {
-      return;
-    } else if (i < 16) {
+  var BobsTask = new Task({
+    Username: 'Bobs',
+    Name: 'shopping',
+    DueMonth: 1,
+    DueDate: 4,
+    StartMonth: 1,
+    StartDate: 1,
+    StartTime: 700,
+    Prerequisites: [],
+    Dependencies: [],
+    Completed: false,
+    Project: 5
+    }).save( function(err, data) {
       var first = new Task({
-        Username: 'Bobs',
-        Name: 'shopping',
-        Start: '12:30',
-        Due: '13:30',
-        Project: 5
-      }).save(function(err, data) {
-        i++;
-        addOne(i);
+      Username: 'Fred',
+      Name: 'coding',
+      DueMonth: 1,
+      DueDate: 11,
+      StartMonth: 1,
+      StartDate: 8,
+      StartTime: 900,
+      Prerequisites: [],
+      Dependencies: [],
+      Completed: false,
+      Project: 5
+      }).save( function(err, data) {
+        return;
+        });
       });
-    } else {
-      var first = new Task({
-        Username: 'Freds',
-        Name: 'coding',
-        Start: '12:30',
-        Due: '13:30',
-        Project: 6
-      }).save(function(err, data) {
-        i++;
-        addOne(i);
-      });
-    }
-  }
-  addOne(i);
 });
+
 
 var projectSchema = new mongoose.Schema({
   id: {type: Number, default: 0},
@@ -76,12 +124,19 @@ var userSchema = new mongoose.Schema({
 var taskSchema = new mongoose.Schema({
   Username: {type: String},
   Name: {type: String},
-  Start: {type: String},
-  Due: {type: String},
-  Prerequisite: Array,
+  DueDate: {type: String},
+  DueMonth: {type: String},
+  StartMonth: {type: String},
+  StartDate: {type: String},
+  StartTime: {type: String},
+  Prerequisites: Array,
+  Dependencies: Array,
+  Completed: Boolean,
   Project: {type: Number, default: 0},
 });
 
 var Task = mongoose.model('Task', taskSchema);
 
-module.exports = Task;
+module.exports = {
+  Task: Task
+}

@@ -97,6 +97,7 @@ class ShowPopup extends React.Component {
   
   componentDidMount() {
     document.addEventListener('keydown', this.handleClose);
+    // console.log(this.props.event);
   }
 
   handleClose(e) {

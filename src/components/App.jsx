@@ -12,7 +12,7 @@ class App extends React.Component {
 			events: [],
 			name: null
 		}
-		this.resetForm = this.resetForm.bind(this);
+		// this.resetForm = this.resetForm.bind(this);
 		this.onSubmit = this.onSubmit.bind(this);
 	
 	}
@@ -36,6 +36,7 @@ class App extends React.Component {
 			ws.onmessage = function (msg) {
 				recObj = JSON.parse(msg.data);
 				el.innerHTML = 'Server time: ' + recObj.time;
+				console.log(recObj.events);
 				if (recObj.events) {
 					context.setState({
 						events: recObj.events
@@ -46,12 +47,19 @@ class App extends React.Component {
 	}
 
 	resetForm() {
-  		this.setState({value: null});
+		// var value = this.refs.form.getValue();
+	 //    if (value) {
+		// 	console.log(value);
+		// 	this.setState({value: null});
+	 //    }
   	}
 
 	onSubmit(evt) {
 		evt.preventDefault();
 		var userInput = this.refs.form.getValue()[0];
+		// console.log('this form = ', this.refs.form)
+		console.log('this.refs.form.getValue() = ', this.refs.form.getValue())
+		// console.log('userInput = ', userInput);
 		if (userInput) {
 			if (userInput.type === "New Task") {
 				var sendObj = {
@@ -62,7 +70,7 @@ class App extends React.Component {
 				window.ws.send( JSON.stringify(sendObj) );
 			}
 		}
-		this.resetForm();
+		// this.refs.form.reset();
 	}
 
 	render() {
@@ -128,7 +136,7 @@ class App extends React.Component {
 	  	  <div className="days">Sunday</div>
 		  	<div><Month month={this.state.events}/></div>
 			  	<div>
-        <form onSubmit={this.onSubmit.bind(this)}>
+        <form onSubmit={this.onSubmit}>
         <t.form.Form
           ref="form"
           type={Type}
@@ -137,7 +145,7 @@ class App extends React.Component {
         <div className="form-group">
           <button 
 	          type="submit" 
-	          className="btn btn-primary" 
+	          className="btn btn-primary"
 	          onClick={this.resetForm}>
 		          Save
 	          </button>
