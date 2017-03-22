@@ -21,8 +21,8 @@ const StyleClose = {
   position: "absolute",
   top: "-4px",
   right: "0px",
-  width: "20px",
-  height: "20px",
+  // width: "20px",
+  // height: "20px",
   textDecoration: "none",
   border: 0,
   outline: 0,
@@ -48,8 +48,8 @@ const StyleTrigger = {
 };
 
 const StyleContainer = {
-  padding: "2px",
-  maxWidth: "100px",
+  // padding: "2px",
+  // maxWidth: "100px",
   transitionDuration: ".3s",
   transitionProperty: "transform",
   transform: "translateY(-40px)",
@@ -74,13 +74,15 @@ class Popup extends React.Component {
   }
   
   render() {
-    return (
+  	let popupForm = 
       <div style={this.props.stylePopup}>
         <div style={this.props.styleContainer}>
-          <p>{this.props.event}</p>
+          <p>{this.props.popup}</p>
           <button style={StyleClose} onClick={this.handleClose.bind(this)}>&times;</button>
         </div>
-      </div>
+      </div>;
+    return (
+    	<RenderInBody>{popupForm}</RenderInBody>
     );
   }
 }
@@ -93,7 +95,7 @@ class ShowPopup extends React.Component {
       stylePopup: StylePopup,
       styleContainer: StyleContainer,
       event: this.props.event,
-      popup: this.props.children
+      popup: this.props.popup
     };
     this.handleClose = this.handleClose.bind(this);
     this.handleClick = this.handleClick.bind(this);
@@ -186,9 +188,12 @@ class ShowPopup extends React.Component {
     return (
     	<div>
       <fieldset style={StyleFrame}>        
-        <Popup stylePopup = {this.state.stylePopup}  styleContainer = {this.state.styleContainer} handleClose = {this.handleClose.bind(this)} 
-        	popup = {this.props.popup}
-        />
+         <Popup 
+          stylePopup = {this.state.stylePopup}  
+          styleContainer = {this.state.styleContainer} 
+          handleClose = {this.handleClose.bind(this)} 
+        	popup = {this.state.popup}
+        	/>
         <button style={StyleTrigger} type="button" onClick={this.handleClick}>{this.state.event}</button>
       </fieldset>
       </div>
@@ -198,3 +203,28 @@ class ShowPopup extends React.Component {
 
 
 export default ShowPopup;
+
+
+var RenderInBody = React.createClass({
+
+  componentDidMount: function() {
+    this.popup = document.createElement("div");
+    document.body.appendChild(this.popup);
+    this._renderLayer();
+  },
+  componentDidUpdate: function() {
+    this._renderLayer();
+  },
+  componentWillUnmount: function() {
+    React.unmountComponentAtNode(this.popup);
+    document.body.removeChild(this.popup);
+  },
+  _renderLayer: function() {
+    React.render(this.props.children, this.popup);
+  },
+  render: function() {
+    // Render a placeholder
+    return React.DOM.div(this.props);
+  }
+
+});
