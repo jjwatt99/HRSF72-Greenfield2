@@ -23,8 +23,8 @@ const StyleClose = {
   position: "absolute",
   top: "-4px",
   right: "0px",
-  width: "20px",
-  height: "20px",
+  // width: "20px",
+  // height: "20px",
   textDecoration: "none",
   border: 0,
   outline: 0,
@@ -50,13 +50,13 @@ const StyleTrigger = {
 };
 
 const StyleContainer = {
-  padding: "2px",
-  maxWidth: "100px",
+  // padding: "2px",
+  // maxWidth: "100px",
   transitionDuration: ".3s",
   transitionProperty: "transform",
   transform: "translateY(-40px)",
   textAlign: "center",
-  borderRadius: ".25em .25em .4em .4em",
+  // borderRadius: ".25em .25em .4em .4em",
   boxShadow: "0 0 20px rgba(0, 0, 0, .2)",
 };
 
@@ -79,11 +79,11 @@ class Popup extends React.Component {
     return (
       <div style={this.props.stylePopup}>
         <div style={this.props.styleContainer}>
-          <p>{this.props.event}</p>
-          <button id="test" style={StyleClose} onClick={this.handleClose.bind(this)}>&times;</button>
+          <p>{this.props.popup}</p>
+          <button style={StyleClose} onClick={this.handleClose.bind(this)}>&times;</button>
         </div>
       </div>
-    );
+    )
   }
 }
 
@@ -95,7 +95,7 @@ class ShowPopup extends React.Component {
       stylePopup: StylePopup,
       styleContainer: StyleContainer,
       event: this.props.event,
-      popup: this.props.children
+      popup: this.props.popup
     };
     this.handleClose = this.handleClose.bind(this);
     this.handleClick = this.handleClick.bind(this);
@@ -120,13 +120,13 @@ class ShowPopup extends React.Component {
           opacity: "0",
         },
         styleContainer: {
-				  padding: "2px",
-				  maxWidth: "100px",
+				  // padding: "2px",
+				  // maxWidth: "100px",
 				  transitionDuration: ".3s",
 				  transitionProperty: "transform",
 				  transform: "translateY(-40px)",
 				  textAlign: "center",
-				  borderRadius: ".25em .25em .4em .4em",
+				  // borderRadius: ".25em .25em .4em .4em",
 				  boxShadow: "0 0 20px rgba(0, 0, 0, .2)",
           transform: "translateY(-40px)",
         },
@@ -147,13 +147,13 @@ class ShowPopup extends React.Component {
           opacity: "0",
         },
         styleContainer: {
-					padding: "2px",
-				  maxWidth: "100px",
+					// padding: "2px",
+				  // maxWidth: "100px",
 				  transitionDuration: ".3s",
 				  transitionProperty: "transform",
 				  transform: "translateY(-40px)",
 				  textAlign: "center",
-				  borderRadius: ".25em .25em .4em .4em",
+				  // borderRadius: ".25em .25em .4em .4em",
 				  boxShadow: "0 0 20px rgba(0, 0, 0, .2)",
           transform: "translateY(-40px)",
         }
@@ -170,13 +170,13 @@ class ShowPopup extends React.Component {
           opacity: "1",
         },
         styleContainer: {
-					padding: "2px",
-				  maxWidth: "100px",
+					// padding: "2px",
+				  // maxWidth: "100px",
 				  transitionDuration: ".3s",
 				  transitionProperty: "transform",
 				  transform: "translateY(-40px)",
 				  textAlign: "center",
-				  borderRadius: ".25em .25em .4em .4em",
+				  // borderRadius: ".25em .25em .4em .4em",
 				  boxShadow: "0 0 20px rgba(0, 0, 0, .2)",
           transform: "translateY(0px)",
         }
@@ -186,11 +186,14 @@ class ShowPopup extends React.Component {
 
   render() {
     return (
-    	<div>      
-        <Popup stylePopup = {this.state.stylePopup}  styleContainer = {this.state.styleContainer} handleClose = {this.handleClose.bind(this)} 
-        	popup = {this.props.popup}
-        />
-        <button id="test1" style={StyleTrigger} type="button" onClick={this.handleClick}>{this.state.event}</button>
+    	<div>
+         <Popup 
+          stylePopup = {this.state.stylePopup}  
+          styleContainer = {this.state.styleContainer} 
+          handleClose = {this.handleClose.bind(this)} 
+        	popup = {this.state.popup}
+        	/>
+        <button style={StyleTrigger} type="button" onClick={this.handleClick}>{this.state.event}</button>
       </div>
     );
   }
@@ -198,3 +201,4 @@ class ShowPopup extends React.Component {
 
 
 export default ShowPopup;
+

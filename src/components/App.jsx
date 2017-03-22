@@ -138,8 +138,6 @@ class App extends React.Component {
           type={Type}
           options={options}
         />
-        <ShowPopup event = {'brah'} >
-        </ShowPopup>
         <div className="form-group">
           <button 
 	          type="submit" 
@@ -207,3 +205,29 @@ const Days = t.enums({
 	30:30,
 	31:31
 })
+
+
+
+var RenderInBody = React.createClass({
+
+  componentDidMount: function() {
+    this.popup = document.createElement("div");
+    document.body.appendChild(this.popup);
+    this._renderLayer();
+  },
+  componentDidUpdate: function() {
+    this._renderLayer();
+  },
+  componentWillUnmount: function() {
+    React.unmountComponentAtNode(this.popup);
+    document.body.removeChild(this.popup);
+  },
+  _renderLayer: function() {
+    React.render(this.props.children, this.popup);
+  },
+  render: function() {
+    // Render a placeholder
+    return React.DOM.div(this.props);
+  }
+
+});

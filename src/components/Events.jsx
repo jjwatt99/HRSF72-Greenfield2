@@ -7,7 +7,7 @@ var Events = (props) => {
     <div>
       <div>{props.event.calendarDate}</div>
       {props.event.Name && 
-        <ShowPopup event = {props.event.Name}/>
+        <ShowPopup event = {props.event.Name} popup={"yo"}/>
       }
     </div>
   );
