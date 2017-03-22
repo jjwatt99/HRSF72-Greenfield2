@@ -3,6 +3,8 @@ import React from 'react';
 import Month from './Month.jsx';
 import $ from 'jquery';
 import t from 'tcomb-form';
+import ShowPopup from './Popup.jsx'
+
 // import Boring from '../../react-client/src/components/boringStuff.js'
 // console.log(Boring.Months)
 class App extends React.Component {
@@ -136,12 +138,14 @@ class App extends React.Component {
 	  	  <div className="days">Sunday</div>
 		  	<div><Month month={this.state.events}/></div>
 			  	<div>
-        <form onSubmit={this.onSubmit}>
-        <t.form.Form
-          ref="form"
-          type={Type}
-          options={options}
-        />
+        <form onSubmit={this.onSubmit.bind(this)}>
+        <ShowPopup event = {'brah'} >
+	        <t.form.Form
+	          ref="form"
+	          type={Type}
+	          options={options}
+	        />
+        </ShowPopup>
         <div className="form-group">
           <button 
 	          type="submit" 

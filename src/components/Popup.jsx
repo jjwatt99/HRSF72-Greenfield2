@@ -8,11 +8,11 @@ const StyleFrame = {
   // borderColor: "black",
   // maxWidth: "100px",
   // margin: "0 auto",
-  // boxShadow: "0 0 20px gray",
+  boxShadow: "0 0 20px gray",
   // padding: "10px",
-  // fontFamily: "Lato, sans-serif",
+  fontFamily: "Lato, sans-serif",
   // fontSize: "100%",
-  // textAlign: "center",
+  textAlign: "center",
 };
 
 const StyleClose = {
@@ -31,20 +31,20 @@ const StyleClose = {
 };
 
 const StyleTrigger = {
-  // fontSize: "20px",
+  fontSize: "20px",
   // fontWeight: "bold",
   // textAlign: "center",
   // lineHeight: "50px",
-  // position: "relative",
-  // overflow: "visible",
+  position: "relative",
+  overflow: "visible",
   // width: "170px",
   // marginTop: "10px",
-  // borderRadius: "5em",
-  // background: "#35a785",
-  // color: "inherit",
-  // border: "0",
-  // outline: "0",
-  // boxShadow: "3px 3px 20px gray",
+  borderRadius: "5em",
+  background: "#35a785",
+  color: "inherit",
+  border: "0",
+  outline: "0",
+  boxShadow: "3px 3px 20px gray",
 };
 
 const StyleContainer = {
@@ -65,6 +65,9 @@ const StylePopup = {
 };
 
 class Popup extends React.Component {
+	constructor(props) {
+		super(props);
+	}
 
   handleClose() {
     this.props.handleClose({keyCode: 27});
@@ -74,7 +77,7 @@ class Popup extends React.Component {
     return (
       <div style={this.props.stylePopup}>
         <div style={this.props.styleContainer}>
-          <p>Bruh</p>
+          <p>{this.props.event}</p>
           <button style={StyleClose} onClick={this.handleClose.bind(this)}>&times;</button>
         </div>
       </div>
@@ -89,7 +92,8 @@ class ShowPopup extends React.Component {
       opened: false,
       stylePopup: StylePopup,
       styleContainer: StyleContainer,
-      event: this.props.event
+      event: this.props.event,
+      popup: this.props.children
     };
     this.handleClose = this.handleClose.bind(this);
     this.handleClick = this.handleClick.bind(this);
@@ -182,7 +186,9 @@ class ShowPopup extends React.Component {
     return (
     	<div>
       <fieldset style={StyleFrame}>        
-        <Popup stylePopup = {this.state.stylePopup}  styleContainer = {this.state.styleContainer} handleClose = {this.handleClose.bind(this)} />
+        <Popup stylePopup = {this.state.stylePopup}  styleContainer = {this.state.styleContainer} handleClose = {this.handleClose.bind(this)} 
+        	popup = {this.props.popup}
+        />
         <button style={StyleTrigger} type="button" onClick={this.handleClick}>{this.state.event}</button>
       </fieldset>
       </div>
