@@ -7,12 +7,12 @@ var app = {
 			var ws = new WebSocket(HOST);
 			var el = document.getElementById('server-time');
 			ws.onmessage = function (msg) {
-					recObj = JSON.parse(msg.data);
-					el.innerHTML = 'Server time: ' + recObj.time;
-					if (recObj.user.loginOk === true) {
-						$("body").load("application.html");
-						ws.close();
-					}
+				recObj = JSON.parse(msg.data);
+				el.innerHTML = 'Server time: ' + recObj.time;
+				if (recObj.user.loginOk === true) {
+					$("body").load("application.html");
+					ws.close();
+				}
 			};
 
 			$('#submit').click( function(event) {

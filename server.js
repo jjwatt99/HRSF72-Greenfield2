@@ -1,22 +1,27 @@
 'use strict'; 
 
 
-const express = require('express');
-const SocketServer = require('ws').Server;
 const path = require('path');
-const bodyParser = require('body-parser');
-const db = require('./database/db.js')
+const CLIENT_FILES = path.join(__dirname, './public');
+
+const SocketServer = require('ws').Server;
+var http = require("http");
+const express = require('express');
+const app = express()
+.use(express.static(CLIENT_FILES));
+
 
 const PORT = process.env.PORT || 3000;
-const CLIENT_FILES = path.join(__dirname, './public');
-const server = express()
-.use(express.static(CLIENT_FILES))
+var server = http.createServer(app)
 .listen(PORT, () => {
 	console.log('\n\n\n\n\n   (((((((((  WELCOME TO OnQ SERVER  )))))))))  ');
 	console.log(`Listening on ${ PORT }`);
 	console.log('\n\n\n\n\n');
 	});
-const WSserver = new SocketServer({ server });
+const bodyParser = require('body-parser');
+const db = require('./database/db.js')
+
+const WSserver = new SocketServer({ server: server });
 const handler = require('./handler');
 
 WSserver.on('connection', (client) => {
