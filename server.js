@@ -38,12 +38,13 @@ WSserver.on('connection', (client) => {
 				client.send( JSON.stringify(sendObj) );
 			}
 			if ( recObj.type === 'getUserTasks') {
-				console.log('Get User Tasks ClientID: ', clientID, ' is username: ', recObj.username);
+				console.log('getUserTasks ClientID: ', clientID, ' is username: ', recObj.username);
 				handler.getUserTasks(recObj.username, function(tasks) {
 					client.send( JSON.stringify(tasks) );
 				});
 			}
 			if ( recObj.type === 'addTask' ) {
+				console.log('addTask ClientID: ', clientID, ' is username: ', recObj.username);
 				handler.addTask(recObj.username, recObj.newTask, function(tasks) {
 					client.send( JSON.stringify(tasks) );
 				})

@@ -1,10 +1,11 @@
 module.exports = {
 	parseToCalendarDays: function(tasksArray) {
-		var daysArray = [];
+		var month = [];
 		for (var i = 0; i < tasksArray.length; i++ ) {
-			daysArray.push([{date: i+1}, tasksArray[i]]);
+			// var day = [];
+			// if ( tasksArray[i] === 
+			month.push([{date: i+1}, tasksArray[i]]);
 		}
-		console.log(daysArray);
-		return daysArray;
+		return month;
 	}
 }

@@ -27,6 +27,7 @@ db.once('open', function() {
       }).save(function(err, data) {
         i++;
         addOne(i);
+        return;
       });
     } else {
       var first = new Task({
@@ -38,6 +39,7 @@ db.once('open', function() {
       }).save(function(err, data) {
         i++;
         addOne(i);
+        return;
       });
     }
   }
@@ -84,4 +86,6 @@ var taskSchema = new mongoose.Schema({
 
 var Task = mongoose.model('Task', taskSchema);
 
-module.exports = Task;
+module.exports = {
+  Task: Task
+}
