@@ -7849,6 +7849,8 @@ var StyleFrame = {
   // borderColor: "black",
   // maxWidth: "100px",
   // margin: "0 auto",
+  width: "56px",
+  height: "17px",
   boxShadow: "0 0 20px gray",
   // padding: "10px",
   fontFamily: "Lato, sans-serif",
@@ -7862,8 +7864,8 @@ var StyleClose = {
   position: "absolute",
   top: "-4px",
   right: "0px",
-  width: "20px",
-  height: "20px",
+  // width: "20px",
+  // height: "20px",
   textDecoration: "none",
   border: 0,
   outline: 0,
@@ -7872,7 +7874,7 @@ var StyleClose = {
 };
 
 var StyleTrigger = {
-  fontSize: "20px",
+  fontSize: "10px",
   // fontWeight: "bold",
   // textAlign: "center",
   // lineHeight: "50px",
@@ -7880,22 +7882,22 @@ var StyleTrigger = {
   overflow: "visible",
   // width: "170px",
   // marginTop: "10px",
-  borderRadius: "5em",
-  background: "#35a785",
-  color: "inherit",
+  borderRadius: "1em",
+  // background: "#35a785",
+  // color: "inherit",
   border: "0",
   outline: "0",
-  boxShadow: "3px 3px 20px gray"
+  boxShadow: "1px 1px 10px gray"
 };
 
 var StyleContainer = {
-  padding: "2px",
-  maxWidth: "100px",
+  // padding: "2px",
+  // maxWidth: "100px",
   transitionDuration: ".3s",
   transitionProperty: "transform",
   transform: "translateY(-40px)",
   textAlign: "center",
-  borderRadius: ".25em .25em .4em .4em",
+  // borderRadius: ".25em .25em .4em .4em",
   boxShadow: "0 0 20px rgba(0, 0, 0, .2)"
 };
 
@@ -7929,9 +7931,9 @@ var Popup = function (_React$Component) {
           'div',
           { style: this.props.styleContainer },
           _react2.default.createElement(
-            'p',
+            'div',
             null,
-            this.props.event
+            this.props.popup
           ),
           _react2.default.createElement(
             'button',
@@ -7959,7 +7961,7 @@ var ShowPopup = function (_React$Component2) {
       stylePopup: StylePopup,
       styleContainer: StyleContainer,
       event: _this2.props.event,
-      popup: _this2.props.children
+      popup: _this2.props.popup
     };
     _this2.handleClose = _this2.handleClose.bind(_this2);
     _this2.handleClick = _this2.handleClick.bind(_this2);
@@ -7987,13 +7989,13 @@ var ShowPopup = function (_React$Component2) {
             opacity: "0"
           }, _defineProperty(_stylePopup, 'transition', "opacity .3s 0s, visibility 0s .3s"), _defineProperty(_stylePopup, 'visibility', "hidden"), _defineProperty(_stylePopup, 'opacity', "0"), _stylePopup),
           styleContainer: _defineProperty({
-            padding: "2px",
-            maxWidth: "100px",
+            // padding: "2px",
+            // maxWidth: "100px",
             transitionDuration: ".3s",
             transitionProperty: "transform",
             transform: "translateY(-40px)",
             textAlign: "center",
-            borderRadius: ".25em .25em .4em .4em",
+            // borderRadius: ".25em .25em .4em .4em",
             boxShadow: "0 0 20px rgba(0, 0, 0, .2)"
           }, 'transform', "translateY(-40px)")
         });
@@ -8013,13 +8015,13 @@ var ShowPopup = function (_React$Component2) {
             opacity: "0"
           }, _defineProperty(_stylePopup2, 'transition', "opacity .3s 0s, visibility 0s .3s"), _defineProperty(_stylePopup2, 'visibility', "hidden"), _defineProperty(_stylePopup2, 'opacity', "0"), _stylePopup2),
           styleContainer: _defineProperty({
-            padding: "2px",
-            maxWidth: "100px",
+            // padding: "2px",
+            // maxWidth: "100px",
             transitionDuration: ".3s",
             transitionProperty: "transform",
             transform: "translateY(-40px)",
             textAlign: "center",
-            borderRadius: ".25em .25em .4em .4em",
+            // borderRadius: ".25em .25em .4em .4em",
             boxShadow: "0 0 20px rgba(0, 0, 0, .2)"
           }, 'transform', "translateY(-40px)")
         });
@@ -8034,13 +8036,13 @@ var ShowPopup = function (_React$Component2) {
             opacity: "0"
           }, _defineProperty(_stylePopup3, 'transition', "opacity .3s 0s, visibility 0s 0s"), _defineProperty(_stylePopup3, 'visibility', "visible"), _defineProperty(_stylePopup3, 'opacity', "1"), _stylePopup3),
           styleContainer: _defineProperty({
-            padding: "2px",
-            maxWidth: "100px",
+            // padding: "2px",
+            // maxWidth: "100px",
             transitionDuration: ".3s",
             transitionProperty: "transform",
             transform: "translateY(-40px)",
             textAlign: "center",
-            borderRadius: ".25em .25em .4em .4em",
+            // borderRadius: ".25em .25em .4em .4em",
             boxShadow: "0 0 20px rgba(0, 0, 0, .2)"
           }, 'transform', "translateY(0px)")
         });
@@ -8051,18 +8053,17 @@ var ShowPopup = function (_React$Component2) {
     value: function render() {
       return _react2.default.createElement(
         'div',
-        null,
+        { id: 'test' },
+        _react2.default.createElement(Popup, {
+          stylePopup: this.state.stylePopup,
+          styleContainer: this.state.styleContainer,
+          handleClose: this.handleClose.bind(this),
+          popup: this.state.popup
+        }),
         _react2.default.createElement(
-          'fieldset',
-          { style: StyleFrame },
-          _react2.default.createElement(Popup, { stylePopup: this.state.stylePopup, styleContainer: this.state.styleContainer, handleClose: this.handleClose.bind(this),
-            popup: this.props.popup
-          }),
-          _react2.default.createElement(
-            'button',
-            { style: StyleTrigger, type: 'button', onClick: this.handleClick },
-            this.state.event
-          )
+          'button',
+          { style: StyleTrigger, type: 'button', onClick: this.handleClick },
+          this.state.event
         )
       );
     }
@@ -11264,8 +11265,6 @@ function _possibleConstructorReturn(self, call) { if (!self) { throw new Referen
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
-// import Boring from '../../react-client/src/components/boringStuff.js'
-// console.log(Boring.Months)
 var App = function (_React$Component) {
 	_inherits(App, _React$Component);
 
@@ -11280,7 +11279,6 @@ var App = function (_React$Component) {
 		};
 		// this.resetForm = this.resetForm.bind(this);
 		_this.onSubmit = _this.onSubmit.bind(_this);
-		console.log('wtf');
 		return _this;
 	}
 
@@ -11288,7 +11286,6 @@ var App = function (_React$Component) {
 		key: 'componentWillMount',
 		value: function componentWillMount() {
 			var context = this;
-			console.log('Now in componentWillMount');
 			(0, _jquery2.default)(document).ready(function () {
 				console.log('hello client calendar');
 				var HOST = location.origin.replace(/^http/, 'ws');
@@ -11328,9 +11325,7 @@ var App = function (_React$Component) {
 		value: function onSubmit(evt) {
 			evt.preventDefault();
 			var userInput = this.refs.form.getValue()[0];
-			// console.log('this form = ', this.refs.form)
 			console.log('this.refs.form.getValue() = ', this.refs.form.getValue());
-			// console.log('userInput = ', userInput);
 			if (userInput) {
 				if (userInput.type === "New Task") {
 					var sendObj = {
@@ -11436,15 +11431,11 @@ var App = function (_React$Component) {
 					_react2.default.createElement(
 						'form',
 						{ onSubmit: this.onSubmit.bind(this) },
-						_react2.default.createElement(
-							_Popup2.default,
-							{ event: 'brah' },
-							_react2.default.createElement(_tcombForm2.default.form.Form, {
-								ref: 'form',
-								type: Type,
-								options: options
-							})
-						),
+						_react2.default.createElement(_tcombForm2.default.form.Form, {
+							ref: 'form',
+							type: Type,
+							options: options
+						}),
 						_react2.default.createElement(
 							'div',
 							{ className: 'form-group' },
@@ -11518,6 +11509,32 @@ var Days = _tcombForm2.default.enums({
 	31: 31
 });
 
+var RenderInBody = _react2.default.createClass({
+	displayName: 'RenderInBody',
+
+
+	componentDidMount: function componentDidMount() {
+		this.popup = document.createElement("div");
+		document.body.appendChild(this.popup);
+		this._renderLayer();
+	},
+	componentDidUpdate: function componentDidUpdate() {
+		this._renderLayer();
+	},
+	componentWillUnmount: function componentWillUnmount() {
+		_react2.default.unmountComponentAtNode(this.popup);
+		document.body.removeChild(this.popup);
+	},
+	_renderLayer: function _renderLayer() {
+		_react2.default.render(this.props.children, this.popup);
+	},
+	render: function render() {
+		// Render a placeholder
+		return _react2.default.DOM.div(this.props);
+	}
+
+});
+
 /***/ }),
 /* 126 */
 /***/ (function(module, exports, __webpack_require__) {
@@ -11579,11 +11596,11 @@ var Events = function Events(props) {
     'div',
     null,
     _react2.default.createElement(
-      'button',
+      'div',
       null,
       props.event.calendarDate
     ),
-    props.event.calendarDate && _react2.default.createElement(_Popup2.default, { event: props.event.calendarDate })
+    props.event.Name && _react2.default.createElement(_Popup2.default, { event: props.event.Name, popup: "yo" })
   );
 };
 
