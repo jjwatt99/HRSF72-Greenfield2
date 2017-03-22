@@ -43,8 +43,8 @@ WSserver.on('connection', (client) => {
 				client.send( JSON.stringify(sendObj) );
 			}
 			if ( recObj.type === 'getUserTasks') {
-				console.log('getUserTasks ClientID: ', clientID, ' is username: ', recObj.username);
-				handler.getUserTasks(recObj.username, '1', function(tasks) {
+				console.log('username: ', recObj.username, ' is seeking update for month ', recObj.currentMonth);
+				handler.getUserTasks(recObj.username, recObj.currentMonth, function(tasks) {
 					client.send( JSON.stringify(tasks) );
 				});
 			}

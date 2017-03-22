@@ -3,17 +3,20 @@ import React from 'react';
 import Month from './Month.jsx';
 import $ from 'jquery';
 import t from 'tcomb-form';
-import ShowPopup from './Popup.jsx'
+import ShowPopup from './Popup.jsx';
+import MonthSelect from './MonthSelect.jsx';
 
 class App extends React.Component {
 	constructor(props) {
 		super(props);
 		this.state = {
 			events: [],
-			name: null
+			name: null,
+			currentMonth: '1',
 		}
 		// this.resetForm = this.resetForm.bind(this);
 		this.onSubmit = this.onSubmit.bind(this);
+		this.monthSelectHandler = this.monthSelectHandler.bind(this);
 	}
 
 	componentWillMount() {
@@ -27,7 +30,8 @@ class App extends React.Component {
 			var dataObj = {
 				type: 'getUserTasks',
 				username: window.username,
-				password: ''
+				password: '',
+				currentMonth: context.state.currentMonth
 			};
 			ws.onopen = function() {
 				ws.send( JSON.stringify(dataObj) );
@@ -67,6 +71,18 @@ class App extends React.Component {
 			}
 		}
 		// this.refs.form.reset();
+	}
+
+	monthSelectHandler(selectedMonth) {
+		this.setState({ currentMonth: selectedMonth });
+		console.log('SetState updated for currentMonth = ', selectedMonth);
+		var dataObj = {
+			type: 'getUserTasks',
+			username: window.username,
+			password: '',
+			currentMonth: selectedMonth
+		};
+		ws.send( JSON.stringify(dataObj) );
 	}
 
 	render() {
@@ -123,32 +139,37 @@ class App extends React.Component {
 		};		
 	  return (
 	  	<div id="calendar">
-	  	  <div className="days">Monday</div>
-	  	  <div className="days">Tuesday</div>
-	  	  <div className="days">Wednesday</div>
-	  	  <div className="days">Thursday</div>
-	  	  <div className="days">Friday</div>
-	  	  <div className="days">Saturday</div>
-	  	  <div className="days">Sunday</div>
-		  	<div><Month month={this.state.events}/></div>
-			  	<div>
-        <form onSubmit={this.onSubmit.bind(this)}>
-        <t.form.Form
-          ref="form"
-          type={Type}
-          options={options}
-        />
-        <div className="form-group">
-          <button 
-	          type="submit" 
-	          className="btn btn-primary"
-	          onClick={this.resetForm}>
-		          Save
-	          </button>
-        </div>
-      </form>
-      </div>
-		  </div>	
+	  		<div>
+	  			<MonthSelect monthSelectHandler={this.monthSelectHandler} />
+	  		</div>
+			<div className="days">Monday</div>
+			<div className="days">Tuesday</div>
+			<div className="days">Wednesday</div>
+			<div className="days">Thursday</div>
+			<div className="days">Friday</div>
+			<div className="days">Saturday</div>
+			<div className="days">Sunday</div>
+			<div><Month month={this.state.events}/></div>
+			<div>
+		        <form onSubmit={this.onSubmit.bind(this)}>
+			        <t.form.Form
+			          ref="form"
+			          type={Type}
+			          options={options}
+			        />
+			        <ShowPopup event = {'brah'} >
+			        </ShowPopup>
+			        <div className="form-group">
+			          <button 
+				          type="submit" 
+				          className="btn btn-primary"
+				          onClick={this.resetForm}>
+					          Save
+				          </button>
+			        </div>
+      			</form>
+      		</div>
+		</div>	
 	  );
 	}
 }
