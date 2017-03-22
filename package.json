@@ -1,8 +1,8 @@
 {
-  "name": "hrsf72-mvp",
+  "name": "hrsf72-greenfield",
   "version": "1.0.0",
   "description": "View your currencies on the best interface!",
-  "main": "index.js",
+  "main": "server.js",
   "scripts": {
     "compile": "webpack",
     "start": "node server.js",
@@ -33,6 +33,7 @@
     "express": "4.15.2",
     "http": "0.0.0",
     "jquery": "^3.1.1",
+    "mongodb": "^2.2.25",
     "mongoose": "^4.8.6",
     "path": "^0.12.7",
     "react": "^15.4.2",
