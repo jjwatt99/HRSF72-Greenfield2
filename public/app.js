@@ -5,7 +5,10 @@ var app = {
 			console.log('hello client login');
 			var HOST = location.origin.replace(/^http/, 'ws')
 			var ws = new WebSocket(HOST);
-			console.log(HOST);
+			console.log('app revision 2')
+			console.log('HOST = ', HOST);
+			console.log('MONGODB_URI = ', process.env.MONGODB_URI || 'undefined');
+			console.log('PORT = ', process.env.PORT || 3000);
 			var el = document.getElementById('server-time');
 			ws.onmessage = function (msg) {
 					recObj = JSON.parse(msg.data);
