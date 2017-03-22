@@ -21,6 +21,7 @@ class App extends React.Component {
 
 	componentWillMount() {
 		var context = this;
+		console.log('Now in componentWillMount')
 		$(document).ready( function() {
 			console.log('hello client calendar');
 			var HOST = location.origin.replace(/^http/, 'ws')
