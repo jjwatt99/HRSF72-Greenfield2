@@ -41,7 +41,7 @@ WSserver.on('connection', (client) => {
 				client.send( JSON.stringify(sendObj) );
 			}
 			if ( recObj.type === 'getUserTasks') {
-				console.log('Get User Takss ClientID: ', clientID, ' is username: ', recObj.username);
+				console.log('Get User Tasks ClientID: ', clientID, ' is username: ', recObj.username);
 				handler.getUserTasks(recObj.username, function(tasks) {
 					client.send( JSON.stringify(tasks) );
 				});

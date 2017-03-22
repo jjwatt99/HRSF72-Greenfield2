@@ -1,9 +1,7 @@
 var mongoose = require('mongoose');
-var express = require('express');
-var router = express.Router();
-mongoose.Promise = global.Promise;
+
 mongoose.connect('mongodb://localhost/test');
-var app = express();
+
 var db = mongoose.connection;
 
 db.on('error', function() {
@@ -11,29 +9,48 @@ db.on('error', function() {
 });
 
 db.once('open', function() {
-  db.dropDatabase().then(function() {
-    for (var i = 1; i <= 31; i++) {
-      var task = new Task({
+  console.log('We are connected to database test');
+  db.collections['tasks'].drop();
+  var i = 1;
+  function addOne(i) {
+    if (i === 32) {
+      return;
+    } else if (i < 16) {
+      var first = new Task({
         Username: 'Bobs',
         Name: 'shopping',
-        Start: ''+i+' 12:30',
-        Due: ''+i+' 13:30',
+        Start: '12:30',
+        Due: '13:30',
         Project: 5
-      }).save();
+      }).save(function(err, data) {
+        i++;
+        addOne(i);
+      });
+    } else {
+      var first = new Task({
+        Username: 'Freds',
+        Name: 'coding',
+        Start: '12:30',
+        Due: '13:30',
+        Project: 6
+      }).save(function(err, data) {
+        i++;
+        addOne(i);
+      });
     }
-  });
+  }
+  addOne(i);
 });
 
-var Project = mongoose.Schema({
+var projectSchema = new mongoose.Schema({
   id: {type: Number, default: 0},
   Due: { type: Date, default: Date.now },
   Members: Array,
   Tasks: { type: Object, ref: 'Tasks' },
   Permissions: Array
-})
+});
 
-
-var User = mongoose.Schema({
+var userSchema = new mongoose.Schema({
   id: {type: Number, default: 0},
   username: {
     type: String, 
@@ -54,42 +71,15 @@ var User = mongoose.Schema({
   Tasks: { type: Object, ref: 'Tasks' },
 });
 
-var Tasks = mongoose.Schema({
+var taskSchema = new mongoose.Schema({
   Username: {type: String},
   Name: {type: String},
   Start: {type: String},
   Due: {type: String},
   Prerequisite: Array,
   Project: {type: Number, default: 0},
-})
+});
 
-var Task = mongoose.model('Task', Tasks)
+var Task = mongoose.model('Task', taskSchema);
+
 module.exports = Task;
-
-
-
-// var Item = mongoose.model('Item', itemSchema);
-
-// var selectAll = function(callback) {
-//   Item.find({}, function(err, items) {
-//     if(err) {
-//       callback(err, null);
-//     } else {
-//       callback(null, items);
-//     }
-//   });
-// };
-
-// var selectAll = function(callback) {
-//   Item.find({}, function(err, items) {
-//     if(err) {
-//       callback(err, null);
-//     } else {
-//       callback(null, items);
-//     }
-//   });
-// };
-
-// module.exports = Item;
-
-
