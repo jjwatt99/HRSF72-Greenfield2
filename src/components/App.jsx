@@ -16,7 +16,7 @@ class App extends React.Component {
 		}
 		// this.resetForm = this.resetForm.bind(this);
 		this.onSubmit = this.onSubmit.bind(this);
-	
+		console.log('wtf')
 	}
 
 	componentWillMount() {
