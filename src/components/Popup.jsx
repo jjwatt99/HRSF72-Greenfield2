@@ -79,7 +79,7 @@ class Popup extends React.Component {
     return (
       <div style={this.props.stylePopup}>
         <div style={this.props.styleContainer}>
-          <p>{this.props.popup}</p>
+          <div>{this.props.popup}</div>
           <button style={StyleClose} onClick={this.handleClose.bind(this)}>&times;</button>
         </div>
       </div>
@@ -186,8 +186,8 @@ class ShowPopup extends React.Component {
 
   render() {
     return (
-    	<div>
-         <Popup 
+    	<div id="test">
+         <Popup
           stylePopup = {this.state.stylePopup}  
           styleContainer = {this.state.styleContainer} 
           handleClose = {this.handleClose.bind(this)} 

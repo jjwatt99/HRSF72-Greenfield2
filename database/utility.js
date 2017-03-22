@@ -21,7 +21,6 @@ module.exports = {
 				var task = tasksArray[j];
 				if ( parseInt(task.StartDate) <= i && parseInt(task.DueDate) >= i ) {
 					var task = task.toObject();
-					task.calendarDate = i + ' ' + task.Name;
 					day.push(task);
 				}
 			}
