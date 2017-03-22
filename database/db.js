@@ -1,7 +1,9 @@
 var mongoose = require('mongoose');
-
-mongoose.connect('mongodb://localhost/test');
-
+var express = require('express');
+var router = express.Router();
+mongoose.Promise = global.Promise;
+mongoose.connect(process.env.MONGODB_URI || 'mongodb://localhost/test');
+var app = express();
 var db = mongoose.connection;
 
 db.on('error', function() {
