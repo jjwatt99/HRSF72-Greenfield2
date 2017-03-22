@@ -3,7 +3,6 @@ import React from 'react';
 import ShowPopup from './Popup.jsx'
 
 var Events = (props) => {
-	// console.log(props.event.calendarDate);
   return (
     <div>
       <div>{props.event.calendarDate}</div>

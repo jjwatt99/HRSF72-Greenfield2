@@ -8,6 +8,8 @@ const StyleFrame = {
   // borderColor: "black",
   // maxWidth: "100px",
   // margin: "0 auto",
+  width: "56px",
+  height: "17px",
   boxShadow: "0 0 20px gray",
   // padding: "10px",
   fontFamily: "Lato, sans-serif",
