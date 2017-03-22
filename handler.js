@@ -16,13 +16,8 @@ module.exports = {
 			// 		}
 			// 	}
 			// }
-			if (data.length > 0) {
-				var sendObj = {};
-				sendObj.events = utility.parseToCalendarDays(data, month);
-				callback(sendObj);
-			} else {
-				console.log('no data for user: ', username);
-			}
+			var sendObj = { events: utility.parseToCalendarDays(data, month) };
+			callback(sendObj);
 		});
 	},
 	addTask: function(username, newTask, callback) {

@@ -16,13 +16,13 @@ module.exports = {
 	parseToCalendarDays: function(tasksArray, month) {
 		var indexedTasksForMonth = [];
 		for (var i = 1; i <= module.exports.daysPerMonth[month]; i++) {
+			var day = [{calendarDate: i}];
 			for (var j = 0; j < tasksArray.length; j++ ) {
-				var day = [{calendarDate: i}];
 				var task = tasksArray[j];
 				if ( task.StartDate <= i && task.DueDate >= i ) {
+					task.calendarDate = task.Name;
 					day.push(task);
 				}
-				// month.push([{date: i+1}, tasksArray[i]]);
 			}
 			indexedTasksForMonth.push(day);
 		}
