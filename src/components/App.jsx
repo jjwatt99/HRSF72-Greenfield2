@@ -130,7 +130,6 @@ class App extends React.Component {
 			  	<div>
         <form onSubmit={this.onSubmit.bind(this)}>
         <t.form.Form
-
           ref="form"
           type={Type}
           options={options}

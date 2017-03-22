@@ -1,5 +1,6 @@
 import React from 'react';
 import Events from './Events.jsx'
+import ShowPopup from './Events.jsx'
 
 var Days = (props) => (
   <div className="box">
