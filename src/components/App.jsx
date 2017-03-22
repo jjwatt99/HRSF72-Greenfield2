@@ -139,12 +139,12 @@ class App extends React.Component {
 		  	<div><Month month={this.state.events}/></div>
 			  	<div>
         <form onSubmit={this.onSubmit.bind(this)}>
+        <t.form.Form
+          ref="form"
+          type={Type}
+          options={options}
+        />
         <ShowPopup event = {'brah'} >
-	        <t.form.Form
-	          ref="form"
-	          type={Type}
-	          options={options}
-	        />
         </ShowPopup>
         <div className="form-group">
           <button 
