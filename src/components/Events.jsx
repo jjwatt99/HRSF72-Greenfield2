@@ -5,11 +5,10 @@ import ShowPopup from './Popup.jsx'
 var Events = (props) => {
   return (
     <div>
-      {props.event.date && 
+      <button>{props.event.calendarDate}</button>
+      {props.event.calendarDate && 
         <ShowPopup event = {props.event.Name}/>
       }
-      <button>{props.event.date}</button>
-      <button>{props.event.Name}</button>
     </div>
   );
 };

@@ -2,7 +2,7 @@ var dbase = require('./database/db.js');
 var utility = require('./database/utility.js')
 
 module.exports = {
-	getUserTasks: function(username, callback) {
+	getUserTasks: function(username, month, callback) {
 		dbase.Task.find({ 'Username' : username }, function(err, data) {
 			if (err) return console.error(err);
 			// if (username !== 'Manager') {
@@ -18,7 +18,7 @@ module.exports = {
 			// }
 			if (data.length > 0) {
 				var sendObj = {};
-				sendObj.events = utility.parseToCalendarDays(data);
+				sendObj.events = utility.parseToCalendarDays(data, month);
 				callback(sendObj);
 			} else {
 				console.log('no data for user: ', username);

@@ -21,8 +21,14 @@ db.once('open', function() {
       var first = new Task({
         Username: 'Bobs',
         Name: 'shopping',
-        Start: '12:30',
-        Due: '13:30',
+        DueMonth: 1,
+        DueDate: 14,
+        StartMonth: 1,
+        StartDate: 10,
+        StartTime: 700,
+        Prerequisites: [],
+        Dependencies: [],
+        Completed: false,
         Project: 5
       }).save(function(err, data) {
         i++;
@@ -31,11 +37,17 @@ db.once('open', function() {
       });
     } else {
       var first = new Task({
-        Username: 'Freds',
+        Username: 'Fred',
         Name: 'coding',
-        Start: '12:30',
-        Due: '13:30',
-        Project: 6
+        DueMonth: 1,
+        DueDate: 15,
+        StartMonth: 1,
+        StartDate: 19,
+        StartTime: 700,
+        Prerequisites: [],
+        Dependencies: [],
+        Completed: false,
+        Project: 5
       }).save(function(err, data) {
         i++;
         addOne(i);
@@ -78,9 +90,14 @@ var userSchema = new mongoose.Schema({
 var taskSchema = new mongoose.Schema({
   Username: {type: String},
   Name: {type: String},
-  Start: {type: String},
-  Due: {type: String},
-  Prerequisite: Array,
+  DueDate: {type: String},
+  DueMonth: {type: String},
+  StartMonth: {type: String},
+  StartDate: {type: String},
+  StartTime: {type: String},
+  Prerequisites: Array,
+  Dependencies: Array,
+  Completed: Boolean,
   Project: {type: Number, default: 0},
 });
 
