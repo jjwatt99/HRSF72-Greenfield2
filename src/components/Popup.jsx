@@ -8,6 +8,8 @@ const StyleFrame = {
   // borderColor: "black",
   // maxWidth: "100px",
   // margin: "0 auto",
+  width: "56px",
+  height: "17px",
   boxShadow: "0 0 20px gray",
   // padding: "10px",
   fontFamily: "Lato, sans-serif",
@@ -78,7 +80,7 @@ class Popup extends React.Component {
       <div style={this.props.stylePopup}>
         <div style={this.props.styleContainer}>
           <p>{this.props.event}</p>
-          <button style={StyleClose} onClick={this.handleClose.bind(this)}>&times;</button>
+          <button id="test" style={StyleClose} onClick={this.handleClose.bind(this)}>&times;</button>
         </div>
       </div>
     );
@@ -184,13 +186,11 @@ class ShowPopup extends React.Component {
 
   render() {
     return (
-    	<div>
-      <fieldset style={StyleFrame}>        
+    	<div>      
         <Popup stylePopup = {this.state.stylePopup}  styleContainer = {this.state.styleContainer} handleClose = {this.handleClose.bind(this)} 
         	popup = {this.props.popup}
         />
-        <button style={StyleTrigger} type="button" onClick={this.handleClick}>{this.state.event}</button>
-      </fieldset>
+        <button id="test1" style={StyleTrigger} type="button" onClick={this.handleClick}>{this.state.event}</button>
       </div>
     );
   }
