@@ -54,7 +54,7 @@ const StyleContainer = {
   transitionProperty: "transform",
   transform: "translateY(-40px)",
   textAlign: "center",
-  borderRadius: ".25em .25em .4em .4em",
+  // borderRadius: ".25em .25em .4em .4em",
   boxShadow: "0 0 20px rgba(0, 0, 0, .2)",
 };
 
@@ -74,16 +74,14 @@ class Popup extends React.Component {
   }
   
   render() {
-  	let popupForm = 
+    return (
       <div style={this.props.stylePopup}>
         <div style={this.props.styleContainer}>
           <p>{this.props.popup}</p>
           <button style={StyleClose} onClick={this.handleClose.bind(this)}>&times;</button>
         </div>
-      </div>;
-    return (
-    	<RenderInBody>{popupForm}</RenderInBody>
-    );
+      </div>
+    )
   }
 }
 
@@ -120,13 +118,13 @@ class ShowPopup extends React.Component {
           opacity: "0",
         },
         styleContainer: {
-				  padding: "2px",
-				  maxWidth: "100px",
+				  // padding: "2px",
+				  // maxWidth: "100px",
 				  transitionDuration: ".3s",
 				  transitionProperty: "transform",
 				  transform: "translateY(-40px)",
 				  textAlign: "center",
-				  borderRadius: ".25em .25em .4em .4em",
+				  // borderRadius: ".25em .25em .4em .4em",
 				  boxShadow: "0 0 20px rgba(0, 0, 0, .2)",
           transform: "translateY(-40px)",
         },
@@ -147,13 +145,13 @@ class ShowPopup extends React.Component {
           opacity: "0",
         },
         styleContainer: {
-					padding: "2px",
-				  maxWidth: "100px",
+					// padding: "2px",
+				  // maxWidth: "100px",
 				  transitionDuration: ".3s",
 				  transitionProperty: "transform",
 				  transform: "translateY(-40px)",
 				  textAlign: "center",
-				  borderRadius: ".25em .25em .4em .4em",
+				  // borderRadius: ".25em .25em .4em .4em",
 				  boxShadow: "0 0 20px rgba(0, 0, 0, .2)",
           transform: "translateY(-40px)",
         }
@@ -170,13 +168,13 @@ class ShowPopup extends React.Component {
           opacity: "1",
         },
         styleContainer: {
-					padding: "2px",
-				  maxWidth: "100px",
+					// padding: "2px",
+				  // maxWidth: "100px",
 				  transitionDuration: ".3s",
 				  transitionProperty: "transform",
 				  transform: "translateY(-40px)",
 				  textAlign: "center",
-				  borderRadius: ".25em .25em .4em .4em",
+				  // borderRadius: ".25em .25em .4em .4em",
 				  boxShadow: "0 0 20px rgba(0, 0, 0, .2)",
           transform: "translateY(0px)",
         }
@@ -187,7 +185,6 @@ class ShowPopup extends React.Component {
   render() {
     return (
     	<div>
-      <fieldset style={StyleFrame}>        
          <Popup 
           stylePopup = {this.state.stylePopup}  
           styleContainer = {this.state.styleContainer} 
@@ -195,7 +192,6 @@ class ShowPopup extends React.Component {
         	popup = {this.state.popup}
         	/>
         <button style={StyleTrigger} type="button" onClick={this.handleClick}>{this.state.event}</button>
-      </fieldset>
       </div>
     );
   }
@@ -205,26 +201,26 @@ class ShowPopup extends React.Component {
 export default ShowPopup;
 
 
-var RenderInBody = React.createClass({
+// var RenderInBody = React.createClass({
 
-  componentDidMount: function() {
-    this.popup = document.createElement("div");
-    document.body.appendChild(this.popup);
-    this._renderLayer();
-  },
-  componentDidUpdate: function() {
-    this._renderLayer();
-  },
-  componentWillUnmount: function() {
-    React.unmountComponentAtNode(this.popup);
-    document.body.removeChild(this.popup);
-  },
-  _renderLayer: function() {
-    React.render(this.props.children, this.popup);
-  },
-  render: function() {
-    // Render a placeholder
-    return React.DOM.div(this.props);
-  }
+//   componentDidMount: function() {
+//     this.popup = document.createElement("div");
+//     document.body.appendChild(this.popup);
+//     this._renderLayer();
+//   },
+//   componentDidUpdate: function() {
+//     this._renderLayer();
+//   },
+//   componentWillUnmount: function() {
+//     React.unmountComponentAtNode(this.popup);
+//     document.body.removeChild(this.popup);
+//   },
+//   _renderLayer: function() {
+//     React.render(this.props.children, this.popup);
+//   },
+//   render: function() {
+//     // Render a placeholder
+//     return React.DOM.div(this.props);
+//   }
 
-});
+// });
