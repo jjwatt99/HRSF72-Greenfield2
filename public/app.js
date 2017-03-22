@@ -6,17 +6,16 @@ var app = {
 			var HOST = location.origin.replace(/^http/, 'ws')
 			var ws = new WebSocket(HOST);
 			console.log('app revision 2')
-			console.log('HOST = ', HOST);
-			console.log('MONGODB_URI = ', process.env.MONGODB_URI || 'undefined');
-			console.log('PORT = ', process.env.PORT || 3000);
 			var el = document.getElementById('server-time');
 			ws.onmessage = function (msg) {
-					recObj = JSON.parse(msg.data);
-					el.innerHTML = 'Server time: ' + recObj.time;
-					if (recObj.user.loginOk === true) {
-						$("body").load("application.html");
-						ws.close();
-					}
+				recObj = JSON.parse(msg.data);
+				el.innerHTML = 'Server time: ' + recObj.time;
+				console.log('MONGODB_URI = ', recObj.mongodbURI || 'undefined');
+				console.log('PORT = ', recObj.port || 'undefined');
+				if (recObj.user.loginOk === true) {
+					$("body").load("application.html");
+					ws.close();
+				}
 			};
 
 			$('#submit').click( function(event) {
