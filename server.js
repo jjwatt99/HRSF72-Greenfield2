@@ -28,9 +28,7 @@ WSserver.on('connection', (client) => {
 	var clientID = client.upgradeReq.rawHeaders[21].slice(0,5);
 	console.log('\n' + clientID + ' <---- connected');
 	var sendObj = {
-		user: {loginOk: false},
-		port: PORT,
-		mongodbURI: process.env.MONGODB_URI
+		user: {loginOk: false}
 	};
 	sendObj.time = new Date().toTimeString();
 	client.send( JSON.stringify(sendObj) );

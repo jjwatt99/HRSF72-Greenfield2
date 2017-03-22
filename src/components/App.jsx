@@ -5,8 +5,6 @@ import $ from 'jquery';
 import t from 'tcomb-form';
 import ShowPopup from './Popup.jsx'
 
-// import Boring from '../../react-client/src/components/boringStuff.js'
-// console.log(Boring.Months)
 class App extends React.Component {
 	constructor(props) {
 		super(props);
@@ -16,12 +14,10 @@ class App extends React.Component {
 		}
 		// this.resetForm = this.resetForm.bind(this);
 		this.onSubmit = this.onSubmit.bind(this);
-		console.log('wtf')
 	}
 
 	componentWillMount() {
 		var context = this;
-		console.log('Now in componentWillMount')
 		$(document).ready( function() {
 			console.log('hello client calendar');
 			var HOST = location.origin.replace(/^http/, 'ws')
@@ -59,9 +55,7 @@ class App extends React.Component {
 	onSubmit(evt) {
 		evt.preventDefault();
 		var userInput = this.refs.form.getValue()[0];
-		// console.log('this form = ', this.refs.form)
 		console.log('this.refs.form.getValue() = ', this.refs.form.getValue())
-		// console.log('userInput = ', userInput);
 		if (userInput) {
 			if (userInput.type === "New Task") {
 				var sendObj = {
