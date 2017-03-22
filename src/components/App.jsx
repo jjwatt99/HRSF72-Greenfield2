@@ -35,11 +35,12 @@ class App extends React.Component {
 			}
 			ws.onmessage = function (msg) {
 				recObj = JSON.parse(msg.data);
-				console.log(recObj);
 				el.innerHTML = 'Server time: ' + recObj.time;
-				context.setState({
-					events: recObj.events
-				})
+				if (recObj.events) {
+					context.setState({
+						events: recObj.events
+					});
+				}
 			};
 		});
 	}
@@ -50,11 +51,9 @@ class App extends React.Component {
 
 	onSubmit(evt) {
 		evt.preventDefault();
-		console.log(window.ws);
 		var userInput = this.refs.form.getValue()[0];
 		if (userInput) {
 			if (userInput.type === "New Task") {
-				console.log('userInput = ', userInput)
 				var sendObj = {
 					type: 'addTask',
 					username: window.username,
