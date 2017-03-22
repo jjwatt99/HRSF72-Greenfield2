@@ -38,7 +38,6 @@ class App extends React.Component {
 			ws.onmessage = function (msg) {
 				recObj = JSON.parse(msg.data);
 				el.innerHTML = 'Server time: ' + recObj.time;
-				console.log(recObj.events);
 				if (recObj.events) {
 					context.setState({
 						events: recObj.events

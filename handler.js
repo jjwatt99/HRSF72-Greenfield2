@@ -16,7 +16,8 @@ module.exports = {
 			// 		}
 			// 	}
 			// }
-			var sendObj = { events: utility.parseToCalendarDays(data, month) };
+			var sendEvents =  utility.parseToCalendarDays(data, month);
+			var sendObj = { events: sendEvents };
 			callback(sendObj);
 		});
 	},
