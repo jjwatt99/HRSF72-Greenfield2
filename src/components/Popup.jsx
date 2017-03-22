@@ -31,7 +31,7 @@ const StyleClose = {
 };
 
 const StyleTrigger = {
-  fontSize: "20px",
+  fontSize: "10px",
   // fontWeight: "bold",
   // textAlign: "center",
   // lineHeight: "50px",
@@ -39,12 +39,12 @@ const StyleTrigger = {
   overflow: "visible",
   // width: "170px",
   // marginTop: "10px",
-  borderRadius: "5em",
-  background: "#35a785",
-  color: "inherit",
+  borderRadius: "1em",
+  // background: "#35a785",
+  // color: "inherit",
   border: "0",
   outline: "0",
-  boxShadow: "3px 3px 20px gray",
+  boxShadow: "1px 1px 10px gray",
 };
 
 const StyleContainer = {
