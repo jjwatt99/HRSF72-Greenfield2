@@ -18,7 +18,7 @@ module.exports = {
 				}
 			}
 			if (data.length > 0) {
-				console.log('db result', data);
+				// console.log('db result', data);
 				var sendObj = {};
 				sendObj.events = utility.parseToCalendarDays(data);
 				callback(sendObj);

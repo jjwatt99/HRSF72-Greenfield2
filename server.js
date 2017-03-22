@@ -18,7 +18,6 @@ const server = express()
 	});
 const WSserver = new SocketServer({ server });
 const handler = require('./handler');
-var sessions = {};
 
 WSserver.on('connection', (client) => {
 	var clientID = client.upgradeReq.rawHeaders[21].slice(0,5);
@@ -34,7 +33,6 @@ WSserver.on('connection', (client) => {
 		recObj = JSON.parse(recObj);
 		console.log('\n' + clientID + ' attempting to update ');
 			if ( recObj.type === 'login' && recObj.username.length > 0 && recObj.password.length > 0) {
-				sessions[recObj.username] = clientID;
 				console.log('Login ClientID: ', clientID, ' is username: ', recObj.username);
 				sendObj.user.loginOk = true;
 				client.send( JSON.stringify(sendObj) );
