@@ -76,6 +76,7 @@ class App extends React.Component {
 		// this.refs.form.reset();
 	}
 
+
 	monthSelectHandler(selectedMonth) {
 		this.setState({ currentMonth: selectedMonth });
 		console.log('SetState updated for currentMonth = ', selectedMonth);

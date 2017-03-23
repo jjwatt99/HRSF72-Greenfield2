@@ -9596,6 +9596,7 @@ var App = function (_React$Component) {
 		// 	}
 		// }
 
+
 	}, {
 		key: 'monthSelectHandler',
 		value: function monthSelectHandler(selectedMonth) {
@@ -9612,54 +9613,11 @@ var App = function (_React$Component) {
 	}, {
 		key: 'render',
 		value: function render() {
-
 			var days = [];
 			for (var i = 0; i < 32; i++) {
 				days.push(i);
 			}
 			var months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
-			var ActionType = t.enums.of(['New Task', 'New Project'], 'ActionType');
-
-			var ListOfProjects = t.enums.of(this.state.eventsFlatArray.map(function (event) {
-				return event.Name;
-			}));
-
-			var AddType = t.struct({
-				type: ActionType
-			}, 'AddType');
-
-			var AddTask = AddType.extend({
-				name: t.Str,
-				startDate: Days,
-				startMonth: Months,
-				startTime: t.String,
-				dueDate: Days,
-				dueMonth: Months,
-				completed: t.Bool,
-				Prerequesites: t.maybe(t.list(ListOfProjects)),
-				Dependencies: t.maybe(t.list(ListOfProjects))
-			}, 'AddTask');
-
-			var AddProject = AddType.extend({
-				name: t.Str,
-				startDate: Days,
-				startMonth: Months,
-				startTime: t.String,
-				dueDate: Days,
-				dueMonth: Months,
-				manager: t.maybe(t.Str)
-			}, 'AddProject');
-
-			var Options = t.union([AddTask, AddProject], 'Options');
-
-			Options.dispatch = function (value) {
-				return value && value.type === 'New Task' ? AddTask : AddProject;
-			};
-
-			var Type = t.list(Options);
-
-			var options = {};
-
 			return _react2.default.createElement(
 				'div',
 				null,
