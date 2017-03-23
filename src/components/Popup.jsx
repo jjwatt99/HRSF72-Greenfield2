@@ -1,4 +1,5 @@
 import React from 'react';
+import t from 'tcomb-form';
 
 'use strict';
 
@@ -76,8 +77,20 @@ class Popup extends React.Component {
   }
   
   render() {
+  	const anEvent = t.struct({
+  		name: t.Str,
+		  startDate: t.Str,
+		  startMonth: t.Str,
+		  startTime: t.String,
+		  dueDate: t.Str,
+		  dueMonth: t.Str,
+		  completed: t.Bool,
+		  Prerequesites: t.String,
+		  Dependencies: t.String,
+  	});
     return (
       <div style={this.props.stylePopup}>
+      <t.form.Form ref="form" type={anEvent} />
         <div style={this.props.styleContainer}>
           <div>{this.props.popup}</div>
           <button style={StyleClose} onClick={this.handleClose.bind(this)}>&times;</button>
@@ -186,14 +199,14 @@ class ShowPopup extends React.Component {
 
   render() {
     return (
-    	<div id="test">
-         <Popup
+    	<div id='test'>
+        <button style={StyleTrigger} type="button" onClick={this.handleClick}>{this.state.event}</button>
+         <Popup 
           stylePopup = {this.state.stylePopup}  
           styleContainer = {this.state.styleContainer} 
           handleClose = {this.handleClose.bind(this)} 
         	popup = {this.state.popup}
         	/>
-        <button style={StyleTrigger} type="button" onClick={this.handleClick}>{this.state.event}</button>
       </div>
     );
   }
