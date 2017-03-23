@@ -65,7 +65,8 @@ class App extends React.Component {
 				var sendObj = {
 					type: 'addTask',
 					username: window.username,
-					newTask: userInput
+					newTask: userInput,
+					currentMonth: this.state.currentMonth
 				};
 				window.ws.send( JSON.stringify(sendObj) );
 			}
