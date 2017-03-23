@@ -50,7 +50,7 @@ WSserver.on('connection', (client) => {
 			}
 			if ( recObj.type === 'addTask' ) {
 				console.log('addTask ClientID: ', clientID, ' is username: ', recObj.username);
-				handler.addTask(recObj.username, recObj.newTask, function(tasks) {
+				handler.addTask(recObj.username, recObj.newTask, recObj.currentMonth, function(tasks) {
 					client.send( JSON.stringify(tasks) );
 				})
 

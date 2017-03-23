@@ -19,10 +19,12 @@ module.exports = {
 			var day = [{calendarDate: i}];
 			for (var j = 0; j < tasksArray.length; j++ ) {
 				var task = tasksArray[j];
-				if ( parseInt(task.StartDate) <= i && parseInt(task.DueDate) >= i ) {
+				var start = parseInt(task.StartMonth)*100 + parseInt(task.StartDate);
+				var end =  parseInt(task.DueMonth)*100 + parseInt(task.DueDate);
+				var date = parseInt(month)*100 + i;
+				if (  start <= date &&  date <= end ) {
 					var task = task.toObject();
 					task.calendarDate = i + ' ' + task.Name;
-					console.log(task.calendarDate);
 					day.push(task);
 				}
 			}

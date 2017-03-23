@@ -4,28 +4,33 @@ var utility = require('./database/utility.js')
 module.exports = {
 	getUserTasks: function(username, month, callback) {
 		dbase.Task.find(
-			{ 'Username' : username,
-			'StartMonth' : month }, 
+			{ 	'Username' : username,
+				'$or' : [	{'StartMonth' : month},
+							{'DueMonth' : month} ]
+			},
 			function(err, data) {
 				if (err) return console.error(err);
-				// if (username !== 'Manager') {
-				// 	for (var i = 0; i < data.length; i++) {
-				// 		if (data[i]['Username'] !== username) {
-				// 			data[i]['Username'] = '';
-				// 			data[i]['Name'] = '';
-				// 			data[i]['Start'] = '';
-				// 			data[i]['Due'] = '';
-				// 			data[i]['Project'] = '';
-				// 		}
-				// 	}
-				// }
 				var sendEvents =  utility.parseToCalendarDays(data, month);
 				var sendObj = { events: sendEvents };
 				callback(sendObj);
 			});
 	},
-	addTask: function(username, newTask, callback) {
-		
+	addTask: function(username, taskParams, month, callback) {
+		var newTask = new dbase.Task({
+			Username: username,
+			Name: taskParams.name,
+			StartMonth: taskParams.startMonth,
+			StartDate: taskParams.startDate,
+			DueMonth: taskParams.dueMonth,
+			DueDate: taskParams.dueDate,
+			StartTime: taskParams.startTime,
+			Prerequisites: taskParams.Prerequisites || 'none',
+			Dependencies: taskParams.Dependencies || 'none',
+			Completed: taskParams.completed || false
+		}).save( function(err) {
+			if (err) return console.error(err);
+			module.exports.getUserTasks(username, month, callback);
+		});
 	}
 }
 
