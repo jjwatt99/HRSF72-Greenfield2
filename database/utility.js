@@ -31,5 +31,14 @@ module.exports = {
 			indexedTasksForMonth.push(day);
 		}
 		return indexedTasksForMonth;
+	},
+	parseDependenciesShow: function(tasksFlatArray) {
+		var eventsFlatReturnArray = [];
+		for (var i = 0; i < tasksFlatArray.length; i++) {
+			var task = tasksFlatArray[i].toObject();
+			task.brief = task.Name+' // start: '+task.StartMonth+'/'+task.StartDate+' end: '+task.DueMonth+'/'+task.DueDate;
+			eventsFlatReturnArray.push(task);
+		}
+		return eventsFlatReturnArray;
 	}
 }

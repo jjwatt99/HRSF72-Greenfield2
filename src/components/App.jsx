@@ -15,11 +15,15 @@ class App extends React.Component {
 			currentMonth: '1',
 			eventsFlatArray: []
 		}
+		this.consoleLogState = this.consoleLogState.bind(this);
+		window.consoleLogState = this.consoleLogState;
 		// this.resetForm = this.resetForm.bind(this);
 		this.onSubmit = this.onSubmit.bind(this);
 		this.monthSelectHandler = this.monthSelectHandler.bind(this);
 	}
-
+	consoleLogState() {
+		console.log(this.state);
+	}
 	componentWillMount() {
 		var context = this;
 		$(document).ready( function() {
@@ -60,20 +64,49 @@ class App extends React.Component {
 
 	onSubmit(evt) {
 		evt.preventDefault();
-		var userInput = this.refs.form.getValue()[0];
-		console.log('this.refs.form.getValue() = ', this.refs.form.getValue())
-		if (userInput) {
-			if (userInput.type === "New Task") {
-				var sendObj = {
-					type: 'addTask',
-					username: window.username,
-					newTask: userInput,
-					currentMonth: this.state.currentMonth
-				};
-				window.ws.send( JSON.stringify(sendObj) );
+		if (this.refs.form.getValue()) {
+			var userInput = this.refs.form.getValue()[0];
+			console.log('this.refs.form.getValue() = ', this.refs.form.getValue())
+			if (userInput) {
+				if (userInput.type === "New Task") {
+					if (userInput.Prerequisites) {
+						var newTaskPreReq = [];
+						// exchange database id's for task brief in prerequisites array
+						for (var j = 0; j < userInput.Prerequisites.length; j++) {
+							var eventsBrief = userInput.Prerequisites[j]
+							for (var i = 0; i < this.state.eventsFlatArray.length; i++) {
+								var knownEvent = this.state.eventsFlatArray[i].brief
+								if (eventsBrief === knownEvent) {
+									newTaskPreReq.push(this.state.eventsFlatArray[i]._id)
+								}
+							}
+						}
+					}
+					if (userInput.Dependencies) {
+						var newTaskDepen = [];
+						// exchange database id's for task brief in Dependencies array
+						for (var j = 0; j < userInput.Dependencies.length; j++) {
+							var eventsBrief = userInput.Dependencies[j]
+							for (var i = 0; i < this.state.eventsFlatArray.length; i++) {
+								var knownEvent = this.state.eventsFlatArray[i].brief
+								if (eventsBrief === knownEvent) {
+									newTaskDepen.push(this.state.eventsFlatArray[i]._id)
+								}
+							}
+						}
+					}
+					var sendObj = {
+						type: 'addTask',
+						username: window.username,
+						newTask: userInput,
+						newTaskPreReq: newTaskPreReq,
+						newTaskDepen: newTaskDepen,
+						currentMonth: this.state.currentMonth
+					};
+					window.ws.send( JSON.stringify(sendObj) );
+				}
 			}
 		}
-		// this.refs.form.reset();
 	}
 
 
@@ -96,7 +129,8 @@ class App extends React.Component {
 		], 'ActionType')
 
 		const ListOfProjects = t.enums.of(this.state.eventsFlatArray.map(function(event) {
-			return event.Name;
+			return event.brief;
+		}))
 
 
 		const AddType = t.struct({
@@ -111,7 +145,7 @@ class App extends React.Component {
 		  dueDate: Days,
 		  dueMonth: Months,
 		  completed: t.Bool,
-		  Prerequesites: t.maybe(t.list(ListOfProjects)),
+		  Prerequisites: t.maybe(t.list(ListOfProjects)),
 		  Dependencies: t.maybe(t.list(ListOfProjects)),
 		}, 'AddTask')
 

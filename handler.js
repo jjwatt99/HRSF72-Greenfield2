@@ -10,11 +10,15 @@ module.exports = {
 			},
 			function(err, data) {
 				var sendEvents =  utility.parseToCalendarDays(data, month);
-				var sendObj = { events: sendEvents, eventsFlatArray: data };
+				var eventsFlatArray = utility.parseDependenciesShow(data);
+				var sendObj = { events: sendEvents, eventsFlatArray: eventsFlatArray };
 				callback(sendObj);
 			});
 	},
-	addTask: function(username, taskParams, month, callback) {
+	addTask: function(username, taskParams, Prereqs, Depens, month, callback) {
+		// var DependenciesArray = utility.getDependencies(taskParams.brief)
+		// console.log(DependenciesArray);
+		console.log(taskParams.Prerequisites);
 		var newTask = new dbase.Task({
 			Username: username,
 			Name: taskParams.name,
@@ -23,8 +27,8 @@ module.exports = {
 			DueMonth: taskParams.dueMonth,
 			DueDate: taskParams.dueDate,
 			StartTime: taskParams.startTime,
-			Prerequisites: taskParams.Prerequisites || 'none',
-			Dependencies: taskParams.Dependencies || 'none',
+			Prerequisites: Prereqs || 'none',
+			Dependencies: Depens || 'none',
 			Completed: taskParams.completed || false
 		}).save( function(err) {
 			if (err) return console.error(err);
