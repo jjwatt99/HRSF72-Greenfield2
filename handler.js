@@ -9,9 +9,8 @@ module.exports = {
 							{'DueMonth' : month} ]
 			},
 			function(err, data) {
-				if (err) return console.error(err);
 				var sendEvents =  utility.parseToCalendarDays(data, month);
-				var sendObj = { events: sendEvents };
+				var sendObj = { events: sendEvents, eventsFlatArray: data };
 				callback(sendObj);
 			});
 	},

@@ -24,7 +24,7 @@ module.exports = {
 				var date = parseInt(month)*100 + i;
 				if (  start <= date &&  date <= end ) {
 					var task = task.toObject();
-					task.calendarDate = i + ' ' + task.Name;
+					task.brief = task.Name+' // start: '+task.StartMonth+'/'+task.StartDate+' end: '+task.DueMonth+'/'+task.DueDate;
 					day.push(task);
 				}
 			}

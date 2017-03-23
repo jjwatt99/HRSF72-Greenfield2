@@ -13,6 +13,7 @@ class App extends React.Component {
 			events: [],
 			name: null,
 			currentMonth: '1',
+			eventsFlatArray: []
 		}
 		// this.resetForm = this.resetForm.bind(this);
 		this.onSubmit = this.onSubmit.bind(this);
@@ -41,7 +42,8 @@ class App extends React.Component {
 				el.innerHTML = 'Server time: ' + recObj.time;
 				if (recObj.events) {
 					context.setState({
-						events: recObj.events
+						events: recObj.events,
+						eventsFlatArray: recObj.eventsFlatArray
 					});
 				}
 			};
@@ -92,16 +94,9 @@ class App extends React.Component {
 		  'New Project'
 		], 'ActionType')
 
-		const ListOfProjects = t.enums.of([
-			// Pass in an array of projects here from DB
-			'Project 1',
-			'Project 2',
-			'Project 3',
-			'Project 4',
-			'Project 5',
-			'Project 6',
-			'Project 7'
-		])
+		const ListOfProjects = t.enums.of(this.state.eventsFlatArray.map(function(event) {
+			return event.Name;
+
 
 		const AddType = t.struct({
 		  type: ActionType
