@@ -7,6 +7,7 @@ var Days = (props) => (
     {props.day.map((event, index) =>
     	<Events key={index}
     		event={event}
+    		autoFillEditTask={props.autoFillEditTask}
     	/>
     )}
   </div>

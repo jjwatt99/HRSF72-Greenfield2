@@ -15,8 +15,18 @@ class App extends React.Component {
 			name: null,
 			currentMonth: '1',
 			eventsFlatArray: [],
-			selectedEventPrerequisites: [],
-			selectedEventDependencies: []
+			editFormState: {
+				type: 'Edit Task',
+				name: '',
+				startDate: '',
+				startMonth: '',
+				startTime: '',
+				dueDate: '',
+				dueMonth: '',
+				completed: false,
+				selectedEventPrerequisites: [],
+				selectedEventDependencies: []
+			}
 		}
 		this.consoleLogState = this.consoleLogState.bind(this);
 		window.consoleLogState = this.consoleLogState;
@@ -24,6 +34,8 @@ class App extends React.Component {
 		this.onSubmit = this.onSubmit.bind(this);
 		this.onChange = this.onChange.bind(this);
 		this.monthSelectHandler = this.monthSelectHandler.bind(this);
+		this.autoFillEditTask = this.autoFillEditTask.bind(this)
+		this.submitEditTaskForm = this.submitEditTaskForm.bind(this);
 	}
 	consoleLogState() {
 		console.log(this.state);
@@ -59,11 +71,41 @@ class App extends React.Component {
 	}
 
 	resetForm() {
-		// var value = this.refs.form.getValue();
-	 //    if (value) {
-		// 	console.log(value);
-		// 	this.setState({value: null});
-	 //    }
+  	}
+
+  	autoFillEditTask(task) {
+		this.setState({
+			editFormState: {
+				type: 'Edit Task',
+				name: task.Name,
+				startDate: task.StartDate,
+				startMonth: task.StartMonth,
+				startTime: task.StartTime,
+				dueDate: task.DueDate,
+				dueMonth: task.DueMonth,
+				completed: task.Completed,
+				selectedEventPrerequisites: task.Prerequisites,
+				selectedEventDependencies: task.Dependencies
+			}
+		})
+  	}
+
+  	submitEditTaskForm(task) {
+  		console.log(task);
+		var sendObj = {
+			type: 'Edit Task',
+			username: window.username,
+			name: task.name,
+     		startDate: task.startDate,
+			startMonth: task.startMonth,
+			startTime: task.startTime,
+			dueDate: task.dueDate,
+			dueMonth: task.dueMonth,
+			completed: task.completed,
+			// selectedEventPrerequisites: task.Prerequisites,
+			// selectedEventDependencies: task.Dependencies
+		};
+		window.ws.send( JSON.stringify(sendObj) );
   	}
 
 	onSubmit(evt) {
@@ -108,43 +150,7 @@ class App extends React.Component {
 						currentMonth: this.state.currentMonth
 					};
 					window.ws.send( JSON.stringify(sendObj) );
-				} else if (userInput.type === "New Task") {
-					// if (userInput.Prerequisites) {
-					// 	var newTaskPreReq = [];
-					// 	// exchange database id's for task brief in prerequisites array
-					// 	for (var j = 0; j < userInput.Prerequisites.length; j++) {
-					// 		var eventsBrief = userInput.Prerequisites[j]
-					// 		for (var i = 0; i < this.state.eventsFlatArray.length; i++) {
-					// 			var knownEvent = this.state.eventsFlatArray[i].brief
-					// 			if (eventsBrief === knownEvent) {
-					// 				newTaskPreReq.push(this.state.eventsFlatArray[i]._id)
-					// 			}
-					// 		}
-					// 	}
-					// }
-					// if (userInput.Dependencies) {
-					// 	var newTaskDepen = [];
-					// 	// exchange database id's for task brief in Dependencies array
-					// 	for (var j = 0; j < userInput.Dependencies.length; j++) {
-					// 		var eventsBrief = userInput.Dependencies[j]
-					// 		for (var i = 0; i < this.state.eventsFlatArray.length; i++) {
-					// 			var knownEvent = this.state.eventsFlatArray[i].brief
-					// 			if (eventsBrief === knownEvent) {
-					// 				newTaskDepen.push(this.state.eventsFlatArray[i]._id)
-					// 			}
-					// 		}
-					// 	}
-					// }
-					// var sendObj = {
-					// 	type: 'addTask',
-					// 	username: window.username,
-					// 	newTask: userInput,
-					// 	newTaskPreReq: newTaskPreReq,
-					// 	newTaskDepen: newTaskDepen,
-					// 	currentMonth: this.state.currentMonth
-					// };
-					// window.ws.send( JSON.stringify(sendObj) );
-				}
+				} 
 			}
 		}
 	}
@@ -157,13 +163,11 @@ class App extends React.Component {
 				// console.log('this.state.eventsFlatArray['+i+'] = ' event)
 				var event = this.state.eventsFlatArray[i];
 				if (selectedTask === event.brief) {
-					this.setState({
+					this.setState({ editFormState: {
 						selectedEventPrerequisites: event.Prerequisites,
 						selectedEventDependencies: event.Dependencies
+						}
 					})
-					// this.state.selectedEventPrerequisites = event.Prerequisites;
-
-					// this.state.selectedEventDependencies = event.Dependencies;
 				}
 			}
 		}
@@ -192,9 +196,9 @@ class App extends React.Component {
 			return event.brief;
 		}))
 
-		const ListOfPrerequisites = t.enums.of(this.state.selectedEventPrerequisites)
+		var ListOfPrerequisites = t.enums.of(this.state.editFormState.selectedEventPrerequisites)
 
-		const ListOfDependencies = t.enums.of(this.state.selectedEventDependencies)
+		var ListOfDependencies = t.enums.of(this.state.editFormState.selectedEventDependencies)
 
 
 		const AddType = t.struct({
@@ -214,7 +218,7 @@ class App extends React.Component {
 		}, 'AddTask')
 
 		const EditTask = AddType.extend({
-			tasks: t.maybe(t.list(ListOfProjects)),
+			tasks: t.list(ListOfProjects),
 			name: t.Str,
 			startDate: Days,
 			startMonth: Months,
@@ -245,12 +249,11 @@ class App extends React.Component {
 		const Type = t.list(Options)
 		
 		const options = {
-			auto: 'placeholders'
 		};		
 	  return (
 	  	<div id="calendar">
 	  		<div>
-	  			<MonthSelect monthSelectHandler={this.monthSelectHandler} />
+	  			<MonthSelect monthSelectHandler={this.monthSelectHandler} autoFillEditTask={this.autoFillEditTask}/>
 	  		</div>
 			<div className="days">Monday</div>
 			<div className="days">Tuesday</div>
@@ -259,10 +262,10 @@ class App extends React.Component {
 			<div className="days">Friday</div>
 			<div className="days">Saturday</div>
 			<div className="days">Sunday</div>
-			<div><Month month={this.state.events}/></div>
+			<div><Month month={this.state.events} autoFillEditTask={this.autoFillEditTask}/></div>
 			<div>
       		<div>
-      			<EditTaskForm appState = {this.state}/>
+      			<EditTaskForm editFormState={this.state.editFormState} submitEditTaskForm={this.submitEditTaskForm}/>
       		</div>
 		        <form onSubmit={this.onSubmit.bind(this)}>
 			        <t.form.Form
@@ -343,26 +346,3 @@ const Days = t.enums({
 
 
 
-// var RenderInBody = React.createClass({
-
-//   componentDidMount: function() {
-//     this.popup = document.createElement("div");
-//     document.body.appendChild(this.popup);
-//     this._renderLayer();
-//   },
-//   componentDidUpdate: function() {
-//     this._renderLayer();
-//   },
-//   componentWillUnmount: function() {
-//     React.unmountComponentAtNode(this.popup);
-//     document.body.removeChild(this.popup);
-//   },
-//   _renderLayer: function() {
-//     React.render(this.props.children, this.popup);
-//   },
-//   render: function() {
-//     // Render a placeholder
-//     return React.DOM.div(this.props);
-//   }
-
-// });

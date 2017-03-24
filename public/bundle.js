@@ -11338,8 +11338,18 @@ var App = function (_React$Component) {
 			name: null,
 			currentMonth: '1',
 			eventsFlatArray: [],
-			selectedEventPrerequisites: [],
-			selectedEventDependencies: []
+			editFormState: {
+				type: 'Edit Task',
+				name: '',
+				startDate: '',
+				startMonth: '',
+				startTime: '',
+				dueDate: '',
+				dueMonth: '',
+				completed: false,
+				selectedEventPrerequisites: [],
+				selectedEventDependencies: []
+			}
 		};
 		_this.consoleLogState = _this.consoleLogState.bind(_this);
 		window.consoleLogState = _this.consoleLogState;
@@ -11347,6 +11357,8 @@ var App = function (_React$Component) {
 		_this.onSubmit = _this.onSubmit.bind(_this);
 		_this.onChange = _this.onChange.bind(_this);
 		_this.monthSelectHandler = _this.monthSelectHandler.bind(_this);
+		_this.autoFillEditTask = _this.autoFillEditTask.bind(_this);
+		_this.submitEditTaskForm = _this.submitEditTaskForm.bind(_this);
 		return _this;
 	}
 
@@ -11388,12 +11400,41 @@ var App = function (_React$Component) {
 		}
 	}, {
 		key: 'resetForm',
-		value: function resetForm() {
-			// var value = this.refs.form.getValue();
-			//    if (value) {
-			// 	console.log(value);
-			// 	this.setState({value: null});
-			//    }
+		value: function resetForm() {}
+	}, {
+		key: 'autoFillEditTask',
+		value: function autoFillEditTask(task) {
+			this.setState({
+				editFormState: {
+					type: 'Edit Task',
+					name: task.Name,
+					startDate: task.StartDate,
+					startMonth: task.StartMonth,
+					startTime: task.StartTime,
+					dueDate: task.DueDate,
+					dueMonth: task.DueMonth,
+					completed: task.Completed,
+					selectedEventPrerequisites: task.Prerequisites,
+					selectedEventDependencies: task.Dependencies
+				}
+			});
+		}
+	}, {
+		key: 'submitEditTaskForm',
+		value: function submitEditTaskForm(task) {
+			console.log(task);
+			var sendObj = {
+				type: 'Edit Task',
+				username: window.username,
+				name: task.name,
+				startDate: task.startDate,
+				startMonth: task.startMonth,
+				startTime: task.startTime,
+				dueDate: task.dueDate,
+				dueMonth: task.dueMonth,
+				completed: task.completed
+			};
+			window.ws.send(JSON.stringify(sendObj));
 		}
 	}, {
 		key: 'onSubmit',
@@ -11439,42 +11480,6 @@ var App = function (_React$Component) {
 							currentMonth: this.state.currentMonth
 						};
 						window.ws.send(JSON.stringify(sendObj));
-					} else if (userInput.type === "New Task") {
-						// if (userInput.Prerequisites) {
-						// 	var newTaskPreReq = [];
-						// 	// exchange database id's for task brief in prerequisites array
-						// 	for (var j = 0; j < userInput.Prerequisites.length; j++) {
-						// 		var eventsBrief = userInput.Prerequisites[j]
-						// 		for (var i = 0; i < this.state.eventsFlatArray.length; i++) {
-						// 			var knownEvent = this.state.eventsFlatArray[i].brief
-						// 			if (eventsBrief === knownEvent) {
-						// 				newTaskPreReq.push(this.state.eventsFlatArray[i]._id)
-						// 			}
-						// 		}
-						// 	}
-						// }
-						// if (userInput.Dependencies) {
-						// 	var newTaskDepen = [];
-						// 	// exchange database id's for task brief in Dependencies array
-						// 	for (var j = 0; j < userInput.Dependencies.length; j++) {
-						// 		var eventsBrief = userInput.Dependencies[j]
-						// 		for (var i = 0; i < this.state.eventsFlatArray.length; i++) {
-						// 			var knownEvent = this.state.eventsFlatArray[i].brief
-						// 			if (eventsBrief === knownEvent) {
-						// 				newTaskDepen.push(this.state.eventsFlatArray[i]._id)
-						// 			}
-						// 		}
-						// 	}
-						// }
-						// var sendObj = {
-						// 	type: 'addTask',
-						// 	username: window.username,
-						// 	newTask: userInput,
-						// 	newTaskPreReq: newTaskPreReq,
-						// 	newTaskDepen: newTaskDepen,
-						// 	currentMonth: this.state.currentMonth
-						// };
-						// window.ws.send( JSON.stringify(sendObj) );
 					}
 				}
 			}
@@ -11489,13 +11494,11 @@ var App = function (_React$Component) {
 					// console.log('this.state.eventsFlatArray['+i+'] = ' event)
 					var event = this.state.eventsFlatArray[i];
 					if (selectedTask === event.brief) {
-						this.setState({
-							selectedEventPrerequisites: event.Prerequisites,
-							selectedEventDependencies: event.Dependencies
+						this.setState({ editFormState: {
+								selectedEventPrerequisites: event.Prerequisites,
+								selectedEventDependencies: event.Dependencies
+							}
 						});
-						// this.state.selectedEventPrerequisites = event.Prerequisites;
-
-						// this.state.selectedEventDependencies = event.Dependencies;
 					}
 				}
 			}
@@ -11522,9 +11525,9 @@ var App = function (_React$Component) {
 				return event.brief;
 			}));
 
-			var ListOfPrerequisites = _tcombForm2.default.enums.of(this.state.selectedEventPrerequisites);
+			var ListOfPrerequisites = _tcombForm2.default.enums.of(this.state.editFormState.selectedEventPrerequisites);
 
-			var ListOfDependencies = _tcombForm2.default.enums.of(this.state.selectedEventDependencies);
+			var ListOfDependencies = _tcombForm2.default.enums.of(this.state.editFormState.selectedEventDependencies);
 
 			var AddType = _tcombForm2.default.struct({
 				type: ActionType
@@ -11543,7 +11546,7 @@ var App = function (_React$Component) {
 			}, 'AddTask');
 
 			var EditTask = AddType.extend({
-				tasks: _tcombForm2.default.maybe(_tcombForm2.default.list(ListOfProjects)),
+				tasks: _tcombForm2.default.list(ListOfProjects),
 				name: _tcombForm2.default.Str,
 				startDate: Days,
 				startMonth: Months,
@@ -11573,16 +11576,14 @@ var App = function (_React$Component) {
 
 			var Type = _tcombForm2.default.list(Options);
 
-			var options = {
-				auto: 'placeholders'
-			};
+			var options = {};
 			return _react2.default.createElement(
 				'div',
 				{ id: 'calendar' },
 				_react2.default.createElement(
 					'div',
 					null,
-					_react2.default.createElement(_MonthSelect2.default, { monthSelectHandler: this.monthSelectHandler })
+					_react2.default.createElement(_MonthSelect2.default, { monthSelectHandler: this.monthSelectHandler, autoFillEditTask: this.autoFillEditTask })
 				),
 				_react2.default.createElement(
 					'div',
@@ -11622,7 +11623,7 @@ var App = function (_React$Component) {
 				_react2.default.createElement(
 					'div',
 					null,
-					_react2.default.createElement(_Month2.default, { month: this.state.events })
+					_react2.default.createElement(_Month2.default, { month: this.state.events, autoFillEditTask: this.autoFillEditTask })
 				),
 				_react2.default.createElement(
 					'div',
@@ -11630,7 +11631,7 @@ var App = function (_React$Component) {
 					_react2.default.createElement(
 						'div',
 						null,
-						_react2.default.createElement(_EditTaskForm2.default, { appState: this.state })
+						_react2.default.createElement(_EditTaskForm2.default, { editFormState: this.state.editFormState, submitEditTaskForm: this.submitEditTaskForm })
 					),
 					_react2.default.createElement(
 						'form',
@@ -11715,30 +11716,6 @@ var Days = _tcombForm2.default.enums({
 	31: 31
 });
 
-// var RenderInBody = React.createClass({
-
-//   componentDidMount: function() {
-//     this.popup = document.createElement("div");
-//     document.body.appendChild(this.popup);
-//     this._renderLayer();
-//   },
-//   componentDidUpdate: function() {
-//     this._renderLayer();
-//   },
-//   componentWillUnmount: function() {
-//     React.unmountComponentAtNode(this.popup);
-//     document.body.removeChild(this.popup);
-//   },
-//   _renderLayer: function() {
-//     React.render(this.props.children, this.popup);
-//   },
-//   render: function() {
-//     // Render a placeholder
-//     return React.DOM.div(this.props);
-//   }
-
-// });
-
 /***/ }),
 /* 127 */
 /***/ (function(module, exports, __webpack_require__) {
@@ -11766,7 +11743,8 @@ var Days = function Days(props) {
     { className: 'box' },
     props.day.map(function (event, index) {
       return _react2.default.createElement(_Events2.default, { key: index,
-        event: event
+        event: event,
+        autoFillEditTask: props.autoFillEditTask
       });
     })
   );
@@ -11785,6 +11763,8 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
 var _react = __webpack_require__(5);
 
 var _react2 = _interopRequireDefault(_react);
@@ -11795,37 +11775,84 @@ var _tcombForm2 = _interopRequireDefault(_tcombForm);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-var Form = _tcombForm2.default.form.Form;
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
-var Person = _tcombForm2.default.struct({
-  name: _tcombForm2.default.String,
-  surname: _tcombForm2.default.String
-});
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
 
-var EditTaskForm = _react2.default.createClass({
-  displayName: 'EditTaskForm',
-  save: function save() {
-    var value = this.refs.form.getValue();
-    if (value) {
-      console.log(value);
-    }
-  },
-  render: function render() {
-    return _react2.default.createElement(
-      'div',
-      null,
-      _react2.default.createElement(Form, {
-        ref: 'form',
-        type: Person
-      }),
-      _react2.default.createElement(
-        'button',
-        { onClick: this.save },
-        'Save'
-      )
-    );
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var EditTaskForm = function (_React$Component) {
+  _inherits(EditTaskForm, _React$Component);
+
+  function EditTaskForm(props) {
+    _classCallCheck(this, EditTaskForm);
+
+    var _this = _possibleConstructorReturn(this, (EditTaskForm.__proto__ || Object.getPrototypeOf(EditTaskForm)).call(this, props));
+
+    _this.onSubmit = _this.onSubmit.bind(_this);
+
+    return _this;
   }
-});
+
+  _createClass(EditTaskForm, [{
+    key: 'onSubmit',
+    value: function onSubmit(evt) {
+      if (this.refs.form.getValue()) {
+        var userInput = this.refs.form.getValue();
+        console.log('this.refs.form.getValue() = ', userInput);
+        if (userInput) {
+          this.props.submitEditTaskForm(userInput);
+        }
+      }
+    }
+  }, {
+    key: 'render',
+    value: function render() {
+      var _this2 = this;
+
+      var Form = _tcombForm2.default.form.Form;
+
+      var Person = _tcombForm2.default.struct({
+        name: _tcombForm2.default.String,
+        startDate: _tcombForm2.default.String,
+        startMonth: _tcombForm2.default.String,
+        startTime: _tcombForm2.default.String,
+        dueDate: _tcombForm2.default.String,
+        dueMonth: _tcombForm2.default.String,
+        completed: _tcombForm2.default.Bool
+      });
+      var value = {
+        name: this.props.editFormState.name,
+        startDate: this.props.editFormState.startDate,
+        startMonth: this.props.editFormState.startMonth,
+        startTime: this.props.editFormState.startTime,
+        dueDate: this.props.editFormState.dueDate,
+        dueMonth: this.props.editFormState.dueMonth,
+        completed: this.props.editFormState.completed
+      };
+      return _react2.default.createElement(
+        'div',
+        null,
+        _react2.default.createElement(Form, {
+          ref: 'form',
+          type: Person,
+          value: value
+        }),
+        _react2.default.createElement(
+          'button',
+          { onClick: function onClick() {
+              return _this2.onSubmit(event);
+            } },
+          'Save'
+        )
+      );
+    }
+  }]);
+
+  return EditTaskForm;
+}(_react2.default.Component);
+
+;
 
 exports.default = EditTaskForm;
 
@@ -11861,7 +11888,9 @@ var Events = function Events(props) {
     ),
     _react2.default.createElement(
       'div',
-      null,
+      { onClick: function onClick() {
+          return props.autoFillEditTask(props.event);
+        } },
       props.event.brief
     )
   );
@@ -11896,7 +11925,8 @@ var Month = function Month(props) {
     null,
     props.month.map(function (day, index) {
       return _react2.default.createElement(_Days2.default, { key: index,
-        day: day
+        day: day,
+        autoFillEditTask: props.autoFillEditTask
       });
     })
   );

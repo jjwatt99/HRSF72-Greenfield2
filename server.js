@@ -53,7 +53,12 @@ WSserver.on('connection', (client) => {
 				handler.addTask(recObj.username, recObj.newTask, recObj.newTaskPreReq, recObj.newTaskDepen, recObj.currentMonth, function(tasks) {
 					client.send( JSON.stringify(tasks) );
 				})
-
+			}
+			if ( recObj.type === 'Edit Task' ) {
+				console.log('Edit Task ClientID: ', clientID, ' is username: ', recObj.username);
+				// handler.editTask(recObj.username, r recObj.newTask, recObj.newTaskPreReq, recObj.newTaskDepen, recObj.currentMonth, function(tasks) {
+					// client.send( JSON.stringify(tasks) );
+				// })
 			}
 		});
 
