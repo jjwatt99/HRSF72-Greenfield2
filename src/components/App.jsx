@@ -5,6 +5,7 @@ import $ from 'jquery';
 import t from 'tcomb-form';
 import ShowPopup from './Popup.jsx';
 import MonthSelect from './MonthSelect.jsx';
+import EditTaskForm from './EditTaskForm.jsx';
 
 class App extends React.Component {
 	constructor(props) {
@@ -13,12 +14,15 @@ class App extends React.Component {
 			events: [],
 			name: null,
 			currentMonth: '1',
-			eventsFlatArray: []
+			eventsFlatArray: [],
+			selectedEventPrerequisites: [],
+			selectedEventDependencies: []
 		}
 		this.consoleLogState = this.consoleLogState.bind(this);
 		window.consoleLogState = this.consoleLogState;
 		// this.resetForm = this.resetForm.bind(this);
 		this.onSubmit = this.onSubmit.bind(this);
+		this.onChange = this.onChange.bind(this);
 		this.monthSelectHandler = this.monthSelectHandler.bind(this);
 	}
 	consoleLogState() {
@@ -104,11 +108,66 @@ class App extends React.Component {
 						currentMonth: this.state.currentMonth
 					};
 					window.ws.send( JSON.stringify(sendObj) );
+				} else if (userInput.type === "New Task") {
+					// if (userInput.Prerequisites) {
+					// 	var newTaskPreReq = [];
+					// 	// exchange database id's for task brief in prerequisites array
+					// 	for (var j = 0; j < userInput.Prerequisites.length; j++) {
+					// 		var eventsBrief = userInput.Prerequisites[j]
+					// 		for (var i = 0; i < this.state.eventsFlatArray.length; i++) {
+					// 			var knownEvent = this.state.eventsFlatArray[i].brief
+					// 			if (eventsBrief === knownEvent) {
+					// 				newTaskPreReq.push(this.state.eventsFlatArray[i]._id)
+					// 			}
+					// 		}
+					// 	}
+					// }
+					// if (userInput.Dependencies) {
+					// 	var newTaskDepen = [];
+					// 	// exchange database id's for task brief in Dependencies array
+					// 	for (var j = 0; j < userInput.Dependencies.length; j++) {
+					// 		var eventsBrief = userInput.Dependencies[j]
+					// 		for (var i = 0; i < this.state.eventsFlatArray.length; i++) {
+					// 			var knownEvent = this.state.eventsFlatArray[i].brief
+					// 			if (eventsBrief === knownEvent) {
+					// 				newTaskDepen.push(this.state.eventsFlatArray[i]._id)
+					// 			}
+					// 		}
+					// 	}
+					// }
+					// var sendObj = {
+					// 	type: 'addTask',
+					// 	username: window.username,
+					// 	newTask: userInput,
+					// 	newTaskPreReq: newTaskPreReq,
+					// 	newTaskDepen: newTaskDepen,
+					// 	currentMonth: this.state.currentMonth
+					// };
+					// window.ws.send( JSON.stringify(sendObj) );
 				}
 			}
 		}
 	}
 
+	onChange(value, path) {
+		if (value[0] && 'tasks' in value[0] && value[0].tasks[0] !== undefined ) {
+			console.log('selected task = ', value[0].tasks[0]);
+			var selectedTask = value[0].tasks[0];
+			for (var i = 0; i < this.state.eventsFlatArray.length; i++) {
+				// console.log('this.state.eventsFlatArray['+i+'] = ' event)
+				var event = this.state.eventsFlatArray[i];
+				if (selectedTask === event.brief) {
+					this.setState({
+						selectedEventPrerequisites: event.Prerequisites,
+						selectedEventDependencies: event.Dependencies
+					})
+					// this.state.selectedEventPrerequisites = event.Prerequisites;
+
+					// this.state.selectedEventDependencies = event.Dependencies;
+				}
+			}
+		}
+	}
 
 	monthSelectHandler(selectedMonth) {
 		this.setState({ currentMonth: selectedMonth });
@@ -125,12 +184,17 @@ class App extends React.Component {
 	render() {
 		const ActionType = t.enums.of([
 		  'New Task',
-		  'New Project'
+		  'New Project',
+		  'Edit Task'
 		], 'ActionType')
 
 		const ListOfProjects = t.enums.of(this.state.eventsFlatArray.map(function(event) {
 			return event.brief;
 		}))
+
+		const ListOfPrerequisites = t.enums.of(this.state.selectedEventPrerequisites)
+
+		const ListOfDependencies = t.enums.of(this.state.selectedEventDependencies)
 
 
 		const AddType = t.struct({
@@ -149,6 +213,20 @@ class App extends React.Component {
 		  Dependencies: t.maybe(t.list(ListOfProjects)),
 		}, 'AddTask')
 
+		const EditTask = AddType.extend({
+			tasks: t.maybe(t.list(ListOfProjects)),
+			name: t.Str,
+			startDate: Days,
+			startMonth: Months,
+			startTime: t.String,
+			dueDate: Days,
+			dueMonth: Months,
+			completed: t.Bool,
+			Prerequisites: t.maybe(t.list(ListOfPrerequisites)),
+			Dependencies: t.maybe(t.list(ListOfDependencies)),
+		}, 'AddTask')
+
+
 		const AddProject = AddType.extend({
 		  name: t.Str,
 		  startDate: Days,
@@ -159,14 +237,15 @@ class App extends React.Component {
 		  manager: t.maybe(t.Str),
 		}, 'AddProject')
 
-		const Options = t.union([AddTask, AddProject], 'Options')
+		const Options = t.union([AddTask, AddProject, EditTask], 'Options')
 	
 
-		Options.dispatch = value => value && value.type === 'New Task' ? AddTask : AddProject
+		Options.dispatch = value => value && value.type === 'New Task' ? AddTask : value && value.type === 'Edit Task' ? EditTask : AddProject
 
 		const Type = t.list(Options)
 		
 		const options = {
+			auto: 'placeholders'
 		};		
 	  return (
 	  	<div id="calendar">
@@ -182,11 +261,15 @@ class App extends React.Component {
 			<div className="days">Sunday</div>
 			<div><Month month={this.state.events}/></div>
 			<div>
+      		<div>
+      			<EditTaskForm appState = {this.state}/>
+      		</div>
 		        <form onSubmit={this.onSubmit.bind(this)}>
 			        <t.form.Form
 			          ref="form"
 			          type={Type}
 			          options={options}
+			          onChange={this.onChange}
 			        />
 			        <ShowPopup event = {'brah'} >
 			        </ShowPopup>
