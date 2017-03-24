@@ -11347,8 +11347,9 @@ var App = function (_React$Component) {
 				dueDate: '',
 				dueMonth: '',
 				completed: false,
-				selectedEventPrerequisites: [],
-				selectedEventDependencies: []
+				Prerequisites: [],
+				Dependencies: [],
+				_id: ''
 			}
 		};
 		_this.consoleLogState = _this.consoleLogState.bind(_this);
@@ -11414,8 +11415,9 @@ var App = function (_React$Component) {
 					dueDate: task.DueDate,
 					dueMonth: task.DueMonth,
 					completed: task.Completed,
-					selectedEventPrerequisites: task.Prerequisites,
-					selectedEventDependencies: task.Dependencies
+					Prerequisites: task.Prerequisites,
+					Dependencies: task.Dependencies,
+					_id: task._id
 				}
 			});
 		}
@@ -11432,7 +11434,11 @@ var App = function (_React$Component) {
 				startTime: task.startTime,
 				dueDate: task.dueDate,
 				dueMonth: task.dueMonth,
-				completed: task.completed
+				completed: task.completed,
+				Prerequisites: task.Prerequisites,
+				Dependencies: task.Dependencies,
+				_id: task._id,
+				currentMonth: this.state.currentMonth
 			};
 			window.ws.send(JSON.stringify(sendObj));
 		}
@@ -11495,8 +11501,8 @@ var App = function (_React$Component) {
 					var event = this.state.eventsFlatArray[i];
 					if (selectedTask === event.brief) {
 						this.setState({ editFormState: {
-								selectedEventPrerequisites: event.Prerequisites,
-								selectedEventDependencies: event.Dependencies
+								Prerequisites: event.Prerequisites,
+								Dependencies: event.Dependencies
 							}
 						});
 					}
@@ -11525,9 +11531,9 @@ var App = function (_React$Component) {
 				return event.brief;
 			}));
 
-			var ListOfPrerequisites = _tcombForm2.default.enums.of(this.state.editFormState.selectedEventPrerequisites);
+			var ListOfPrerequisites = _tcombForm2.default.enums.of(this.state.editFormState.Prerequisites);
 
-			var ListOfDependencies = _tcombForm2.default.enums.of(this.state.editFormState.selectedEventDependencies);
+			var ListOfDependencies = _tcombForm2.default.enums.of(this.state.editFormState.Dependencies);
 
 			var AddType = _tcombForm2.default.struct({
 				type: ActionType
@@ -11812,6 +11818,10 @@ var EditTaskForm = function (_React$Component) {
 
       var Form = _tcombForm2.default.form.Form;
 
+      var ListOfPrerequisites = _tcombForm2.default.enums.of(this.props.editFormState.Prerequisites);
+
+      var ListOfDependencies = _tcombForm2.default.enums.of(this.props.editFormState.Dependencies);
+
       var Person = _tcombForm2.default.struct({
         name: _tcombForm2.default.String,
         startDate: _tcombForm2.default.String,
@@ -11819,7 +11829,10 @@ var EditTaskForm = function (_React$Component) {
         startTime: _tcombForm2.default.String,
         dueDate: _tcombForm2.default.String,
         dueMonth: _tcombForm2.default.String,
-        completed: _tcombForm2.default.Bool
+        completed: _tcombForm2.default.Bool,
+        Prerequisites: _tcombForm2.default.maybe(_tcombForm2.default.list(ListOfPrerequisites)),
+        Dependencies: _tcombForm2.default.maybe(_tcombForm2.default.list(ListOfDependencies)),
+        _id: _tcombForm2.default.String
       });
       var value = {
         name: this.props.editFormState.name,
@@ -11828,7 +11841,10 @@ var EditTaskForm = function (_React$Component) {
         startTime: this.props.editFormState.startTime,
         dueDate: this.props.editFormState.dueDate,
         dueMonth: this.props.editFormState.dueMonth,
-        completed: this.props.editFormState.completed
+        completed: this.props.editFormState.completed,
+        Prerequisites: this.props.editFormState.Prerequisites,
+        Dependencies: this.props.editFormState.Dependencies,
+        _id: this.props.editFormState._id
       };
       return _react2.default.createElement(
         'div',

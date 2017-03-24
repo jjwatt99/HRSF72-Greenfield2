@@ -24,6 +24,10 @@ class EditTaskForm extends React.Component {
   render() {
     const Form = t.form.Form;
 
+    var ListOfPrerequisites = t.enums.of(this.props.editFormState.Prerequisites)
+
+    var ListOfDependencies = t.enums.of(this.props.editFormState.Dependencies)
+
     const Person = t.struct({
       name: t.String,
       startDate: t.String,
@@ -31,7 +35,10 @@ class EditTaskForm extends React.Component {
       startTime: t.String,
       dueDate: t.String,
       dueMonth: t.String,
-      completed: t.Bool
+      completed: t.Bool,
+      Prerequisites: t.maybe(t.list(ListOfPrerequisites)),
+      Dependencies: t.maybe(t.list(ListOfDependencies)),
+      _id: t.String
     });
     const value = {
       name: this.props.editFormState.name,
@@ -40,7 +47,10 @@ class EditTaskForm extends React.Component {
       startTime: this.props.editFormState.startTime,
       dueDate: this.props.editFormState.dueDate,
       dueMonth: this.props.editFormState.dueMonth,
-      completed: this.props.editFormState.completed
+      completed: this.props.editFormState.completed,
+      Prerequisites: this.props.editFormState.Prerequisites,
+      Dependencies: this.props.editFormState.Dependencies,
+      _id: this.props.editFormState._id
     };
     return (
       <div>

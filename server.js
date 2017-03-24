@@ -56,9 +56,10 @@ WSserver.on('connection', (client) => {
 			}
 			if ( recObj.type === 'Edit Task' ) {
 				console.log('Edit Task ClientID: ', clientID, ' is username: ', recObj.username);
-				// handler.editTask(recObj.username, r recObj.newTask, recObj.newTaskPreReq, recObj.newTaskDepen, recObj.currentMonth, function(tasks) {
-					// client.send( JSON.stringify(tasks) );
-				// })
+				handler.editTask(recObj.username, recObj._id, recObj.currentMonth, recObj.name, recObj.startDate, recObj.startMonth, recObj.startTime, recObj.dueDate, recObj.dueMonth, recObj.completed, recObj.Prerequisites, recObj.Dependencies, function(tasks) {
+					console.log('in Edit Task callback to getUserTasks, tasks =', tasks)
+					client.send( JSON.stringify(tasks) );
+				})
 			}
 		});
 

@@ -9,6 +9,7 @@ module.exports = {
 							{'DueMonth' : month} ]
 			},
 			function(err, data) {
+				console.log('username = ', username, 'month = ', month, 'data = ', data)
 				var sendEvents =  utility.parseToCalendarDays(data, month);
 				var eventsFlatArray = utility.parseDependenciesShow(data);
 				var sendObj = { events: sendEvents, eventsFlatArray: eventsFlatArray };
@@ -34,6 +35,24 @@ module.exports = {
 			if (err) return console.error(err);
 			module.exports.getUserTasks(username, month, callback);
 		});
+	},
+	editTask: function(username, id, month, taskName, startDate, startMonth, startTime, dueDate, dueMonth, completed, Prerequisites, Dependencies, callback ) {
+		dbase.Task.update(
+			{ _id: id }, 
+			{$set: { 	Name: taskName,
+						StartMonth: startMonth,
+						StartDate: startDate,
+						StartTime: startTime,
+						DueMonth: dueMonth,
+						DueDate: dueDate,
+						Prerequisites: Prerequisites,
+						Dependencies: Dependencies,
+						Completed: completed
+				 }}, 
+			function(err) {
+				if (err) return console.error(err);
+				module.exports.getUserTasks(username, month, callback);
+			});
 	}
 }
 

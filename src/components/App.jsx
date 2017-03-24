@@ -24,8 +24,9 @@ class App extends React.Component {
 				dueDate: '',
 				dueMonth: '',
 				completed: false,
-				selectedEventPrerequisites: [],
-				selectedEventDependencies: []
+				Prerequisites: [],
+				Dependencies: [],
+				_id: ''
 			}
 		}
 		this.consoleLogState = this.consoleLogState.bind(this);
@@ -84,8 +85,9 @@ class App extends React.Component {
 				dueDate: task.DueDate,
 				dueMonth: task.DueMonth,
 				completed: task.Completed,
-				selectedEventPrerequisites: task.Prerequisites,
-				selectedEventDependencies: task.Dependencies
+				Prerequisites: task.Prerequisites,
+				Dependencies: task.Dependencies,
+				_id: task._id
 			}
 		})
   	}
@@ -102,8 +104,10 @@ class App extends React.Component {
 			dueDate: task.dueDate,
 			dueMonth: task.dueMonth,
 			completed: task.completed,
-			// selectedEventPrerequisites: task.Prerequisites,
-			// selectedEventDependencies: task.Dependencies
+			Prerequisites: task.Prerequisites,
+			Dependencies: task.Dependencies,
+			_id: task._id,
+			currentMonth: this.state.currentMonth
 		};
 		window.ws.send( JSON.stringify(sendObj) );
   	}
@@ -164,8 +168,8 @@ class App extends React.Component {
 				var event = this.state.eventsFlatArray[i];
 				if (selectedTask === event.brief) {
 					this.setState({ editFormState: {
-						selectedEventPrerequisites: event.Prerequisites,
-						selectedEventDependencies: event.Dependencies
+						Prerequisites: event.Prerequisites,
+						Dependencies: event.Dependencies
 						}
 					})
 				}
@@ -196,9 +200,9 @@ class App extends React.Component {
 			return event.brief;
 		}))
 
-		var ListOfPrerequisites = t.enums.of(this.state.editFormState.selectedEventPrerequisites)
+		var ListOfPrerequisites = t.enums.of(this.state.editFormState.Prerequisites)
 
-		var ListOfDependencies = t.enums.of(this.state.editFormState.selectedEventDependencies)
+		var ListOfDependencies = t.enums.of(this.state.editFormState.Dependencies)
 
 
 		const AddType = t.struct({
