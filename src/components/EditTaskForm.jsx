@@ -8,8 +8,8 @@ class EditTaskForm extends React.Component {
   constructor(props) {
     super(props);
     this.onSubmit= this.onSubmit.bind(this);
-    // this.i = 0;
-    // this.incrementAndDebug = this.incrementAndDebug.bind(this);
+    this.monitorEditTaskFormProps = this.monitorEditTaskFormProps.bind(this);
+    window.monitorEditTaskFormProps = this.monitorEditTaskFormProps;
   }
 
   onSubmit(evt) {
@@ -21,14 +21,12 @@ class EditTaskForm extends React.Component {
       }
     }
   }
-  // incrementAndDebug() {
-  //   this.i++;
-  //   if (this.i === 2 ) {
-  //     debugger;
-  //   }
-  // }
+
+  monitorEditTaskFormProps() {
+    console.log(this.props);
+  }
   render() {
-    // this.incrementAndDebug();
+
     const Form = t.form.Form;
 
     var ListOfPrerequisites = t.enums.of(this.props.editFormState.Prerequisites)
@@ -43,8 +41,8 @@ class EditTaskForm extends React.Component {
       dueDate: t.String,
       dueMonth: t.String,
       completed: t.Bool,
-      Prerequisites: t.maybe(t.list(ListOfPrerequisites)),
-      Dependencies: t.maybe(t.list(ListOfDependencies)),
+      Prerequisites: t.list(ListOfPrerequisites),
+      Dependencies: t.list(ListOfDependencies),
       _id: t.String
     });
     const value = {

@@ -24,7 +24,7 @@ module.exports = {
 				var date = parseInt(month)*100 + i;
 				if (  start <= date &&  date <= end ) {
 					var task = task.toObject();
-					task.brief = task.Name+' // start: '+task.StartMonth+'/'+task.StartDate+' end: '+task.DueMonth+'/'+task.DueDate;
+					task.brief = task.Name+' begin '+task.StartMonth+'/'+task.StartDate+' end '+task.DueMonth+'/'+task.DueDate;
 					day.push(task);
 				}
 			}
@@ -36,7 +36,7 @@ module.exports = {
 		var eventsFlatReturnArray = [];
 		for (var i = 0; i < tasksFlatArray.length; i++) {
 			var task = tasksFlatArray[i].toObject();
-			task.brief = task.Name+' // start: '+task.StartMonth+'/'+task.StartDate+' end: '+task.DueMonth+'/'+task.DueDate;
+			task.brief = task.Name+' begin '+task.StartMonth+'/'+task.StartDate+' end '+task.DueMonth+'/'+task.DueDate;
 			eventsFlatReturnArray.push(task);
 		}
 		return eventsFlatReturnArray;
