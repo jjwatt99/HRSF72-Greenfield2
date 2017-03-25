@@ -122,8 +122,8 @@ class App extends React.Component {
   	}
 
   	submitEditTaskForm(task) {
+		var taskPrerequisites = [];
   		for (var i = 0; i < task.Prerequisites.length; i++) {
-  			var taskPrerequisites = [];
 	  		for (var j = 0; j < this.state.eventsFlatArray.length; j++) {
 	  			var eventBrief = this.state.eventsFlatArray[j].brief;
 	  			if (task.Prerequisites[i] === eventBrief) {
@@ -131,8 +131,9 @@ class App extends React.Component {
 	  			}
 	  		}
   		}
+  		console.log('Prerequisites after processing EditTaskForm = ', taskPrerequisites)
+		var taskDependencies = [];
   		for (var i = 0; i < task.Dependencies.length; i++) {
-  			var taskDependencies = [];
 	  		for (var j = 0; j < this.state.eventsFlatArray.length; j++) {
 	  			var eventBrief = this.state.eventsFlatArray[j].brief;
 	  			if (task.Dependencies[i] === eventBrief) {
