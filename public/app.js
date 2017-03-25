@@ -27,6 +27,20 @@ var app = {
 				ws.send( JSON.stringify(dataObj));
 			});
 
+
+			$(document).keypress(function(event) {
+                          if(event.which ==13) {
+                            event.preventDefault();
+                            window.username = $("#username").val();
+                            var password = $("#password").val();
+                            var dataObj = {
+                              type: 'login',
+                              username: username,
+                              password: password
+                            };
+                            ws.send( JSON.stringify(dataObj));
+                          }
+			});
 		});
 	}
 };
