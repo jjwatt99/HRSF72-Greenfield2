@@ -324,7 +324,7 @@ class App extends React.Component {
 			          options={options}
 			          onChange={this.onChange}
 			        />
-			        <ShowPopup event = {'brah'} >
+			        <ShowPopup event = {'New Task'} >
 			        </ShowPopup>
 			        <div className="form-group">
 			          <button 
