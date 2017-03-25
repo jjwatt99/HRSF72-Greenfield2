@@ -88,6 +88,22 @@ class App extends React.Component {
   	}
 
   	autoFillEditTask(task) {
+  		for (var i = 0; i < task.Prerequisites.length; i++) {
+	  		for (var j = 0; j < this.state.eventsFlatArray.length; j++) {
+	  			var eventID = this.state.eventsFlatArray[j]._id;
+	  			if (task.Prerequisites[i] === eventID) {
+	  				task.Prerequisites[i] = this.state.eventsFlatArray[j].brief;
+	  			}
+	  		}
+  		}
+  		for (var i = 0; i < task.Dependencies.length; i++) {
+	  		for (var j = 0; j < this.state.eventsFlatArray.length; j++) {
+	  			var eventID = this.state.eventsFlatArray[j]._id;
+	  			if (task.Dependencies[i] === eventID) {
+	  				task.Dependencies[i] = this.state.eventsFlatArray[j].brief;
+	  			}
+	  		}
+  		}
 		this.setState({
 			editFormState: {
 				type: 'Edit Task',
@@ -106,7 +122,24 @@ class App extends React.Component {
   	}
 
   	submitEditTaskForm(task) {
-  		console.log(task);
+  		for (var i = 0; i < task.Prerequisites.length; i++) {
+  			var taskPrerequisites = [];
+	  		for (var j = 0; j < this.state.eventsFlatArray.length; j++) {
+	  			var eventBrief = this.state.eventsFlatArray[j].brief;
+	  			if (task.Prerequisites[i] === eventBrief) {
+	  				taskPrerequisites.push(this.state.eventsFlatArray[j]._id);
+	  			}
+	  		}
+  		}
+  		for (var i = 0; i < task.Dependencies.length; i++) {
+  			var taskDependencies = [];
+	  		for (var j = 0; j < this.state.eventsFlatArray.length; j++) {
+	  			var eventBrief = this.state.eventsFlatArray[j].brief;
+	  			if (task.Dependencies[i] === eventBrief) {
+	  				taskDependencies.push(this.state.eventsFlatArray[j]._id)
+	  			}
+	  		}
+  		}
 		var sendObj = {
 			type: 'Edit Task',
 			username: window.username,
@@ -117,8 +150,8 @@ class App extends React.Component {
 			dueDate: task.dueDate,
 			dueMonth: task.dueMonth,
 			completed: task.completed,
-			Prerequisites: task.Prerequisites || [],
-			Dependencies: task.Dependencies || [],
+			Prerequisites: taskPrerequisites || task.Prerequisites,
+			Dependencies: taskDependencies || task.Dependencies,
 			_id: task._id,
 			currentMonth: this.state.currentMonth
 		};

@@ -4,9 +4,9 @@ var utility = require('./database/utility.js')
 module.exports = {
 	getUserTasks: function(username, month, callback) {
 		dbase.Task.find(
-			{ 	'Username' : username,
-				'$or' : [	{'StartMonth' : month},
-							{'DueMonth' : month} ]
+			{ 	'Username' : username
+				// '$or' : [	{'StartMonth' : month},
+				// 			{'DueMonth' : month} ]
 			},
 			function(err, data) {
 				console.log('username = ', username, 'month = ', month, 'data = ', data)
@@ -37,6 +37,7 @@ module.exports = {
 		});
 	},
 	editTask: function(username, id, month, taskName, startDate, startMonth, startTime, dueDate, dueMonth, completed, Prerequisites, Dependencies, callback ) {
+		
 		dbase.Task.update(
 			{ _id: id }, 
 			{$set: { 	Name: taskName,

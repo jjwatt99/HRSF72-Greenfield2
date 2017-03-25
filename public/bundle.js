@@ -11418,6 +11418,22 @@ var App = function (_React$Component) {
 	}, {
 		key: 'autoFillEditTask',
 		value: function autoFillEditTask(task) {
+			for (var i = 0; i < task.Prerequisites.length; i++) {
+				for (var j = 0; j < this.state.eventsFlatArray.length; j++) {
+					var eventID = this.state.eventsFlatArray[j]._id;
+					if (task.Prerequisites[i] === eventID) {
+						task.Prerequisites[i] = this.state.eventsFlatArray[j].brief;
+					}
+				}
+			}
+			for (var i = 0; i < task.Dependencies.length; i++) {
+				for (var j = 0; j < this.state.eventsFlatArray.length; j++) {
+					var eventID = this.state.eventsFlatArray[j]._id;
+					if (task.Dependencies[i] === eventID) {
+						task.Dependencies[i] = this.state.eventsFlatArray[j].brief;
+					}
+				}
+			}
 			this.setState({
 				editFormState: {
 					type: 'Edit Task',
@@ -11437,7 +11453,24 @@ var App = function (_React$Component) {
 	}, {
 		key: 'submitEditTaskForm',
 		value: function submitEditTaskForm(task) {
-			console.log(task);
+			for (var i = 0; i < task.Prerequisites.length; i++) {
+				var taskPrerequisites = [];
+				for (var j = 0; j < this.state.eventsFlatArray.length; j++) {
+					var eventBrief = this.state.eventsFlatArray[j].brief;
+					if (task.Prerequisites[i] === eventBrief) {
+						taskPrerequisites.push(this.state.eventsFlatArray[j]._id);
+					}
+				}
+			}
+			for (var i = 0; i < task.Dependencies.length; i++) {
+				var taskDependencies = [];
+				for (var j = 0; j < this.state.eventsFlatArray.length; j++) {
+					var eventBrief = this.state.eventsFlatArray[j].brief;
+					if (task.Dependencies[i] === eventBrief) {
+						taskDependencies.push(this.state.eventsFlatArray[j]._id);
+					}
+				}
+			}
 			var sendObj = {
 				type: 'Edit Task',
 				username: window.username,
@@ -11448,8 +11481,8 @@ var App = function (_React$Component) {
 				dueDate: task.dueDate,
 				dueMonth: task.dueMonth,
 				completed: task.completed,
-				Prerequisites: task.Prerequisites || [],
-				Dependencies: task.Dependencies || [],
+				Prerequisites: taskPrerequisites || task.Prerequisites,
+				Dependencies: taskDependencies || task.Dependencies,
 				_id: task._id,
 				currentMonth: this.state.currentMonth
 			};
@@ -11809,8 +11842,8 @@ var EditTaskForm = function (_React$Component) {
     var _this = _possibleConstructorReturn(this, (EditTaskForm.__proto__ || Object.getPrototypeOf(EditTaskForm)).call(this, props));
 
     _this.onSubmit = _this.onSubmit.bind(_this);
-    // this.i = 0;
-    // this.incrementAndDebug = this.incrementAndDebug.bind(this);
+    _this.monitorEditTaskFormProps = _this.monitorEditTaskFormProps.bind(_this);
+    window.monitorEditTaskFormProps = _this.monitorEditTaskFormProps;
     return _this;
   }
 
@@ -11825,19 +11858,16 @@ var EditTaskForm = function (_React$Component) {
         }
       }
     }
-    // incrementAndDebug() {
-    //   this.i++;
-    //   if (this.i === 2 ) {
-    //     debugger;
-    //   }
-    // }
-
+  }, {
+    key: 'monitorEditTaskFormProps',
+    value: function monitorEditTaskFormProps() {
+      console.log(this.props);
+    }
   }, {
     key: 'render',
     value: function render() {
       var _this2 = this;
 
-      // this.incrementAndDebug();
       var Form = _tcombForm2.default.form.Form;
 
       var ListOfPrerequisites = _tcombForm2.default.enums.of(this.props.editFormState.Prerequisites);
@@ -11852,8 +11882,8 @@ var EditTaskForm = function (_React$Component) {
         dueDate: _tcombForm2.default.String,
         dueMonth: _tcombForm2.default.String,
         completed: _tcombForm2.default.Bool,
-        Prerequisites: _tcombForm2.default.maybe(_tcombForm2.default.list(ListOfPrerequisites)),
-        Dependencies: _tcombForm2.default.maybe(_tcombForm2.default.list(ListOfDependencies)),
+        Prerequisites: _tcombForm2.default.list(ListOfPrerequisites),
+        Dependencies: _tcombForm2.default.list(ListOfDependencies),
         _id: _tcombForm2.default.String
       });
       var value = {
@@ -11929,7 +11959,7 @@ var Events = function Events(props) {
       { onClick: function onClick() {
           return props.autoFillEditTask(props.event);
         } },
-      props.event.brief
+      props.event.Name
     )
   );
 };
