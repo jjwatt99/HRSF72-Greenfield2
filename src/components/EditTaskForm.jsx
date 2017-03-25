@@ -8,7 +8,8 @@ class EditTaskForm extends React.Component {
   constructor(props) {
     super(props);
     this.onSubmit= this.onSubmit.bind(this);
-  
+    // this.i = 0;
+    // this.incrementAndDebug = this.incrementAndDebug.bind(this);
   }
 
   onSubmit(evt) {
@@ -20,8 +21,14 @@ class EditTaskForm extends React.Component {
       }
     }
   }
-
+  // incrementAndDebug() {
+  //   this.i++;
+  //   if (this.i === 2 ) {
+  //     debugger;
+  //   }
+  // }
   render() {
+    // this.incrementAndDebug();
     const Form = t.form.Form;
 
     var ListOfPrerequisites = t.enums.of(this.props.editFormState.Prerequisites)

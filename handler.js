@@ -28,8 +28,8 @@ module.exports = {
 			DueMonth: taskParams.dueMonth,
 			DueDate: taskParams.dueDate,
 			StartTime: taskParams.startTime,
-			Prerequisites: Prereqs || 'none',
-			Dependencies: Depens || 'none',
+			Prerequisites: Prereqs || [],
+			Dependencies: Depens || [],
 			Completed: taskParams.completed || false
 		}).save( function(err) {
 			if (err) return console.error(err);

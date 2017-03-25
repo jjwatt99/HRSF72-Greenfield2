@@ -64,7 +64,20 @@ class App extends React.Component {
 				if (recObj.events) {
 					context.setState({
 						events: recObj.events,
-						eventsFlatArray: recObj.eventsFlatArray
+						eventsFlatArray: recObj.eventsFlatArray,
+						editFormState: {
+							type: 'Edit Task',
+							name: '',
+							startDate: '',
+							startMonth: '',
+							startTime: '',
+							dueDate: '',
+							dueMonth: '',
+							completed: false,
+							Prerequisites: [],
+							Dependencies: [],
+							_id: ''
+						}
 					});
 				}
 			};
@@ -104,8 +117,8 @@ class App extends React.Component {
 			dueDate: task.dueDate,
 			dueMonth: task.dueMonth,
 			completed: task.completed,
-			Prerequisites: task.Prerequisites,
-			Dependencies: task.Dependencies,
+			Prerequisites: task.Prerequisites || [],
+			Dependencies: task.Dependencies || [],
 			_id: task._id,
 			currentMonth: this.state.currentMonth
 		};

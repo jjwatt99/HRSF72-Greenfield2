@@ -11393,7 +11393,20 @@ var App = function (_React$Component) {
 					if (recObj.events) {
 						context.setState({
 							events: recObj.events,
-							eventsFlatArray: recObj.eventsFlatArray
+							eventsFlatArray: recObj.eventsFlatArray,
+							editFormState: {
+								type: 'Edit Task',
+								name: '',
+								startDate: '',
+								startMonth: '',
+								startTime: '',
+								dueDate: '',
+								dueMonth: '',
+								completed: false,
+								Prerequisites: [],
+								Dependencies: [],
+								_id: ''
+							}
 						});
 					}
 				};
@@ -11435,8 +11448,8 @@ var App = function (_React$Component) {
 				dueDate: task.dueDate,
 				dueMonth: task.dueMonth,
 				completed: task.completed,
-				Prerequisites: task.Prerequisites,
-				Dependencies: task.Dependencies,
+				Prerequisites: task.Prerequisites || [],
+				Dependencies: task.Dependencies || [],
 				_id: task._id,
 				currentMonth: this.state.currentMonth
 			};
@@ -11796,7 +11809,8 @@ var EditTaskForm = function (_React$Component) {
     var _this = _possibleConstructorReturn(this, (EditTaskForm.__proto__ || Object.getPrototypeOf(EditTaskForm)).call(this, props));
 
     _this.onSubmit = _this.onSubmit.bind(_this);
-
+    // this.i = 0;
+    // this.incrementAndDebug = this.incrementAndDebug.bind(this);
     return _this;
   }
 
@@ -11811,11 +11825,19 @@ var EditTaskForm = function (_React$Component) {
         }
       }
     }
+    // incrementAndDebug() {
+    //   this.i++;
+    //   if (this.i === 2 ) {
+    //     debugger;
+    //   }
+    // }
+
   }, {
     key: 'render',
     value: function render() {
       var _this2 = this;
 
+      // this.incrementAndDebug();
       var Form = _tcombForm2.default.form.Form;
 
       var ListOfPrerequisites = _tcombForm2.default.enums.of(this.props.editFormState.Prerequisites);
