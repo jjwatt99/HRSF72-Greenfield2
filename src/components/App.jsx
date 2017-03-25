@@ -50,6 +50,7 @@ class App extends React.Component {
 			window.ws = ws;
 			var el = document.getElementById('server-time');
 			var dataObj = {
+                                time: Date.now(),
 				type: 'getUserTasks',
 				username: window.username,
 				password: '',
@@ -60,25 +61,27 @@ class App extends React.Component {
 			}
 			ws.onmessage = function (msg) {
 				recObj = JSON.parse(msg.data);
-				el.innerHTML = 'Server time: ' + recObj.time;
+                                var timeNow = recObj.time;
+                                console.log('this is the recObj ======', timeNow);
 				if (recObj.events) {
-					context.setState({
-						events: recObj.events,
-						eventsFlatArray: recObj.eventsFlatArray,
-						editFormState: {
-							type: 'Edit Task',
-							name: '',
-							startDate: '',
-							startMonth: '',
-							startTime: '',
-							dueDate: '',
-							dueMonth: '',
-							completed: false,
-							Prerequisites: [],
-							Dependencies: [],
-							_id: ''
-						}
-					});
+                                  context.setState({
+                                    events: recObj.events,
+                                    eventsFlatArray: recObj.eventsFlatArray,
+                                    editFormState: {
+                                    type: 'Edit Task',
+                                    name: '',
+                                    startDate: '',
+                                    startMonth: '',
+                                    startTime: '',
+                                    dueDate: '',
+                                    dueMonth: '',
+                                    completed: false,
+                                    Prerequisites: [],
+                                    Dependencies: [],
+                                    _id: ''
+                                    }
+                                  });
+				// el.innerHTML = 'Server time: ' + timeNow;
 				}
 			};
 		});
