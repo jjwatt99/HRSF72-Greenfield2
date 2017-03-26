@@ -64,13 +64,13 @@ WSserver.on('connection', (client) => {
 
 	client.on('close', ()=> {
 		console.log('\n' + clientID, ' <------ disconnected');
-		// clearInterval(oneSetInterval); 
+		clearInterval(oneSetInterval); 
 		});
 
-	// var oneSetInterval = setInterval( ()=> {
-	// 	sendObj.time = new Date().toTimeString();
-	// 	client.send( JSON.stringify(sendObj) );
-	// 	}, 1000);
+	var oneSetInterval = setInterval( ()=> {
+		sendObj.time = new Date().toTimeString();
+		client.send( JSON.stringify(sendObj) );
+		}, 1000);
 	
 });
 
