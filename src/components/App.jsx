@@ -302,22 +302,27 @@ class App extends React.Component {
 		const options = {
 		};		
 	  return (
-	  	<div id="calendar">
-	  		<div>
-	  			<MonthSelect monthSelectHandler={this.monthSelectHandler} autoFillEditTask={this.autoFillEditTask}/>
+	  	<div id="calendarApp">
+	  		<div className="monthselect">
+	  			<MonthSelect  monthSelectHandler={this.monthSelectHandler} autoFillEditTask={this.autoFillEditTask}/>
 	  		</div>
-			<div className="days">Monday</div>
-			<div className="days">Tuesday</div>
-			<div className="days">Wednesday</div>
-			<div className="days">Thursday</div>
-			<div className="days">Friday</div>
-			<div className="days">Saturday</div>
-			<div className="days">Sunday</div>
-			<div><Month month={this.state.events} autoFillEditTask={this.autoFillEditTask}/></div>
-			<div>
-      		<div>
-      			<EditTaskForm editFormState={this.state.editFormState} submitEditTaskForm={this.submitEditTaskForm}/>
-      		</div>
+	  		<div id="calendarTemplate">
+				<div className="days">Monday</div>
+				<div className="days">Tuesday</div>
+				<div className="days">Wednesday</div>
+				<div className="days">Thursday</div>
+				<div className="days">Friday</div>
+				<div className="days">Saturday</div>
+				<div className="days">Sunday</div>
+				<div>
+					<Month month={this.state.events} autoFillEditTask={this.autoFillEditTask}/>
+				</div>
+			</div>
+
+  			<div className="edit-task-form">
+  				<EditTaskForm  editFormState={this.state.editFormState} submitEditTaskForm={this.submitEditTaskForm}/>
+  			</div>
+  			<div className="add-task-form">
 		        <form onSubmit={this.onSubmit.bind(this)}>
 			        <t.form.Form
 			          ref="form"
@@ -325,8 +330,6 @@ class App extends React.Component {
 			          options={options}
 			          onChange={this.onChange}
 			        />
-			        <ShowPopup event = {'New Task'} >
-			        </ShowPopup>
 			        <div className="form-group">
 			          <button 
 				          type="submit" 
@@ -337,6 +340,7 @@ class App extends React.Component {
 			        </div>
       			</form>
       		</div>
+  			<ShowPopup></ShowPopup>
 		</div>	
 	  );
 	}

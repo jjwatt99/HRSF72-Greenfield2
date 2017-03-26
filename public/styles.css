@@ -1,44 +1,3 @@
-#app {
-    position:absolute;
-    float:left;
-    width: 80%;
-    height: 80%;
-}
-
-#server-time {
-    position: absolute;
-    top: 10px;
-    height: 10px;
-    left: 10px;
-    float: left;
-    color:lightgrey;
-}
-
-.box {
-    color:white;
-    font-size:10px;
-  height: 102px;
-  width: 102px;
-    /*overflow: hidden;*/
-  float: left;
-  border: 1px lightgrey;
-    border-radius: "3%",
-    border-width: "8px",
-    border-color: "black",
-    max-width: "100px",
-    margin: "0 auto",
-    padding: "10px",
-    box-shadow: "0 0 20px gray",
-    font-family : "Lato, sans-serif",
-    text-align: "center",
-    color: white;
-
-  position: relative;
-  box-sizing: border-box;
-    -webkit-box-shadow: 0 7px 4px #777;
-    -moz-box-shadow: 0 7px 4px #777;
-    box-shadow: 0 7px 4px #777;
-}
 
 html,
 body {
@@ -52,49 +11,6 @@ body {
 
 }
 
-html {
-}
-
-body {
-}
-
-.calendar {
-  margin: 4rem;
-  padding: 0;
-  list-style: none;
-  font-size: 1.4rem;
-}
-
-.calendar-day {
-  color: #fff;
-  position: relative;
-  box-sizing: border-box;
-}
-
-.boxClicked{
-
-}
-.days {
-  height: 20px;
-    width: 100px;
-    float: left;
-    border: 10px #F44336;
-    font-family: 'Lato', sans-serif;
-    color: lightgrey;
-    font-size: 13;
-}
-
-.box:nth-child(7n+1) {
-  clear: left;  
-}
-
-#calendar {
-    margin-right: 10%;
-  position: relative;
-  left: 250px;
-  top: 90px;
-}
-
 
 html, body {
     width: 100%;
@@ -106,49 +22,21 @@ html, body {
     background-repeat: repeat-x;
 
 }
-#container {
-    position: fixed;
-    width: 340px;
-    height: 280px;
-    top: 50%;
-    left: 50%;
-    margin-top: -140px;
-    margin-left: -170px;
-    background: #fff;
-    border-radius: 3px;
-    border: 1px solid #ccc;
-    box-shadow: 0 1px 2px rgba(0, 0, 0, .1);
-
-}
-.fieldset {
-    position: relative;
-    /* float: left; */
-    margin-left: auto;
-    margin-right: auto;
-    padding-left: 5%;
-    padding-right: 10%;
+html,
+body {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  background: #262626;
 }
 
-.btn {
-    float:left;
-    position: relative;
-    left:12;
 
-}
-button.btn.btn-primary.btn.btn-default {
-    display: inline-block;
-    height: 30px;
-    position: absolute;
-    width: 100px;
-    top:450px;
-}
-label {
-    color: #9E9E9E;
-    display: inline-block;
-    margin-left: 18px;
-    padding-top: 10px;
-    font-size: 10px;
-}
 p a {
     font-size: 11px;
     color: #aaa;
@@ -161,6 +49,49 @@ p a {
 }
 p a:hover {
     color: #555;
+}
+
+
+/* --------------------------------->   LOGIN PAGE  <-------------------- */
+
+#server-time {
+    position: absolute;
+    top: 10px;
+    height: 10px;
+    left: 10px;
+    float: left;
+    color:lightgrey;
+}
+#loginBox {
+    position: fixed;
+    width: 340px;
+    height: 280px;
+    top: 50%;
+    left: 50%;
+    margin-top: -140px;
+    margin-left: -170px;
+    background: #fff;
+    border-radius: 3px;
+    border: 1px solid #ccc;
+    box-shadow: 0 1px 2px rgba(0, 0, 0, .1);''
+
+}
+
+.fieldset {
+    position: relative;
+    /* float: left; */
+    margin-left: auto;
+    margin-right: auto;
+    padding-left: 5%;
+    padding-right: 10%;
+}
+
+label {
+    color: #9E9E9E;
+    display: inline-block;
+    margin-left: 18px;
+    padding-top: 10px;
+    font-size: 10px;
 }
 input {
     font-family: "Helvetica Neue", Helvetica, sans-serif;
@@ -194,117 +125,8 @@ input[type=password]:focus,input[type=time]:focus {
     box-shadow: inset 0 1.5px 3px rgba(190, 190, 190, .4), 0 0 0 5px #e6f2f9;
 }
 
-.icon {
-  position: absolute;
-  position:center;
- /* top: 50%;
-  left: 50%;*/
-  width: 16em;
-  height: 16em;
-  transform: translate(-50%,-50%);
-  margin-left: 100px;
-}
 
-/* Calendar */
-
-.calendar {
-  position: absolute;
-  top: 8%;
-  left: -1%;
-  perspective: 40em;
-  color: #12395F;
-  margin-left: 100px;
-
-}
-
-.calendar i {
-  position: absolute;
-  top:125px; 
-  left:250px;
-  display: block;
-  width: 6em;
-  height: 6em;
-  transform: translate(-50%,-50%);
-  color: inherit;
-  background-color: #FFF;
-  border: 0.25em solid;
-  background-image:
-    linear-gradient(to bottom, currentColor 10%, rgba(255,255,255,0) 10%),
-    linear-gradient(to left, currentColor 10%, rgba(255,255,255,0) 10%);
-  background-size: 1.25em;
-  background-position: -0.0625em -0.1875em;
-  border-radius: 0.1875em;
-  box-shadow: inset 0 1.0625em #F78D72;
-  margin-left: 100px;
-
-}
-
-.calendar i:last-child {
-  transform-origin: 50% -1.5%;
-  animation: flip 1.35s infinite linear;
-  margin-left: 100px;
-
-}
-
-/*.calendar i:before {
-  content: '';
-  position: absolute;
-  top: 2.4375em;
-  left: 3.6875em;
-  display: block;
-  width: 1.125em;
-  height: 1.125em;
-  background-color: #FFDEA3;
-  /*margin-left: 100px;
-*/
-
-
-.calendar:before {
-  content: '';
-  position: absolute;
-  z-index: 1;
-  top: 0;
-  left: 50%;
- /* width: 0.25em;
-  height: 1.5625em;*/
-  margin: 3.9375em 0 0 -1.875em;
-  transform: translate(-50%,0);
-  transform-origin: 0 0;
-  color: inherit;
-  background-color: currentColor;
-  border-radius: 0.1875em;
-  box-shadow: 3.75em 0 currentColor;
-  animation: mask 1.35s infinite linear;
-  margin-left: 100px;
-
-}
-
-@keyframes flip {
-  0%, 62% { transform: translate(-50%,-50%) rotateX(0) scaleY(1); }
-  100% { transform: translate(-50%,-50%) rotateX(265deg) scaleY(0.5); }
-}
-
-@keyframes mask {
-  63% { transform: translate(-50%,0%); }
-  74% { transform: translate(-50%,0%) scaleY(0.5); }
-  74.1% { transform: translate(-50%,0%) scaleY(1); }
-}
-
-
-/* ========================= Tittle */
-html,
-body {
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-box-align: center;
-      -ms-flex-align: center;
-          align-items: center;
-  -webkit-box-pack: center;
-      -ms-flex-pack: center;
-          justify-content: center;
-  background: #262626;
-}
+/* ---------------------------->   APPLICATION.HTML  <----------------- */
 
 .title {
   position: absolute;
@@ -360,6 +182,182 @@ body {
   -webkit-animation: roll-in 0.15s 0.525s ease-out forwards;
           animation: roll-in 0.15s 0.525s ease-out forwards;
 }
+
+.icon {
+  position: absolute;
+  position:center;
+ /* top: 50%;
+  left: 50%;*/
+  width: 16em;
+  height: 16em;
+  transform: translate(-50%,-50%);
+  margin-left: 100px;
+}
+
+/* Calendar (small icon) */
+
+.calendar {
+  margin: 4rem;
+  padding: 0;
+  list-style: none;
+  font-size: 1.4rem;
+}
+
+.calendar-day {
+  color: #fff;
+  position: relative;
+  box-sizing: border-box;
+}
+.calendar {
+  position: absolute;
+  top: 8%;
+  left: -1%;
+  perspective: 40em;
+  color: #12395F;
+  margin-left: 100px;
+
+}
+
+.calendar i {
+  position: absolute;
+  top:125px; 
+  left:250px;
+  display: block;
+  width: 6em;
+  height: 6em;
+  transform: translate(-50%,-50%);
+  color: inherit;
+  background-color: #FFF;
+  border: 0.25em solid;
+  background-image:
+    linear-gradient(to bottom, currentColor 10%, rgba(255,255,255,0) 10%),
+    linear-gradient(to left, currentColor 10%, rgba(255,255,255,0) 10%);
+  background-size: 1.25em;
+  background-position: -0.0625em -0.1875em;
+  border-radius: 0.1875em;
+  box-shadow: inset 0 1.0625em #F78D72;
+  margin-left: 100px;
+
+}
+
+.calendar i:last-child {
+  transform-origin: 50% -1.5%;
+  animation: flip 1.35s infinite linear;
+  margin-left: 100px;
+
+}
+
+
+
+
+.calendar:before {
+  content: '';
+  position: absolute;
+  z-index: 1;
+  top: 0;
+  left: 50%;
+  margin: 3.9375em 0 0 -1.875em;
+  transform: translate(-50%,0);
+  transform-origin: 0 0;
+  color: inherit;
+  background-color: currentColor;
+  border-radius: 0.1875em;
+  box-shadow: 3.75em 0 currentColor;
+  animation: mask 1.35s infinite linear;
+  margin-left: 100px;
+
+}
+
+/* ----------------------------->  APP (REACT ENVIRONMENT)  <---------------*/
+#app {
+    position:absolute;
+    float:left;
+    width: 80%;
+    height: 80%;
+}
+
+#calendarApp {
+  margin-right: 10%;
+  position: relative;
+  left: 250px;
+  top: 90px;
+}
+
+#calendarTemplate {
+/*  display: flex;
+  float: left;
+  overflow: auto;*/
+}
+
+.days {
+  height: 20px;
+    width: 100px;
+    float: left;
+    border: 10px #F44336;
+    font-family: 'Lato', sans-serif;
+    color: lightgrey;
+    font-size: 13;
+}
+.box {
+    color:white;
+    font-size:10px;
+  height: 102px;
+  width: 102px;
+    /*overflow: hidden;*/
+  float: left;
+  border: 1px lightgrey;
+    border-radius: "3%",
+    border-width: "8px",
+    border-color: "black",
+    max-width: "100px",
+    margin: "0 auto",
+    padding: "10px",
+    box-shadow: "0 0 20px gray",
+    font-family : "Lato, sans-serif",
+    text-align: "center",
+    color: white;
+
+  position: relative;
+  box-sizing: border-box;
+    -webkit-box-shadow: 0 7px 4px #777;
+    -moz-box-shadow: 0 7px 4px #777;
+    box-shadow: 0 7px 4px #777;
+}
+
+.box:nth-child(7n+1) {
+  clear: left;  
+}
+.edit-task-form {
+  float: left;
+  clear: left;
+  width: 35%;
+}
+.add-task-form {
+  float: left;
+  width: 35%;
+}
+
+
+
+
+
+
+
+/*  ----------------------------->   KEYFRAMES   <-----------------------*/
+
+@keyframes flip {
+  0%, 62% { transform: translate(-50%,-50%) rotateX(0) scaleY(1); }
+  100% { transform: translate(-50%,-50%) rotateX(265deg) scaleY(0.5); }
+}
+
+@keyframes mask {
+  63% { transform: translate(-50%,0%); }
+  74% { transform: translate(-50%,0%) scaleY(0.5); }
+  74.1% { transform: translate(-50%,0%) scaleY(1); }
+}
+
+
+
 @-webkit-keyframes title-border-slide-in {
   0% {
     -webkit-transform: translateX(-150px);

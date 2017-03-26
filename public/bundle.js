@@ -11632,60 +11632,64 @@ var App = function (_React$Component) {
 			var options = {};
 			return _react2.default.createElement(
 				'div',
-				{ id: 'calendar' },
+				{ id: 'calendarApp' },
 				_react2.default.createElement(
 					'div',
-					null,
+					{ className: 'monthselect' },
 					_react2.default.createElement(_MonthSelect2.default, { monthSelectHandler: this.monthSelectHandler, autoFillEditTask: this.autoFillEditTask })
 				),
 				_react2.default.createElement(
 					'div',
-					{ className: 'days' },
-					'Monday'
-				),
-				_react2.default.createElement(
-					'div',
-					{ className: 'days' },
-					'Tuesday'
-				),
-				_react2.default.createElement(
-					'div',
-					{ className: 'days' },
-					'Wednesday'
-				),
-				_react2.default.createElement(
-					'div',
-					{ className: 'days' },
-					'Thursday'
-				),
-				_react2.default.createElement(
-					'div',
-					{ className: 'days' },
-					'Friday'
-				),
-				_react2.default.createElement(
-					'div',
-					{ className: 'days' },
-					'Saturday'
-				),
-				_react2.default.createElement(
-					'div',
-					{ className: 'days' },
-					'Sunday'
-				),
-				_react2.default.createElement(
-					'div',
-					null,
-					_react2.default.createElement(_Month2.default, { month: this.state.events, autoFillEditTask: this.autoFillEditTask })
-				),
-				_react2.default.createElement(
-					'div',
-					null,
+					{ id: 'calendarTemplate' },
+					_react2.default.createElement(
+						'div',
+						{ className: 'days' },
+						'Monday'
+					),
+					_react2.default.createElement(
+						'div',
+						{ className: 'days' },
+						'Tuesday'
+					),
+					_react2.default.createElement(
+						'div',
+						{ className: 'days' },
+						'Wednesday'
+					),
+					_react2.default.createElement(
+						'div',
+						{ className: 'days' },
+						'Thursday'
+					),
+					_react2.default.createElement(
+						'div',
+						{ className: 'days' },
+						'Friday'
+					),
+					_react2.default.createElement(
+						'div',
+						{ className: 'days' },
+						'Saturday'
+					),
+					_react2.default.createElement(
+						'div',
+						{ className: 'days' },
+						'Sunday'
+					),
 					_react2.default.createElement(
 						'div',
 						null,
-						_react2.default.createElement(_EditTaskForm2.default, { editFormState: this.state.editFormState, submitEditTaskForm: this.submitEditTaskForm })
-					),
+						_react2.default.createElement(_Month2.default, { month: this.state.events, autoFillEditTask: this.autoFillEditTask })
+					)
+				),
+				_react2.default.createElement(
+					'div',
+					{ className: 'edit-task-form' },
+					_react2.default.createElement(_EditTaskForm2.default, { editFormState: this.state.editFormState, submitEditTaskForm: this.submitEditTaskForm })
+				),
+				_react2.default.createElement(
+					'div',
+					{ className: 'add-task-form' },
 					_react2.default.createElement(
 						'form',
 						{ onSubmit: this.onSubmit.bind(this) },
@@ -11695,7 +11699,6 @@ var App = function (_React$Component) {
 							options: options,
 							onChange: this.onChange
 						}),
-						_react2.default.createElement(_Popup2.default, { event: 'New Task' }),
 						_react2.default.createElement(
 							'div',
 							{ className: 'form-group' },
@@ -11709,7 +11712,8 @@ var App = function (_React$Component) {
 							)
 						)
 					)
-				)
+				),
+				_react2.default.createElement(_Popup2.default, null)
 			);
 		}
 	}]);
