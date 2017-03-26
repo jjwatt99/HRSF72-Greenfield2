@@ -20,9 +20,9 @@ var app = {
 				window.username = $("#username").val();
 				var password = $("#password").val();
 				var dataObj = {
-					type: 'login',
-					username: username,
-					password: password
+                                  type: 'login',
+                                  username: username,
+                                  password: password
 				};
 				ws.send( JSON.stringify(dataObj));
 			});

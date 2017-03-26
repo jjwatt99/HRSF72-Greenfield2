@@ -34,35 +34,35 @@ class EditTaskForm extends React.Component {
     var ListOfDependencies = t.enums.of(this.props.editFormState.Dependencies)
 
     const Person = t.struct({
-      name: t.String,
-      startDate: t.String,
-      startMonth: t.String,
-      startTime: t.String,
-      dueDate: t.String,
-      dueMonth: t.String,
-      completed: t.Bool,
-      Prerequisites: t.list(ListOfPrerequisites),
-      Dependencies: t.list(ListOfDependencies),
-      _id: t.String
+      name          : t.String,
+      startDate     : t.String,
+      startMonth    : t.String,
+      startTime     : t.String,
+      dueDate       : t.String,
+      dueMonth      : t.String,
+      completed     : t.Bool,
+      Prerequisites : t.list(ListOfPrerequisites),
+      Dependencies  : t.list(ListOfDependencies),
+      _id           : t.String
     });
     const value = {
-      name: this.props.editFormState.name,
-      startDate: this.props.editFormState.startDate,
-      startMonth: this.props.editFormState.startMonth,
-      startTime: this.props.editFormState.startTime,
-      dueDate: this.props.editFormState.dueDate,
-      dueMonth: this.props.editFormState.dueMonth,
-      completed: this.props.editFormState.completed,
-      Prerequisites: this.props.editFormState.Prerequisites,
-      Dependencies: this.props.editFormState.Dependencies,
-      _id: this.props.editFormState._id
+      name          : this.props.editFormState.name,
+      startDate     : this.props.editFormState.startDate,
+      startMonth    : this.props.editFormState.startMonth,
+      startTime     : this.props.editFormState.startTime,
+      dueDate       : this.props.editFormState.dueDate,
+      dueMonth      : this.props.editFormState.dueMonth,
+      completed     : this.props.editFormState.completed,
+      Prerequisites : this.props.editFormState.Prerequisites,
+      Dependencies  : this.props.editFormState.Dependencies,
+      _id           : this.props.editFormState._id
     };
     return (
       <div>
         <Form
-          ref="form"
-          type={Person}
-          value={value}
+          ref   = "form"
+          type  = {Person}
+          value = {value}
         />
         <button onClick={()=>this.onSubmit(event)}>Save</button>
       </div>

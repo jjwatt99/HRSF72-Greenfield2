@@ -43,7 +43,7 @@
 html,
 body {
 
-  background: url(images/image_name.jpg) no-repeat center center fixed; 
+  background: url(background.jpg) repeat; 
   -webkit-background-size: cover;
   -moz-background-size: cover;
   -o-background-size: cover;
@@ -219,11 +219,11 @@ input[type=password]:focus,input[type=time]:focus {
 
 .calendar i {
   position: absolute;
-  top:125px; 
-  left:250px;
+  top:168px; 
+  left:569px;
   display: block;
-  width: 6em;
-  height: 6em;
+  width: 3.5em;
+  height: 3.5em;
   transform: translate(-50%,-50%);
   color: inherit;
   background-color: #FFF;

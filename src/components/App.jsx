@@ -11,23 +11,23 @@ class App extends React.Component {
 	constructor(props) {
 		super(props);
 		this.state = {
-			events: [],
-			name: null,
-			currentMonth: '1',
-			eventsFlatArray: [],
-			editFormState: {
-				type: 'Edit Task',
-				name: '',
-				startDate: '',
-				startMonth: '',
-				startTime: '',
-				dueDate: '',
-				dueMonth: '',
-				completed: false,
-				Prerequisites: [],
-				Dependencies: [],
-				_id: ''
-			}
+                  events: [],
+                  name: null,
+                  currentMonth: '1',
+                  eventsFlatArray: [],
+                  editFormState: {
+                    type          : 'Edit Task',
+                    name          : '',
+                    startDate     : '',
+                    startMonth    : '',
+                    startTime     : '',
+                    dueDate       : '',
+                    dueMonth      : '',
+                    completed     : false,
+                    Prerequisites : [],
+                    Dependencies  : [],
+                    _id           : ''
+                  }
 		}
 		this.consoleLogState = this.consoleLogState.bind(this);
 		window.consoleLogState = this.consoleLogState;
@@ -50,35 +50,38 @@ class App extends React.Component {
 			window.ws = ws;
 			var el = document.getElementById('server-time');
 			var dataObj = {
-				type: 'getUserTasks',
-				username: window.username,
-				password: '',
-				currentMonth: context.state.currentMonth
+                                time         : Date.now(),
+				type         : 'getUserTasks',
+				username     : window.username,
+				password     : '',
+				currentMonth : context.state.currentMonth
 			};
 			ws.onopen = function() {
 				ws.send( JSON.stringify(dataObj) );
 			}
 			ws.onmessage = function (msg) {
 				recObj = JSON.parse(msg.data);
-				el.innerHTML = 'Server time: ' + recObj.time;
+                                var timeNow = recObj.time;
+                                console.log('this is the recObj ======', timeNow);
 				if (recObj.events) {
-					context.setState({
-						events: recObj.events,
-						eventsFlatArray: recObj.eventsFlatArray,
-						editFormState: {
-							type: 'Edit Task',
-							name: '',
-							startDate: '',
-							startMonth: '',
-							startTime: '',
-							dueDate: '',
-							dueMonth: '',
-							completed: false,
-							Prerequisites: [],
-							Dependencies: [],
-							_id: ''
-						}
-					});
+                                  context.setState({
+                                    events: recObj.events,
+                                    eventsFlatArray: recObj.eventsFlatArray,
+                                    editFormState: {
+                                    type          : 'Edit Task',
+                                    name          : '',
+                                    startDate     : '',
+                                    startMonth    : '',
+                                    startTime     : '',
+                                    dueDate       : '',
+                                    dueMonth      : '',
+                                    completed     : false,
+                                    Prerequisites : [],
+                                    Dependencies  : [],
+                                    _id           : ''
+                                    }
+                                  });
+				// el.innerHTML = 'Server time: ' + timeNow;
 				}
 			};
 		});
@@ -106,24 +109,24 @@ class App extends React.Component {
   		}
 		this.setState({
 			editFormState: {
-				type: 'Edit Task',
-				name: task.Name,
-				startDate: task.StartDate,
-				startMonth: task.StartMonth,
-				startTime: task.StartTime,
-				dueDate: task.DueDate,
-				dueMonth: task.DueMonth,
-				completed: task.Completed,
-				Prerequisites: task.Prerequisites,
-				Dependencies: task.Dependencies,
-				_id: task._id
+				type          : 'Edit Task',
+				name          : task.Name,
+				startDate     : task.StartDate,
+				startMonth    : task.StartMonth,
+				startTime     : task.StartTime,
+				dueDate       : task.DueDate,
+				dueMonth      : task.DueMonth,
+				completed     : task.Completed,
+				Prerequisites : task.Prerequisites,
+				Dependencies  : task.Dependencies,
+				_id           : task._id
 			}
 		})
   	}
 
   	submitEditTaskForm(task) {
+		var taskPrerequisites = [];
   		for (var i = 0; i < task.Prerequisites.length; i++) {
-  			var taskPrerequisites = [];
 	  		for (var j = 0; j < this.state.eventsFlatArray.length; j++) {
 	  			var eventBrief = this.state.eventsFlatArray[j].brief;
 	  			if (task.Prerequisites[i] === eventBrief) {
@@ -131,8 +134,9 @@ class App extends React.Component {
 	  			}
 	  		}
   		}
+  		console.log('Prerequisites after processing EditTaskForm = ', taskPrerequisites)
+		var taskDependencies = [];
   		for (var i = 0; i < task.Dependencies.length; i++) {
-  			var taskDependencies = [];
 	  		for (var j = 0; j < this.state.eventsFlatArray.length; j++) {
 	  			var eventBrief = this.state.eventsFlatArray[j].brief;
 	  			if (task.Dependencies[i] === eventBrief) {
@@ -141,19 +145,19 @@ class App extends React.Component {
 	  		}
   		}
 		var sendObj = {
-			type: 'Edit Task',
-			username: window.username,
-			name: task.name,
-     		startDate: task.startDate,
-			startMonth: task.startMonth,
-			startTime: task.startTime,
-			dueDate: task.dueDate,
-			dueMonth: task.dueMonth,
-			completed: task.completed,
-			Prerequisites: taskPrerequisites || task.Prerequisites,
-			Dependencies: taskDependencies || task.Dependencies,
-			_id: task._id,
-			currentMonth: this.state.currentMonth
+			type          : 'Edit Task',
+			username      : window.username,
+			name          : task.name,
+     		startDate             : task.startDate,
+			startMonth    : task.startMonth,
+			startTime     : task.startTime,
+			dueDate       : task.dueDate,
+			dueMonth      : task.dueMonth,
+			completed     : task.completed,
+			Prerequisites : taskPrerequisites || task.Prerequisites,
+			Dependencies  : taskDependencies || task.Dependencies,
+			_id           : task._id,
+			currentMonth  : this.state.currentMonth
 		};
 		window.ws.send( JSON.stringify(sendObj) );
   	}
@@ -192,12 +196,12 @@ class App extends React.Component {
 						}
 					}
 					var sendObj = {
-						type: 'addTask',
-						username: window.username,
-						newTask: userInput,
-						newTaskPreReq: newTaskPreReq,
-						newTaskDepen: newTaskDepen,
-						currentMonth: this.state.currentMonth
+						type          : 'addTask',
+						username      : window.username,
+						newTask       : userInput,
+						newTaskPreReq : newTaskPreReq,
+						newTaskDepen  : newTaskDepen,
+						currentMonth  : this.state.currentMonth
 					};
 					window.ws.send( JSON.stringify(sendObj) );
 				} 
@@ -227,10 +231,10 @@ class App extends React.Component {
 		this.setState({ currentMonth: selectedMonth });
 		console.log('SetState updated for currentMonth = ', selectedMonth);
 		var dataObj = {
-			type: 'getUserTasks',
-			username: window.username,
-			password: '',
-			currentMonth: selectedMonth
+			type         : 'getUserTasks',
+			username     : window.username,
+			password     : '',
+			currentMonth : selectedMonth
 		};
 		ws.send( JSON.stringify(dataObj) );
 	}
@@ -256,39 +260,39 @@ class App extends React.Component {
 		}, 'AddType')
 
 		const AddTask = AddType.extend({
-		  name: t.Str,
-		  startDate: Days,
-		  startMonth: Months,
-		  startTime: t.String,
-		  dueDate: Days,
-		  dueMonth: Months,
-		  completed: t.Bool,
-		  Prerequisites: t.maybe(t.list(ListOfProjects)),
-		  Dependencies: t.maybe(t.list(ListOfProjects)),
+		  name          : t.Str,
+		  startDate     : Days,
+		  startMonth    : Months,
+		  startTime     : t.String,
+		  dueDate       : Days,
+		  dueMonth      : Months,
+		  completed     : t.Bool,
+		  Prerequisites : t.maybe(t.list(ListOfProjects)),
+		  Dependencies  : t.maybe(t.list(ListOfProjects)),
 		}, 'AddTask')
 
 		const EditTask = AddType.extend({
-			tasks: t.list(ListOfProjects),
-			name: t.Str,
-			startDate: Days,
-			startMonth: Months,
-			startTime: t.String,
-			dueDate: Days,
-			dueMonth: Months,
-			completed: t.Bool,
-			Prerequisites: t.maybe(t.list(ListOfPrerequisites)),
-			Dependencies: t.maybe(t.list(ListOfDependencies)),
+			tasks         : t.list(ListOfProjects),
+			name          : t.Str,
+			startDate     : Days,
+			startMonth    : Months,
+			startTime     : t.String,
+			dueDate       : Days,
+			dueMonth      : Months,
+			completed     : t.Bool,
+			Prerequisites : t.maybe(t.list(ListOfPrerequisites)),
+			Dependencies  : t.maybe(t.list(ListOfDependencies)),
 		}, 'AddTask')
 
 
 		const AddProject = AddType.extend({
-		  name: t.Str,
-		  startDate: Days,
-		  startMonth: Months,
-		  startTime: t.String,
-		  dueDate: Days,
-		  dueMonth: Months,
-		  manager: t.maybe(t.Str),
+		  name       : t.Str,
+		  startDate  : Days,
+		  startMonth : Months,
+		  startTime  : t.String,
+		  dueDate    : Days,
+		  dueMonth   : Months,
+		  manager    : t.maybe(t.Str),
 		}, 'AddProject')
 
 		const Options = t.union([AddTask, AddProject, EditTask], 'Options')
@@ -346,52 +350,52 @@ export default App;
 
 
 const Months = t.enums({
-  1: 'January',
-  2: 'February',
-  3: 'March',
-  4: 'April',
-  5: 'May',
-  6: 'June',
-  7: 'July',
-  8: 'August',
-  9: 'September',
-  10: 'October',
-  11: 'November',
-  12: 'December'
+  1  : 'January',
+  2  : 'February',
+  3  : 'March',
+  4  : 'April',
+  5  : 'May',
+  6  : 'June',
+  7  : 'July',
+  8  : 'August',
+  9  : 'September',
+  10 : 'October',
+  11 : 'November',
+  12 : 'December'
 });
 
 const Days = t.enums({
-	1:1,
-	2:2,
-	3:3,
-	4:4,
-	5:5,
-	6:6,
-	7:7,
-	8:8,
-	9:9,
-	10:10,
-	11:11,
-	12:12,
-	13:13,
-	14:14,
-	15:15,
-	16:16,
-	17:17,
-	18:18,
-	19:19,
-	20:20,
-	21:21,
-	22:22,
-	23:23,
-	24:24,
-	25:25,
-	26:26,
-	27:27,
-	28:28,
-	29:29,
-	30:30,
-	31:31
+	1  : 1,
+	2  : 2,
+	3  : 3,
+	4  : 4,
+	5  : 5,
+	6  : 6,
+	7  : 7,
+	8  : 8,
+	9  : 9,
+	10 : 10,
+	11 : 11,
+	12 : 12,
+	13 : 13,
+	14 : 14,
+	15 : 15,
+	16 : 16,
+	17 : 17,
+	18 : 18,
+	19 : 19,
+	20 : 20,
+	21 : 21,
+	22 : 22,
+	23 : 23,
+	24 : 24,
+	25 : 25,
+	26 : 26,
+	27 : 27,
+	28 : 28,
+	29 : 29,
+	30 : 30,
+	31 : 31
 })
 
 
