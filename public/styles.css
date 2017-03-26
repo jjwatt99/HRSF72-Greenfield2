@@ -17,11 +17,11 @@
 .box {
     color:white;
     font-size:10px;
-	height: 102px;
-	width: 102px;
+  height: 102px;
+  width: 102px;
     /*overflow: hidden;*/
-	float: left;
-	border: 1px lightgrey;
+  float: left;
+  border: 1px lightgrey;
     border-radius: "3%",
     border-width: "8px",
     border-color: "black",
@@ -75,7 +75,7 @@ body {
 
 }
 .days {
-	height: 20px;
+  height: 20px;
     width: 100px;
     float: left;
     border: 10px #F44336;
@@ -90,9 +90,9 @@ body {
 
 #calendar {
     margin-right: 10%;
-	position: relative;
-	left: 250px;
-	top: 90px;
+  position: relative;
+  left: 250px;
+  top: 90px;
 }
 
 
