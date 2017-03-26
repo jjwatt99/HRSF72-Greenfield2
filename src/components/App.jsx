@@ -91,254 +91,257 @@ class App extends React.Component {
   	}
 
   	autoFillEditTask(task) {
-  		for (var i = 0; i < task.Prerequisites.length; i++) {
-	  		for (var j = 0; j < this.state.eventsFlatArray.length; j++) {
-	  			var eventID = this.state.eventsFlatArray[j]._id;
-	  			if (task.Prerequisites[i] === eventID) {
-	  				task.Prerequisites[i] = this.state.eventsFlatArray[j].brief;
-	  			}
-	  		}
-  		}
-  		for (var i = 0; i < task.Dependencies.length; i++) {
-	  		for (var j = 0; j < this.state.eventsFlatArray.length; j++) {
-	  			var eventID = this.state.eventsFlatArray[j]._id;
-	  			if (task.Dependencies[i] === eventID) {
-	  				task.Dependencies[i] = this.state.eventsFlatArray[j].brief;
-	  			}
-	  		}
-  		}
-		this.setState({
-			editFormState: {
-				type          : 'Edit Task',
-				name          : task.Name,
-				startDate     : task.StartDate,
-				startMonth    : task.StartMonth,
-				startTime     : task.StartTime,
-				dueDate       : task.DueDate,
-				dueMonth      : task.DueMonth,
-				completed     : task.Completed,
-				Prerequisites : task.Prerequisites,
-				Dependencies  : task.Dependencies,
-				_id           : task._id
-			}
-		})
+          for (var i = 0; i < task.Prerequisites.length; i++) {
+            for (var j = 0; j < this.state.eventsFlatArray.length; j++) {
+                    var eventID = this.state.eventsFlatArray[j]._id;
+                    if (task.Prerequisites[i] === eventID) {
+                      task.Prerequisites[i] = this.state.eventsFlatArray[j].brief;
+                    }
+            }
+          }
+          for (var i = 0; i < task.Dependencies.length; i++) {
+            for (var j = 0; j < this.state.eventsFlatArray.length; j++) {
+              var eventID = this.state.eventsFlatArray[j]._id;
+              if (task.Dependencies[i] === eventID) {
+                task.Dependencies[i] = this.state.eventsFlatArray[j].brief;
+              }
+            }
+          }
+
+          this.setState({
+            editFormState: {
+              type          : 'Edit Task',
+              name          : task.Name,
+              startDate     : task.StartDate,
+              startMonth    : task.StartMonth,
+              startTime     : task.StartTime,
+              dueDate       : task.DueDate,
+              dueMonth      : task.DueMonth,
+              completed     : task.Completed,
+              Prerequisites : task.Prerequisites,
+              Dependencies  : task.Dependencies,
+              _id           : task._id
+            }
+          })
   	}
 
   	submitEditTaskForm(task) {
-		var taskPrerequisites = [];
-  		for (var i = 0; i < task.Prerequisites.length; i++) {
-	  		for (var j = 0; j < this.state.eventsFlatArray.length; j++) {
-	  			var eventBrief = this.state.eventsFlatArray[j].brief;
-	  			if (task.Prerequisites[i] === eventBrief) {
-	  				taskPrerequisites.push(this.state.eventsFlatArray[j]._id);
-	  			}
-	  		}
-  		}
-  		console.log('Prerequisites after processing EditTaskForm = ', taskPrerequisites)
-		var taskDependencies = [];
-  		for (var i = 0; i < task.Dependencies.length; i++) {
-	  		for (var j = 0; j < this.state.eventsFlatArray.length; j++) {
-	  			var eventBrief = this.state.eventsFlatArray[j].brief;
-	  			if (task.Dependencies[i] === eventBrief) {
-	  				taskDependencies.push(this.state.eventsFlatArray[j]._id)
-	  			}
-	  		}
-  		}
-		var sendObj = {
-			type          : 'Edit Task',
-			username      : window.username,
-			name          : task.name,
-     		startDate             : task.startDate,
-			startMonth    : task.startMonth,
-			startTime     : task.startTime,
-			dueDate       : task.dueDate,
-			dueMonth      : task.dueMonth,
-			completed     : task.completed,
-			Prerequisites : taskPrerequisites || task.Prerequisites,
-			Dependencies  : taskDependencies || task.Dependencies,
-			_id           : task._id,
-			currentMonth  : this.state.currentMonth
-		};
-		window.ws.send( JSON.stringify(sendObj) );
+          var taskPrerequisites = [];
+          for (var i = 0; i < task.Prerequisites.length; i++) {
+            for (var j = 0; j < this.state.eventsFlatArray.length; j++) {
+              var eventBrief = this.state.eventsFlatArray[j].brief;
+              if (task.Prerequisites[i] === eventBrief) {
+                taskPrerequisites.push(this.state.eventsFlatArray[j]._id);
+              }
+            }
+          }
+
+        console.log('Prerequisites after processing EditTaskForm = ', taskPrerequisites)
+        var taskDependencies = [];
+        for (var i = 0; i < task.Dependencies.length; i++) {
+          for (var j = 0; j < this.state.eventsFlatArray.length; j++) {
+            var eventBrief = this.state.eventsFlatArray[j].brief;
+            if (task.Dependencies[i] === eventBrief) {
+              taskDependencies.push(this.state.eventsFlatArray[j]._id)
+            }
+          }
+        }
+
+        var sendObj = {
+          type          : 'Edit Task',
+          username      : window.username,
+          name          : task.name,
+          startDate     : task.startDate,
+          startMonth    : task.startMonth,
+          startTime     : task.startTime,
+          dueDate       : task.dueDate,
+          dueMonth      : task.dueMonth,
+          completed     : task.completed,
+          Prerequisites : taskPrerequisites || task.Prerequisites,
+          Dependencies  : taskDependencies || task.Dependencies,
+          _id           : task._id,
+          currentMonth  : this.state.currentMonth
+        };
+          window.ws.send( JSON.stringify(sendObj) );
   	}
 
 	onSubmit(evt) {
-		evt.preventDefault();
-		if (this.refs.form.getValue()) {
-			var userInput = this.refs.form.getValue()[0];
-			console.log('this.refs.form.getValue() = ', this.refs.form.getValue())
-			if (userInput) {
-				if (userInput.type === "New Task") {
-					if (userInput.Prerequisites) {
-						var newTaskPreReq = [];
-						// exchange database id's for task brief in prerequisites array
-						for (var j = 0; j < userInput.Prerequisites.length; j++) {
-							var eventsBrief = userInput.Prerequisites[j]
-							for (var i = 0; i < this.state.eventsFlatArray.length; i++) {
-								var knownEvent = this.state.eventsFlatArray[i].brief
-								if (eventsBrief === knownEvent) {
-									newTaskPreReq.push(this.state.eventsFlatArray[i]._id)
-								}
-							}
-						}
-					}
-					if (userInput.Dependencies) {
-						var newTaskDepen = [];
-						// exchange database id's for task brief in Dependencies array
-						for (var j = 0; j < userInput.Dependencies.length; j++) {
-							var eventsBrief = userInput.Dependencies[j]
-							for (var i = 0; i < this.state.eventsFlatArray.length; i++) {
-								var knownEvent = this.state.eventsFlatArray[i].brief
-								if (eventsBrief === knownEvent) {
-									newTaskDepen.push(this.state.eventsFlatArray[i]._id)
-								}
-							}
-						}
-					}
-					var sendObj = {
-						type          : 'addTask',
-						username      : window.username,
-						newTask       : userInput,
-						newTaskPreReq : newTaskPreReq,
-						newTaskDepen  : newTaskDepen,
-						currentMonth  : this.state.currentMonth
-					};
-					window.ws.send( JSON.stringify(sendObj) );
-				} 
+          evt.preventDefault();
+          if (this.refs.form.getValue()) {
+            var userInput = this.refs.form.getValue()[0];
+            console.log('this.refs.form.getValue() = ', this.refs.form.getValue())
+              if (userInput) {
+                if (userInput.type === "New Task") {
+                  if (userInput.Prerequisites) {
+                  var newTaskPreReq = [];
+                  // exchange database id's for task brief in prerequisites array
+                      for (var j = 0; j < userInput.Prerequisites.length; j++) {
+                        var eventsBrief = userInput.Prerequisites[j]
+                          for (var i = 0; i < this.state.eventsFlatArray.length; i++) {
+                            var knownEvent = this.state.eventsFlatArray[i].brief
+                              if (eventsBrief === knownEvent) {
+                                newTaskPreReq.push(this.state.eventsFlatArray[i]._id)
+                              }
+                          }
+                      }
+                  }
+                if (userInput.Dependencies) {
+                  var newTaskDepen = [];
+                  // exchange database id's for task brief in Dependencies array
+                    for (var j = 0; j < userInput.Dependencies.length; j++) {
+                      var eventsBrief = userInput.Dependencies[j]
+                      for (var i = 0; i < this.state.eventsFlatArray.length; i++) {
+                        var knownEvent = this.state.eventsFlatArray[i].brief
+                        if (eventsBrief === knownEvent) {
+                          newTaskDepen.push(this.state.eventsFlatArray[i]._id)
+                        }
+                      }
+                    }
+                }
+              var sendObj = {
+                type          : 'addTask',
+                username      : window.username,
+                newTask       : userInput,
+                newTaskPreReq : newTaskPreReq,
+                newTaskDepen  : newTaskDepen,
+                currentMonth  : this.state.currentMonth
+              };
+              window.ws.send( JSON.stringify(sendObj) );
+                    } 
 			}
 		}
 	}
 
 	onChange(value, path) {
-		if (value[0] && 'tasks' in value[0] && value[0].tasks[0] !== undefined ) {
-			console.log('selected task = ', value[0].tasks[0]);
-			var selectedTask = value[0].tasks[0];
-			for (var i = 0; i < this.state.eventsFlatArray.length; i++) {
-				// console.log('this.state.eventsFlatArray['+i+'] = ' event)
-				var event = this.state.eventsFlatArray[i];
-				if (selectedTask === event.brief) {
-					this.setState({ editFormState: {
-						Prerequisites: event.Prerequisites,
-						Dependencies: event.Dependencies
-						}
-					})
-				}
-			}
-		}
+          if (value[0] && 'tasks' in value[0] && value[0].tasks[0] !== undefined ) {
+            console.log('selected task = ', value[0].tasks[0]);
+            var selectedTask = value[0].tasks[0];
+              for (var i = 0; i < this.state.eventsFlatArray.length; i++) {
+              // console.log('this.state.eventsFlatArray['+i+'] = ' event)
+                var event = this.state.eventsFlatArray[i];
+                if (selectedTask === event.brief) {
+                  this.setState({ editFormState: {
+                    Prerequisites: event.Prerequisites,
+                    Dependencies: event.Dependencies
+                  }})
+                }
+              }
+          }
 	}
 
 	monthSelectHandler(selectedMonth) {
-		this.setState({ currentMonth: selectedMonth });
-		console.log('SetState updated for currentMonth = ', selectedMonth);
-		var dataObj = {
-			type         : 'getUserTasks',
-			username     : window.username,
-			password     : '',
-			currentMonth : selectedMonth
-		};
-		ws.send( JSON.stringify(dataObj) );
-	}
+          this.setState({ currentMonth: selectedMonth });
+          console.log('SetState updated for currentMonth = ', selectedMonth);
+          var dataObj = {
+            type         : 'getUserTasks',
+            username     : window.username,
+            password     : '',
+            currentMonth : selectedMonth
+          };
+          ws.send( JSON.stringify(dataObj) );
+        }
 
 	render() {
-		const ActionType = t.enums.of([
-		  'New Task',
-		  'New Project',
-		  'Edit Task'
-		], 'ActionType')
+          const ActionType = t.enums.of([
+            'New Task',
+            'New Project',
+            'Edit Task'
+          ], 'ActionType')
 
-		const ListOfProjects = t.enums.of(this.state.eventsFlatArray.map(function(event) {
-			return event.brief;
-		}))
+          const ListOfProjects = t.enums.of(this.state.eventsFlatArray.map(function(event) {
+            return event.brief;
+          }))
 
-		var ListOfPrerequisites = t.enums.of(this.state.editFormState.Prerequisites)
+          var ListOfPrerequisites = t.enums.of(this.state.editFormState.Prerequisites)
 
-		var ListOfDependencies = t.enums.of(this.state.editFormState.Dependencies)
-
-
-		const AddType = t.struct({
-		  type: ActionType
-		}, 'AddType')
-
-		const AddTask = AddType.extend({
-		  name          : t.Str,
-		  startDate     : Days,
-		  startMonth    : Months,
-		  startTime     : t.String,
-		  dueDate       : Days,
-		  dueMonth      : Months,
-		  completed     : t.Bool,
-		  Prerequisites : t.maybe(t.list(ListOfProjects)),
-		  Dependencies  : t.maybe(t.list(ListOfProjects)),
-		}, 'AddTask')
-
-		const EditTask = AddType.extend({
-			tasks         : t.list(ListOfProjects),
-			name          : t.Str,
-			startDate     : Days,
-			startMonth    : Months,
-			startTime     : t.String,
-			dueDate       : Days,
-			dueMonth      : Months,
-			completed     : t.Bool,
-			Prerequisites : t.maybe(t.list(ListOfPrerequisites)),
-			Dependencies  : t.maybe(t.list(ListOfDependencies)),
-		}, 'AddTask')
+          var ListOfDependencies = t.enums.of(this.state.editFormState.Dependencies)
 
 
-		const AddProject = AddType.extend({
-		  name       : t.Str,
-		  startDate  : Days,
-		  startMonth : Months,
-		  startTime  : t.String,
-		  dueDate    : Days,
-		  dueMonth   : Months,
-		  manager    : t.maybe(t.Str),
-		}, 'AddProject')
+          const AddType = t.struct({
+            type: ActionType
+          }, 'AddType')
 
-		const Options = t.union([AddTask, AddProject, EditTask], 'Options')
-	
+          const AddTask = AddType.extend({
+            name          : t.Str,
+            startDate     : Days,
+            startMonth    : Months,
+            startTime     : t.String,
+            dueDate       : Days,
+            dueMonth      : Months,
+            completed     : t.Bool,
+            Prerequisites : t.maybe(t.list(ListOfProjects)),
+            Dependencies  : t.maybe(t.list(ListOfProjects)),
+          }, 'AddTask')
 
-		Options.dispatch = value => value && value.type === 'New Task' ? AddTask : value && value.type === 'Edit Task' ? EditTask : AddProject
+          const EditTask = AddType.extend({
+            tasks         : t.list(ListOfProjects),
+            name          : t.Str,
+            startDate     : Days,
+            startMonth    : Months,
+            startTime     : t.String,
+            dueDate       : Days,
+            dueMonth      : Months,
+            completed     : t.Bool,
+            Prerequisites : t.maybe(t.list(ListOfPrerequisites)),
+            Dependencies  : t.maybe(t.list(ListOfDependencies)),
+          }, 'AddTask')
 
-		const Type = t.list(Options)
-		
-		const options = {
-		};		
+
+          const AddProject = AddType.extend({
+            name       : t.Str,
+            startDate  : Days,
+            startMonth : Months,
+            startTime  : t.String,
+            dueDate    : Days,
+            dueMonth   : Months,
+            manager    : t.maybe(t.Str),
+          }, 'AddProject')
+
+          const Options = t.union([AddTask, AddProject, EditTask], 'Options')
+  
+
+          Options.dispatch = value => value && value.type === 'New Task' ? AddTask : value && value.type === 'Edit Task' ? EditTask : AddProject
+
+          const Type = t.list(Options)
+          
+          const options = {
+            //pass form options
+          };		
 	  return (
-	  	<div id="calendar">
-	  		<div>
-	  			<MonthSelect monthSelectHandler={this.monthSelectHandler} autoFillEditTask={this.autoFillEditTask}/>
-	  		</div>
-			<div className="days">Monday</div>
-			<div className="days">Tuesday</div>
-			<div className="days">Wednesday</div>
-			<div className="days">Thursday</div>
-			<div className="days">Friday</div>
-			<div className="days">Saturday</div>
-			<div className="days">Sunday</div>
-			<div><Month month={this.state.events} autoFillEditTask={this.autoFillEditTask}/></div>
-			<div>
+            <div id="calendar">
+                <div>
+                  <MonthSelect monthSelectHandler={this.monthSelectHandler} autoFillEditTask={this.autoFillEditTask}/>
+                </div>
+                <div className="days">Monday</div>
+                <div className="days">Tuesday</div>
+                <div className="days">Wednesday</div>
+                <div className="days">Thursday</div>
+                <div className="days">Friday</div>
+                <div className="days">Saturday</div>
+                <div className="days">Sunday</div>
+                <div><Month month={this.state.events} autoFillEditTask={this.autoFillEditTask}/></div>
+                <div>
       		<div>
       			<EditTaskForm editFormState={this.state.editFormState} submitEditTaskForm={this.submitEditTaskForm}/>
       		</div>
-		        <form onSubmit={this.onSubmit.bind(this)}>
-			        <t.form.Form
-			          ref="form"
-			          type={Type}
-			          options={options}
-			          onChange={this.onChange}
-			        />
-			        <ShowPopup event = {'New Task'} >
-			        </ShowPopup>
-			        <div className="form-group">
-			          <button 
-				          type="submit" 
-				          className="btn btn-primary"
-				          onClick={this.resetForm}>
-					          Save
-				          </button>
-			        </div>
-      			</form>
+                  <form onSubmit={this.onSubmit.bind(this)}>
+                    <t.form.Form
+                      ref="form"
+                      type={Type}
+                      options={options}
+                      onChange={this.onChange}
+                    />
+                    <ShowPopup event = {'New Task'} >
+                    </ShowPopup>
+                    <div className="form-group">
+                      <button 
+                        type="submit" 
+                        className="btn btn-primary"
+                        onClick={this.resetForm}>
+                                Save
+                      </button>
+                    </div>
+                  </form>
       		</div>
 		</div>	
 	  );
