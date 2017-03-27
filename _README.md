@@ -1,13 +1,15 @@
-# Project Name
+# OnQ
 
-> Pithy project description
+> Project management calendaring solution
+
+OnQ is a project management app, which is designed to target organizations and enterprise to make working on team a breeze. 
+Main feature of the app is the ability for entries to be dynamically linked with each other so that if one changes, all of its dependencies and prerequisites reschedule. In a collaboration environment, with multiple tasks and project linking to each other, this app helps increasing the productivity and efficiency of the whole team by decreasing the amount of time spent on scheduling and reassigning.
 
 ## Team
 
-  - teamMember
-  - teamMember
-  - teamMember
-  - teamMember
+  - Dale Toney
+  - Tim Nguyen
+  - JJ Gutierrez
 
 ## Table of Contents
 
@@ -21,33 +23,73 @@
 
 ## Usage
 
-> Some usage instructions
+> npm install
+> mongod
+> webpack
+> npm start
+
+Demo username is Bobs.  Password can be any sequence of characters.
 
 ## Requirements
 
-- Node 6.4.x
-- Redis 2.6.x
-- Postgresql 9.1.x
-- etc
-- etc
+    "babel-core": "^6.23.1",
+    "babel-loader": "^6.4.0",
+    "babel-preset-latest": "^6.22.0",
+    "babel-preset-react": "^6.23.0",
+    "bcrypt-nodejs": "0.0.3",
+    "body-parser": "^1.17.1",
+    "bufferutil": "3.0.0",
+    "express": "4.15.2",
+    "http": "0.0.0",
+    "jquery": "^3.1.1",
+    "mongoose": "^4.8.6",
+    "path": "^0.12.7",
+    "react": "^15.4.2",
+    "react-bootstrap": "^0.30.8",
+    "react-dom": "^15.4.2",
+    "react-popup": "^0.6.0",
+    "socket.io": "^1.7.3",
+    "tcomb-form": "^0.9.14",
+    "utf-8-validate": "3.0.1",
+    "webpack": "^2.2.1",
+    "webpack-dev-middleware": "^1.10.1",
+    "ws": "2.2.1"
 
 ## Development
 
+	Our solution was implented from a user standpoint, starting first from the front end, and developing the infrastructure to support user criteria through iterative developement.
+
+	We used websockets as it is more lightweight from a network usage perspective over the long term usage of a client-server application.
+
+	Authentication was not yet implemented.
+
+	Future vision for this project would be to implement authentication, as well as draggability of events, popups that would show event details, and notifications of events via sms or email.  
+
+	A project manager view was intended to be implemented but was only partially built.  That project manager would be able to see a collection of users' events that they manage.
+
 ### Installing Dependencies
 
-From within the root directory:
+> mongod
+> webpack -d --watch
+> nodemon server.js
 
-```sh
-npm install -g bower
-npm install
-bower install
-```
+
 
 ### Roadmap
 
-View the project roadmap [here](LINK_TO_DOC)
+Make a Login screen
+Dynamically render calendar
+Create example data
+build database schema
+Set up authentication
+Hook up server to database
+Develop schema
+Define relationship between schemas
+
+
+
 
 
 ## Contributing
 
-See [CONTRIBUTING.md](CONTRIBUTING.md) for contribution guidelines.
+https://github.com/ChatterHax/HRSF72-Greenfield2
