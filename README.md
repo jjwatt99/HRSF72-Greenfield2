@@ -15,11 +15,6 @@ Main feature of the app is the ability for entries to be dynamically linked with
 
 1. [Usage](#Usage)
 1. [Requirements](#requirements)
-1. [Development](#development)
-    1. [Installing Dependencies](#installing-dependencies)
-    1. [Tasks](#tasks)
-1. [Roadmap](#roadmap)
-1. [Contributing](#contributing)
 
 ## Usage
 
@@ -28,7 +23,7 @@ Main feature of the app is the ability for entries to be dynamically linked with
 > webpack
 > npm start
 
-Demo username is Bobs.  Password can be any sequence of characters.
+Demo username is Bobs. Password can be any sequence of characters.
 
 ## Requirements
 
@@ -54,42 +49,3 @@ Demo username is Bobs.  Password can be any sequence of characters.
     "webpack": "^2.2.1",
     "webpack-dev-middleware": "^1.10.1",
     "ws": "2.2.1"
-
-## Development
-
-	Our solution was implented from a user standpoint, starting first from the front end, and developing the infrastructure to support user criteria through iterative developement.
-
-	We used websockets as it is more lightweight from a network usage perspective over the long term usage of a client-server application.
-
-	Authentication was not yet implemented.
-
-	Future vision for this project would be to implement authentication, as well as draggability of events, popups that would show event details, and notifications of events via sms or email.  
-
-	A project manager view was intended to be implemented but was only partially built.  That project manager would be able to see a collection of users' events that they manage.
-
-### Installing Dependencies
-
-> mongod
-> webpack -d --watch
-> nodemon server.js
-
-
-
-### Roadmap
-
-Make a Login screen
-Dynamically render calendar
-Create example data
-build database schema
-Set up authentication
-Hook up server to database
-Develop schema
-Define relationship between schemas
-
-
-
-
-
-## Contributing
-
-https://github.com/ChatterHax/HRSF72-Greenfield2
