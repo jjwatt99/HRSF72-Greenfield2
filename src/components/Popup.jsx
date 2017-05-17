@@ -200,7 +200,6 @@ class ShowPopup extends React.Component {
   render() {
     return (
     	<div id='test'>
-        <button style={StyleTrigger} type="button" onClick={this.handleClick}>{this.state.event}</button>
          <Popup 
           stylePopup = {this.state.stylePopup}  
           styleContainer = {this.state.styleContainer} 
